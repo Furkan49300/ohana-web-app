@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import 'package:ohana_webapp_flutter/presentation/routers/router_constants.dart';
+import 'package:ohana_webapp_flutter/presentation/constants/router_constants.dart';
 
 class ContactPage extends StatelessWidget {
   const ContactPage({super.key});
