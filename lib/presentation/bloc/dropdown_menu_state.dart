@@ -13,3 +13,5 @@ class ExpertisesMenuShowedState extends DropdownMenuState {}
 class OffersMenuShowedState extends DropdownMenuState {}
 
 class AboutUsMenuShowedState extends DropdownMenuState {}
+
+class SearchNavbarShowedState extends DropdownMenuState {}

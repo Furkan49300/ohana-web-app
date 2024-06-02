@@ -1,5 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
+import 'package:ohana_webapp_flutter/presentation/bloc/dropdown_menu_bloc.dart';
+import 'package:ohana_webapp_flutter/presentation/bloc/dropdown_menu_event.dart';
+import 'package:ohana_webapp_flutter/presentation/bloc/dropdown_menu_state.dart';
 import 'package:ohana_webapp_flutter/presentation/constants/router_constants.dart';
 import 'package:ohana_webapp_flutter/presentation/widgets/composants/button.dart';
 import 'package:ohana_webapp_flutter/presentation/widgets/composants/logo.dart';
@@ -21,22 +25,59 @@ class NavigationBarContents extends StatelessWidget {
         Button(
           "EXPERTISES",
           type: ButtonType.navbar,
-          onTap: () {},
+          onTap: () {
+            if (context.read<DropdownMenuBloc>().state
+                is ExpertisesMenuShowedState) {
+              context.read<DropdownMenuBloc>().add(HideMenuEvent());
+            } else {
+              context.read<DropdownMenuBloc>().add(ShowExpertisesMenuEvent());
+            }
+          },
         ),
         const SizedBox(width: 2),
         Button(
           "OFFRES",
           type: ButtonType.navbar,
-          onTap: () {},
+          onTap: () {
+            if (context.read<DropdownMenuBloc>().state
+                is OffersMenuShowedState) {
+              context.read<DropdownMenuBloc>().add(HideMenuEvent());
+            } else {
+              context.read<DropdownMenuBloc>().add(ShowOffersMenuEvent());
+            }
+          },
         ),
         const SizedBox(width: 2),
         Button(
           "NOUS CONNAITRE",
           type: ButtonType.navbar,
-          onTap: () {},
+          onTap: () {
+            if (context.read<DropdownMenuBloc>().state
+                is AboutUsMenuShowedState) {
+              context.read<DropdownMenuBloc>().add(HideMenuEvent());
+            } else {
+              context.read<DropdownMenuBloc>().add(ShowAboutUsMenuEvent());
+            }
+          },
         ),
         const SizedBox(width: 2),
-        IconButton(onPressed: () {}, icon: const Icon(Icons.search, size: 30)),
+        IconButton(onPressed: () {
+          if (context.read<DropdownMenuBloc>().state
+              is SearchNavbarShowedState) {
+            context.read<DropdownMenuBloc>().add(HideMenuEvent());
+          } else {
+            context.read<DropdownMenuBloc>().add(ShowSearchNavbarEvent());
+          }
+        }, icon: BlocBuilder<DropdownMenuBloc, DropdownMenuState>(
+          builder: (context, state) {
+            return Icon(
+                context.read<DropdownMenuBloc>().state
+                        is SearchNavbarShowedState
+                    ? Icons.close
+                    : Icons.search,
+                size: 30);
+          },
+        )),
         const SizedBox(width: 8),
         Button(
           "CONTACT",

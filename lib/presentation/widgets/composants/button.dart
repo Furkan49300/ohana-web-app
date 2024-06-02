@@ -6,19 +6,18 @@ class Button extends StatefulWidget {
   final ButtonType type;
   final double fontSizeVal;
   final VoidCallback onTap;
-  final EdgeInsets paddingEdgeInsetValue;
+  final double paddingLeftRight;
+  final double paddingTopBottom;
 
-  const Button(this.content,
-      {super.key,
-      required this.type,
-      this.fontSizeVal = 17,
-      this.paddingEdgeInsetValue = const EdgeInsets.only(
-        left: 20.0,
-        top: 5.0,
-        right: 20.0,
-        bottom: 5.0,
-      ),
-      required this.onTap});
+  const Button(
+    this.content, {
+    super.key,
+    required this.type,
+    required this.onTap,
+    this.fontSizeVal = 17,
+    this.paddingLeftRight = 20.0,
+    this.paddingTopBottom = 5.0,
+  });
 
   @override
   _ButtonState createState() => _ButtonState();
@@ -37,7 +36,12 @@ class _ButtonState extends State<Button> {
         });
       },
       child: Container(
-        padding: widget.paddingEdgeInsetValue,
+        padding: EdgeInsets.only(
+          left: widget.paddingLeftRight,
+          top: widget.paddingTopBottom,
+          right: widget.paddingLeftRight,
+          bottom: widget.paddingTopBottom,
+        ),
         decoration: BoxDecoration(
             color: _isHover ? widget.type.hoverColor : widget.type.primaryColor,
             border: _isHover ? getBorderOnNavbarButton(widget.type) : null),

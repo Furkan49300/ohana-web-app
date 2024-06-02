@@ -16,5 +16,8 @@ class DropdownMenuBloc extends Bloc<DropdownMenuEvent, DropdownMenuState> {
     on<HideMenuEvent>((event, emit) {
       emit(MenuHiddenState());
     });
+    on<ShowSearchNavbarEvent>((event, emit) {
+      emit(SearchNavbarShowedState());
+    });
   }
 }

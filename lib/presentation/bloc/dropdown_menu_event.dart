@@ -13,3 +13,5 @@ class ShowExpertisesMenuEvent extends DropdownMenuEvent {}
 class ShowOffersMenuEvent extends DropdownMenuEvent {}
 
 class ShowAboutUsMenuEvent extends DropdownMenuEvent {}
+
+class ShowSearchNavbarEvent extends DropdownMenuEvent {}

@@ -1,8 +1,14 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
+import 'package:ohana_webapp_flutter/presentation/bloc/dropdown_menu_bloc.dart';
+import 'package:ohana_webapp_flutter/presentation/bloc/dropdown_menu_event.dart';
 import 'package:ohana_webapp_flutter/presentation/constants/dimensions.dart';
+import 'package:ohana_webapp_flutter/presentation/navbar/megaDropdown/dropdown_menu_about_us.dart';
 import 'package:ohana_webapp_flutter/presentation/navbar/megaDropdown/dropdown_menu_expertises.dart';
+import 'package:ohana_webapp_flutter/presentation/navbar/megaDropdown/dropdown_menu_offers.dart';
 import 'package:ohana_webapp_flutter/presentation/navbar/navigation_bar_contents.dart';
+import 'package:ohana_webapp_flutter/presentation/navbar/search_bar.dart';
 
 class HomePageLargeScreen extends StatelessWidget {
   const HomePageLargeScreen({super.key});
@@ -15,7 +21,24 @@ class HomePageLargeScreen extends StatelessWidget {
             preferredSize: Size(screenSize.width, navBarHeight),
             child: const NavigationBarContents()),
         body: Stack(
-          children: [_content(screenSize, context), DropdownMenuExpertises()],
+          children: [
+            // CONTENT
+            GestureDetector(
+              onTap: () {
+                context.read<DropdownMenuBloc>().add(HideMenuEvent());
+              },
+              child: _content(screenSize, context),
+            ),
+            // NAVBAR MEGA-DROPDOWN MENUS
+            const DropdownMenuExpertises(),
+            const DropdownMenuOffers(),
+            const DropdownMenuAboutUs(),
+            //SEARCH BAR
+            const SearchNavBar(
+              placeholder:
+                  "Cherchez une page, un service, un article, une offre d'emploi...",
+            )
+          ],
         ));
   }
 
@@ -27,12 +50,12 @@ class HomePageLargeScreen extends StatelessWidget {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Text('HOME PAGE LARGE SCREEN !!!!!!'),
+            const Text('HOME PAGE LARGE SCREEN !!!!!!'),
             ElevatedButton(
                 onPressed: () {
                   Navigator.of(context).pushNamed('/contact-us');
                 },
-                child: Text('Go to contact'))
+                child: const Text('Go to contact'))
           ],
         ),
       ),

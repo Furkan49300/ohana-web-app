@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import "package:google_fonts/google_fonts.dart";
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:ohana_webapp_flutter/presentation/bloc/dropdown_menu_bloc.dart';
 
 import 'package:ohana_webapp_flutter/presentation/routers/app_router.dart';
 
@@ -12,13 +14,17 @@ class MainApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final AppRouter _appRouter = AppRouter();
-    return MaterialApp(
-      title: "OHana Entreprise",
-      debugShowCheckedModeBanner: false,
-      theme: ThemeData(
-          textTheme: GoogleFonts.dmSansTextTheme(Theme.of(context).textTheme)),
-      onGenerateRoute: _appRouter.onGenerateRoute,
+    final AppRouter appRouter = AppRouter();
+    return BlocProvider<DropdownMenuBloc>(
+      create: (context) => DropdownMenuBloc(),
+      child: MaterialApp(
+        title: "OHana Entreprise",
+        debugShowCheckedModeBanner: false,
+        theme: ThemeData(
+            textTheme:
+                GoogleFonts.dmSansTextTheme(Theme.of(context).textTheme)),
+        onGenerateRoute: appRouter.onGenerateRoute,
+      ),
     );
   }
 }
