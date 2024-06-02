@@ -6,6 +6,7 @@ import 'package:ohana_webapp_flutter/presentation/bloc/dropdown_menu_state.dart'
 import 'package:ohana_webapp_flutter/presentation/constants/animation_constants.dart';
 import 'package:ohana_webapp_flutter/presentation/constants/colors.dart';
 import 'package:ohana_webapp_flutter/presentation/widgets/composants/button.dart';
+import 'package:ohana_webapp_flutter/presentation/widgets/composants/custom_input_field.dart';
 
 class SearchNavBar extends StatelessWidget {
   final String placeholder;
@@ -13,8 +14,6 @@ class SearchNavBar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    double screenSizeWidth = MediaQuery.of(context).size.width;
-
     return BlocBuilder<DropdownMenuBloc, DropdownMenuState>(
       builder: (context, state) {
         return AnimatedOpacity(
@@ -25,22 +24,7 @@ class SearchNavBar extends StatelessWidget {
             height: state is SearchNavbarShowedState ? 70 : 0,
             color: const Color.fromARGB(255, 190, 151, 218),
             child: Row(mainAxisAlignment: MainAxisAlignment.center, children: [
-              SizedBox(
-                width: screenSizeWidth * 2 / 3,
-                child: TextField(
-                    decoration: InputDecoration(
-                        hintText: placeholder,
-                        hintStyle: const TextStyle(color: Colors.grey),
-                        border: InputBorder.none,
-                        filled: true,
-                        fillColor: const Color(0xFFF0F2F2),
-                        focusedBorder: const OutlineInputBorder(
-                          borderSide: BorderSide(color: purpleNeutral),
-                        )),
-                    style: const TextStyle(
-                      color: Colors.black,
-                    )),
-              ),
+              CustomInputField(placeholder: placeholder),
               const SizedBox(
                 width: 10,
               ),

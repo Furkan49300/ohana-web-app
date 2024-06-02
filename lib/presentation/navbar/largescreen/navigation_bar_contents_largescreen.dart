@@ -8,8 +8,8 @@ import 'package:ohana_webapp_flutter/presentation/constants/router_constants.dar
 import 'package:ohana_webapp_flutter/presentation/widgets/composants/button.dart';
 import 'package:ohana_webapp_flutter/presentation/widgets/composants/logo.dart';
 
-class NavigationBarContents extends StatelessWidget {
-  const NavigationBarContents({super.key});
+class NavigationBarContentsLargeScreen extends StatelessWidget {
+  const NavigationBarContentsLargeScreen({super.key});
 
   @override
   Widget build(BuildContext context) {

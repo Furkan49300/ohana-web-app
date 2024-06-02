@@ -4,10 +4,10 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:ohana_webapp_flutter/presentation/bloc/dropdown_menu_bloc.dart';
 import 'package:ohana_webapp_flutter/presentation/bloc/dropdown_menu_event.dart';
 import 'package:ohana_webapp_flutter/presentation/constants/dimensions.dart';
-import 'package:ohana_webapp_flutter/presentation/navbar/megaDropdown/dropdown_menu_about_us.dart';
-import 'package:ohana_webapp_flutter/presentation/navbar/megaDropdown/dropdown_menu_expertises.dart';
-import 'package:ohana_webapp_flutter/presentation/navbar/megaDropdown/dropdown_menu_offers.dart';
-import 'package:ohana_webapp_flutter/presentation/navbar/navigation_bar_contents.dart';
+import 'package:ohana_webapp_flutter/presentation/navbar/largescreen/megaDropdown/dropdown_menu_about_us.dart';
+import 'package:ohana_webapp_flutter/presentation/navbar/largescreen/megaDropdown/dropdown_menu_expertises.dart';
+import 'package:ohana_webapp_flutter/presentation/navbar/largescreen/megaDropdown/dropdown_menu_offers.dart';
+import 'package:ohana_webapp_flutter/presentation/navbar/largescreen/navigation_bar_contents_largescreen.dart';
 import 'package:ohana_webapp_flutter/presentation/navbar/search_bar.dart';
 
 class HomePageLargeScreen extends StatelessWidget {
@@ -19,7 +19,7 @@ class HomePageLargeScreen extends StatelessWidget {
     return Scaffold(
         appBar: PreferredSize(
             preferredSize: Size(screenSize.width, navBarHeight),
-            child: const NavigationBarContents()),
+            child: const NavigationBarContentsLargeScreen()),
         body: Stack(
           children: [
             // CONTENT

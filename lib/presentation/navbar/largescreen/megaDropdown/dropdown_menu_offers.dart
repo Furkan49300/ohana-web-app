@@ -6,8 +6,8 @@ import 'package:ohana_webapp_flutter/presentation/bloc/dropdown_menu_bloc.dart';
 import 'package:ohana_webapp_flutter/presentation/bloc/dropdown_menu_state.dart';
 import 'package:ohana_webapp_flutter/presentation/constants/animation_constants.dart';
 import 'package:ohana_webapp_flutter/presentation/constants/colors.dart';
-import 'package:ohana_webapp_flutter/presentation/navbar/navbar_link.dart';
-import 'package:ohana_webapp_flutter/presentation/navbar/navbar_menu_title.dart';
+import 'package:ohana_webapp_flutter/presentation/navbar/largescreen/navbar_link.dart';
+import 'package:ohana_webapp_flutter/presentation/navbar/largescreen/navbar_menu_title.dart';
 
 class DropdownMenuOffers extends StatelessWidget {
   const DropdownMenuOffers({super.key});
