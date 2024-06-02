@@ -1,6 +1,12 @@
 import 'package:flutter/material.dart';
-import "package:google_fonts/google_fonts.dart";
+import 'package:flutter/widgets.dart';
+import 'package:ohana_webapp_flutter/presentation/constants/colors.dart';
+
 import 'package:ohana_webapp_flutter/presentation/constants/router_constants.dart';
+import 'package:ohana_webapp_flutter/presentation/navbar/navbar_menu_title.dart';
+import 'package:ohana_webapp_flutter/presentation/navbar/smallscreen/drawerSection/about_us_drawer_section.dart';
+import 'package:ohana_webapp_flutter/presentation/navbar/smallscreen/drawerSection/expertises_drawer_section.dart';
+import 'package:ohana_webapp_flutter/presentation/navbar/smallscreen/drawerSection/offers_drawer_section.dart';
 
 class CustomEndDrawer extends StatelessWidget {
   const CustomEndDrawer({
@@ -11,33 +17,23 @@ class CustomEndDrawer extends StatelessWidget {
   Widget build(BuildContext context) {
     return Drawer(
       child: ListView(
-        children: [
-          const DrawerHeader(
-            child: Text('Header'),
-          ),
-          ExpansionTile(
-            title: Row(
-              children: [
-                IconButton(
-                    onPressed: () {
-                      Navigator.of(context).pushNamed("");
-                    },
-                    icon: const Icon(Icons.arrow_forward)),
-                Text(
-                  'Expertises',
-                  style: GoogleFonts.majorMonoDisplay(fontSize: 15),
-                ),
-              ],
+        children: const [
+          DrawerHeader(
+            decoration: BoxDecoration(color: purpleNeutral),
+            child: Align(
+              alignment: Alignment.center,
+              child: Text(
+                'OHana Entreprise',
+                style: TextStyle(
+                    color: Colors.white,
+                    fontSize: 30,
+                    fontWeight: FontWeight.bold),
+              ),
             ),
-            children: [
-              ListTile(
-                onTap: () {
-                  Navigator.pushNamed(context, web);
-                },
-                title: const Text('WEB'),
-              )
-            ],
-          )
+          ),
+          ExpertisesDrawerSection(),
+          OffersDrawerSection(),
+          AboutUsDrawerSection()
         ],
       ),
     );

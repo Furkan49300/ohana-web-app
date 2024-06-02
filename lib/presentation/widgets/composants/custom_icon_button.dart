@@ -7,12 +7,14 @@ class CustomIconButton extends StatefulWidget {
   final double size;
   final Color hoverColor;
   final Color primaryColor;
+  final bool hoverDisabled;
   const CustomIconButton(
       {super.key,
       required this.iconPath,
       this.size = 30,
       this.hoverColor = dropDownHoverColor,
-      this.primaryColor = Colors.white});
+      this.primaryColor = Colors.white,
+      this.hoverDisabled = false});
 
   @override
   State<CustomIconButton> createState() => _CustomIconButtonState();
@@ -23,7 +25,7 @@ class _CustomIconButtonState extends State<CustomIconButton> {
 
   @override
   Widget build(BuildContext context) {
-    Color iconColor = _isHovered ? widget.hoverColor : widget.primaryColor;
+    Color iconColor = getIconColor();
     return MouseRegion(
       cursor: SystemMouseCursors.click,
       onEnter: (event) {
@@ -46,5 +48,12 @@ class _CustomIconButtonState extends State<CustomIconButton> {
         ),
       ),
     );
+  }
+
+  Color getIconColor() {
+    if (widget.hoverDisabled) {
+      return widget.primaryColor;
+    }
+    return _isHovered ? widget.hoverColor : widget.primaryColor;
   }
 }
