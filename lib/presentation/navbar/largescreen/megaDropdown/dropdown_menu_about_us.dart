@@ -7,6 +7,7 @@ import 'package:ohana_webapp_flutter/presentation/bloc/dropdown_menu_state.dart'
 import 'package:ohana_webapp_flutter/presentation/constants/animation_constants.dart';
 import 'package:ohana_webapp_flutter/presentation/constants/colors.dart';
 import 'package:ohana_webapp_flutter/presentation/constants/router_constants.dart';
+import 'package:ohana_webapp_flutter/presentation/navbar/largescreen/megaDropdown/dropdown_header_section.dart';
 import 'package:ohana_webapp_flutter/presentation/navbar/largescreen/navbar_link.dart';
 import 'package:ohana_webapp_flutter/presentation/navbar/largescreen/navbar_menu_title.dart';
 import 'package:ohana_webapp_flutter/presentation/widgets/patterns/social_media_buttons.dart';
@@ -35,26 +36,12 @@ class DropdownMenuAboutUs extends StatelessWidget {
             child: Row(
               children: [
                 // header section
-                Container(
-                  width: sectionWidth,
-                  padding:
-                      EdgeInsets.only(left: paddingValue, right: paddingValue),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        "Découvrez-Nous",
-                        style: GoogleFonts.majorMonoDisplay(
-                            color: Colors.white, fontSize: 30),
-                      ),
-                      const SizedBox(height: 10),
-                      const Text(
+                DropdownHeaderSection(
+                    title: "Découvrez-Nous",
+                    description:
                         "Qui nous sommes, comment nous contater et où en savoir plus",
-                        style: TextStyle(color: Colors.white),
-                      )
-                    ],
-                  ),
-                ),
+                    sectionWidth: sectionWidth,
+                    paddingValue: paddingValue),
                 const VerticalDivider(),
                 // 1st section
                 Container(
