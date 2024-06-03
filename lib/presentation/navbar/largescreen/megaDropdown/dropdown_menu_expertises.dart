@@ -38,6 +38,7 @@ class DropdownMenuExpertises extends StatelessWidget {
                       title: "Expertises",
                       description:
                           "Découvre l'ensemble de nos services conçus pour répondre à vos besoins technologiques et de sécurité",
+                      routeName: expertiseLargeScreen,
                       sectionWidth: sectionWidth,
                       paddingValue: paddingValue),
                   const VerticalDivider(),

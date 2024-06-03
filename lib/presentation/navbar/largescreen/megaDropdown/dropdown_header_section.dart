@@ -3,16 +3,17 @@ import "package:google_fonts/google_fonts.dart";
 import 'package:ohana_webapp_flutter/presentation/constants/colors.dart';
 
 class DropdownHeaderSection extends StatefulWidget {
-  const DropdownHeaderSection({
-    super.key,
-    required this.title,
-    required this.description,
-    required this.sectionWidth,
-    required this.paddingValue,
-  });
+  const DropdownHeaderSection(
+      {super.key,
+      required this.title,
+      required this.description,
+      required this.sectionWidth,
+      required this.paddingValue,
+      this.routeName = ''});
 
   final String title;
   final String description;
+  final String routeName;
   final double sectionWidth;
   final double paddingValue;
 
@@ -44,10 +45,15 @@ class _DropdownHeaderSectionState extends State<DropdownHeaderSection> {
                 _isHovered = false;
               });
             },
-            child: Text(
-              widget.title,
-              style: GoogleFonts.majorMonoDisplay(
-                  color: globalColor, fontSize: 30),
+            child: GestureDetector(
+              onTap: () {
+                Navigator.pushNamed(context, widget.routeName);
+              },
+              child: Text(
+                widget.title,
+                style: GoogleFonts.majorMonoDisplay(
+                    color: globalColor, fontSize: 30),
+              ),
             ),
           ),
           const SizedBox(height: 10),

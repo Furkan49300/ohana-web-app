@@ -1,0 +1,60 @@
+import 'package:flutter/material.dart';
+import 'package:ohana_webapp_flutter/presentation/constants/dimensions.dart';
+import 'package:ohana_webapp_flutter/presentation/widgets/composants/custom_text_list.dart';
+import 'package:ohana_webapp_flutter/presentation/widgets/composants/custom_underlined_title.dart';
+
+class StrongPointsSection extends StatelessWidget {
+  const StrongPointsSection(
+      {super.key, this.height = 400, this.width = 400, this.textWidget});
+  final double height;
+  final double width;
+  final Text? textWidget;
+
+  @override
+  Widget build(BuildContext context) {
+    List<String> defaultTextContent = [
+      'Choississez un accompagnement',
+      'Combinaison entre expertise et rigueur',
+      'Un service de qualité',
+      'Accueil chaleureux'
+    ];
+
+    return Column(
+        crossAxisAlignment: CrossAxisAlignment.start, //begin at Start
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          const CustomUnderlineTitle(
+            title: 'Les + de OHana Entreprise',
+          ),
+          const SizedBox(
+            height: spaceBetweenBigTitleAndTextBody,
+          ),
+          Row(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            mainAxisAlignment: MainAxisAlignment.center,
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Image.asset(
+                'buisness.jpg',
+                width: width,
+                height: height,
+              ),
+              textWidget ??
+                  Container(
+                    height: height,
+                    padding: const EdgeInsets.only(left: 20, right: 50),
+                    color: Colors.purple,
+                    child: Align(
+                      alignment: Alignment.center,
+                      child: CustomListText(
+                        textList: defaultTextContent,
+                        textColor: Colors.white,
+                        fontSize: 20,
+                      ),
+                    ),
+                  )
+            ],
+          ),
+        ]);
+  }
+}

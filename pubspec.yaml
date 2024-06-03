@@ -10,6 +10,7 @@ dependencies:
   flutter:
     sdk: flutter
   equatable: ^2.0.0
+  carousel_slider: ^4.2.1
   flutter_svg: ^2.0.10+1
 
 
@@ -26,3 +27,7 @@ flutter:
   assets :
     - assets/
     - assets/social_media_icons/
+    - assets/homepage_image/
+    - assets/expertise_icons/cyber_services/
+    - assets/services_icons/dev_icons/
+    - assets/services_images/
