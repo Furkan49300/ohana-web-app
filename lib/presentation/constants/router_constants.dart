@@ -4,6 +4,8 @@ const String root = '/';
 
 const String expertiseLargeScreen = '/services';
 
+const String singleServices = '/single-service';
+
 const String devServices = "services/dev-services";
 const String web = "services/dev-services/web";
 const String mobile = "services/dev-services/mobile";

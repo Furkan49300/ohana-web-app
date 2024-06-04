@@ -2,13 +2,14 @@ import "package:google_fonts/google_fonts.dart";
 import 'package:flutter/material.dart';
 
 class CustomBanner extends StatelessWidget {
-  const CustomBanner({
-    super.key,
-    this.message = '',
-    required this.imagePath,
-  });
+  const CustomBanner(
+      {super.key,
+      this.message = '',
+      required this.imagePath,
+      this.textColor = Colors.white});
 
   final String message;
+  final Color? textColor;
   final String imagePath;
 
   @override
@@ -36,8 +37,8 @@ class CustomBanner extends StatelessWidget {
             alignment: Alignment.center,
             child: Text(
               message,
-              style: GoogleFonts.majorMonoDisplay(
-                  color: Colors.white, fontSize: 40),
+              style:
+                  GoogleFonts.majorMonoDisplay(color: textColor, fontSize: 40),
             ),
           ),
         ),

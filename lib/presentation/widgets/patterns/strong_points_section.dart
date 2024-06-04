@@ -8,7 +8,7 @@ class StrongPointsSection extends StatelessWidget {
       {super.key, this.height = 400, this.width = 400, this.textWidget});
   final double height;
   final double width;
-  final Text? textWidget;
+  final Widget? textWidget;
 
   @override
   Widget build(BuildContext context) {

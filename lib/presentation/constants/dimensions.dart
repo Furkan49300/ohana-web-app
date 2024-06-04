@@ -7,3 +7,6 @@ const double navBarHeight = 80;
 //Text
 const double spaceLeftBigTitle = 200.0;
 const double spaceBetweenBigTitleAndTextBody = 30.0;
+
+//Box shape
+const double partialCircularItem = 10.0;

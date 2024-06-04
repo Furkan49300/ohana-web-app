@@ -123,12 +123,13 @@ class ExpertisesList extends StatelessWidget {
             spacing: 40, //horizontal space between children
             alignment: WrapAlignment.center,
             children: [
-              _getExpertiseBloc('devLogo.svg', 'DÉVELOPPEMENT  LOGICIELS'),
-              _getExpertiseBloc('design.svg', 'DESIGN'),
-              _getExpertiseBloc('locked.svg', 'CYBERSECURITÉ'),
-              _getExpertiseBloc('ref.svg', 'RÉFÉRENCEMENT'),
-              _getExpertiseBloc('testValidate.svg', 'TESTING'),
-              _getExpertiseBloc('increase.svg', 'IA GENERATIVE'),
+              _getExpertiseBloc(
+                  'dev_services/devLogo.svg', 'DÉVELOPPEMENT  LOGICIELS'),
+              _getExpertiseBloc('dev_services/design.svg', 'DESIGN'),
+              _getExpertiseBloc('dev_services/locked.svg', 'CYBERSECURITÉ'),
+              _getExpertiseBloc('dev_services/ref.svg', 'RÉFÉRENCEMENT'),
+              _getExpertiseBloc('dev_services/testValidate.svg', 'TESTING'),
+              _getExpertiseBloc('dev_services/increase.svg', 'IA GENERATIVE'),
             ],
           )
         ],
@@ -156,7 +157,7 @@ class ExpertisesList extends StatelessWidget {
       child: Column(
         children: [
           CustomIconButton(
-            iconPath: 'assets/expertise_icons/$svgLink',
+            iconPath: 'assets/services_icons/$svgLink',
             hoverDisabled: true,
             size: 200,
           ),

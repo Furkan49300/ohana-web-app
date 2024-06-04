@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:ohana_webapp_flutter/presentation/constants/router_constants.dart';
 
 class Logo extends StatelessWidget {
   final double heightLogo;
@@ -7,12 +8,17 @@ class Logo extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: EdgeInsets.only(left: paddingLeft, top: 5, bottom: 5),
-      child: Image.asset(
-        'assets/logo.png',
-        width: heightLogo,
-        fit: BoxFit.cover,
+    return GestureDetector(
+      onTap: () {
+        Navigator.of(context).pushNamed(root);
+      },
+      child: Padding(
+        padding: EdgeInsets.only(left: paddingLeft, top: 5, bottom: 5),
+        child: Image.asset(
+          'assets/logo.png',
+          width: heightLogo,
+          fit: BoxFit.cover,
+        ),
       ),
     );
   }
