@@ -5,7 +5,6 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 import 'package:ohana_webapp_flutter/presentation/bloc/dropdown_menu_bloc.dart';
 import 'package:ohana_webapp_flutter/presentation/bloc/dropdown_menu_event.dart';
-import 'package:ohana_webapp_flutter/presentation/constants/colors.dart';
 import 'package:ohana_webapp_flutter/presentation/constants/dimensions.dart';
 import 'package:ohana_webapp_flutter/presentation/footer/footer_large_screen.dart';
 import 'package:ohana_webapp_flutter/presentation/navbar/largescreen/megaDropdown/dropdown_menu_about_us.dart';
@@ -13,6 +12,7 @@ import 'package:ohana_webapp_flutter/presentation/navbar/largescreen/megaDropdow
 import 'package:ohana_webapp_flutter/presentation/navbar/largescreen/megaDropdown/dropdown_menu_offers.dart';
 import 'package:ohana_webapp_flutter/presentation/navbar/largescreen/navigation_bar_contents_largescreen.dart';
 import 'package:ohana_webapp_flutter/presentation/navbar/search_bar.dart';
+import 'package:ohana_webapp_flutter/presentation/pages/homePage/widgets/expertises_card.dart';
 import 'package:ohana_webapp_flutter/presentation/widgets/patterns/custom_banner.dart';
 import 'package:ohana_webapp_flutter/presentation/widgets/composants/custom_icon_button.dart';
 import 'package:ohana_webapp_flutter/presentation/widgets/composants/custom_underlined_title.dart';
@@ -103,9 +103,9 @@ class ExpertisesList extends StatelessWidget {
     return Container(
       // color: Colors.amber,
       padding: const EdgeInsets.only(top: 10),
-      child: Column(
+      child: const Column(
         children: [
-          const Row(
+          Row(
             mainAxisAlignment: MainAxisAlignment.start,
             children: [
               SizedBox(
@@ -116,20 +116,26 @@ class ExpertisesList extends StatelessWidget {
               )
             ],
           ),
-          const SizedBox(
+          SizedBox(
             height: spaceBetweenBigTitleAndTextBody,
           ),
           Wrap(
             spacing: 40, //horizontal space between children
             alignment: WrapAlignment.center,
             children: [
-              _getExpertiseBloc(
-                  'dev_services/devLogo.svg', 'DÉVELOPPEMENT  LOGICIELS'),
-              _getExpertiseBloc('dev_services/design.svg', 'DESIGN'),
-              _getExpertiseBloc('dev_services/locked.svg', 'CYBERSECURITÉ'),
-              _getExpertiseBloc('dev_services/ref.svg', 'RÉFÉRENCEMENT'),
-              _getExpertiseBloc('dev_services/testValidate.svg', 'TESTING'),
-              _getExpertiseBloc('dev_services/increase.svg', 'IA GENERATIVE'),
+              ExpertisesCard(
+                  svgLink: 'dev_services/devLogo.svg',
+                  title: 'DÉVELOPPEMENT  LOGICIELS'),
+              ExpertisesCard(
+                  svgLink: 'dev_services/design.svg', title: 'DESIGN'),
+              ExpertisesCard(
+                  svgLink: 'dev_services/locked.svg', title: 'CYBERSECURITÉ'),
+              ExpertisesCard(
+                  svgLink: 'dev_services/ref.svg', title: 'RÉFÉRENCEMENT'),
+              ExpertisesCard(
+                  svgLink: 'dev_services/testValidate.svg', title: 'TESTING'),
+              ExpertisesCard(
+                  svgLink: 'dev_services/increase.svg', title: 'IA GENERATIVE'),
             ],
           )
         ],

@@ -4,21 +4,23 @@ import 'package:google_fonts/google_fonts.dart';
 class CustomTextContent extends StatelessWidget {
   final String text;
   final List<String> boldTextList;
-  final double boldFontSizeVal;
   final bool isOverflowEllipsis;
   final Color boldTextListColor;
   final int? maxLines;
+  final double? fontSize;
   final bool boldListTextMode;
+  final double? width;
 
   const CustomTextContent(
       {super.key,
       required this.text,
       required this.boldTextList,
-      this.boldFontSizeVal = 20,
       this.isOverflowEllipsis = false,
       this.maxLines,
       this.boldListTextMode = false,
-      this.boldTextListColor = Colors.black});
+      this.boldTextListColor = Colors.black,
+      this.width,
+      this.fontSize = 20.0});
 
   @override
   Widget build(BuildContext context) {
@@ -48,14 +50,18 @@ class CustomTextContent extends StatelessWidget {
     return newContent;
   }
 
-  RichText getRichTextFromFormattedText(String formattedText) {
-    return RichText(
-      softWrap: true,
-      maxLines: maxLines,
-      overflow: isOverflowEllipsis ? TextOverflow.ellipsis : TextOverflow.clip,
-      text: TextSpan(
-        style: GoogleFonts.titilliumWeb(fontSize: 15.0),
-        children: getTextSpanListFromText(formattedText),
+  SizedBox getRichTextFromFormattedText(String formattedText) {
+    return SizedBox(
+      width: width,
+      child: RichText(
+        softWrap: true,
+        maxLines: maxLines,
+        overflow:
+            isOverflowEllipsis ? TextOverflow.ellipsis : TextOverflow.clip,
+        text: TextSpan(
+          style: GoogleFonts.dmSans(fontSize: fontSize),
+          children: getTextSpanListFromText(formattedText),
+        ),
       ),
     );
   }
@@ -67,18 +73,13 @@ class CustomTextContent extends StatelessWidget {
       if (boldTextList.contains(textList[i])) {
         var boldText = TextSpan(
           text: textList[i],
-          style: TextStyle(
-              fontWeight: FontWeight.bold,
-              fontSize: boldFontSizeVal,
-              color: boldTextListColor),
+          style:
+              TextStyle(fontWeight: FontWeight.bold, color: boldTextListColor),
         );
         textSpanList.add(boldText);
       } else {
         var normalText = TextSpan(
           text: textList[i],
-          style: TextStyle(
-            fontSize: boldFontSizeVal,
-          ),
         );
         textSpanList.add(normalText);
       }

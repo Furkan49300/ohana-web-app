@@ -4,13 +4,14 @@ class CustomListText extends StatelessWidget {
   final List<String> textList;
   final Color? textColor;
   final double? fontSize;
+  final double? width;
 
-  const CustomListText({
-    super.key,
-    required this.textList,
-    this.textColor,
-    this.fontSize,
-  });
+  const CustomListText(
+      {super.key,
+      required this.textList,
+      this.textColor,
+      this.fontSize,
+      this.width});
 
   @override
   Widget build(BuildContext context) {
@@ -18,34 +19,53 @@ class CustomListText extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.start,
         crossAxisAlignment: CrossAxisAlignment.start,
         mainAxisSize: MainAxisSize.min,
-        children: _getSetOfTextListItem(textList, textColor, fontSize));
+        children: textList
+            .map((item) => BulletPoint(
+                  text: item,
+                  textColor: textColor,
+                  fontSize: fontSize,
+                  width: width,
+                ))
+            .toList());
   }
 }
 
-List<Container> _getSetOfTextListItem(
-    List<String> textList, Color? textColor, double? fontSize) {
-  List<Container> result = [];
-  for (var item in textList) {
-    result.add(Container(
-      margin: const EdgeInsets.all(8.0),
+class BulletPoint extends StatelessWidget {
+  final String text;
+  final Color? textColor;
+  final double? fontSize;
+  final double? width;
+  const BulletPoint(
+      {super.key,
+      required this.text,
+      this.textColor,
+      this.fontSize,
+      this.width});
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.all(8.0),
       child: Row(
         mainAxisSize: MainAxisSize.min,
         children: [
-          Padding(
-            padding: const EdgeInsets.only(right: 10.0),
-            child: Icon(Icons.brightness_1,
-                size: 6.0, color: textColor), // Cette icône sert de puce
-          ),
-          Text(
-            item,
-            style: TextStyle(
-              fontSize: fontSize,
-              color: textColor,
-            ),
-          ),
+          Icon(Icons.brightness_1,
+              size: 10.0, color: textColor), // Cette icône sert de puce
+          /*Text("• ",
+              style: TextStyle(
+                fontSize: fontSize,
+                color: textColor,
+              )),*/
+          const SizedBox(width: 20),
+          SizedBox(
+              width: width,
+              child: Text(text,
+                  style: TextStyle(
+                    fontSize: fontSize,
+                    color: textColor,
+                  ))),
         ],
       ),
-    ));
+    );
   }
-  return result;
 }

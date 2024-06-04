@@ -2,9 +2,7 @@
 const String contactUs = '/contact-us';
 const String root = '/';
 
-const String expertiseLargeScreen = '/services';
-
-const String singleServices = '/single-service';
+const String expertise = '/services';
 
 const String devServices = "services/dev-services";
 const String web = "services/dev-services/web";

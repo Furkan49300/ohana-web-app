@@ -33,4 +33,5 @@ flutter:
     - assets/services_icons/dev_services/
     - assets/services_images/dev_services/
     - assets/services_images/cyber_services/
-    - assets/services_images/dev_services/catalog_images/ 
+    - assets/services_images/dev_services/catalog_images/
+    - assets/services_images/dev_services/web/
