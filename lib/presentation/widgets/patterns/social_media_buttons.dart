@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:ohana_webapp_flutter/presentation/widgets/composants/custom_icon_button.dart';
+import 'package:ohana_webapp_flutter/presentation/widgets/composants/button_format/custom_icon_button.dart';
 
 class SocialMediaButtons extends StatelessWidget {
   final bool hoverDisabled;

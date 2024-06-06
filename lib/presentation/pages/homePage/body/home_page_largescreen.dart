@@ -12,10 +12,12 @@ import 'package:ohana_webapp_flutter/presentation/navbar/largescreen/megaDropdow
 import 'package:ohana_webapp_flutter/presentation/navbar/largescreen/megaDropdown/dropdown_menu_offers.dart';
 import 'package:ohana_webapp_flutter/presentation/navbar/largescreen/navigation_bar_contents_largescreen.dart';
 import 'package:ohana_webapp_flutter/presentation/navbar/search_bar.dart';
-import 'package:ohana_webapp_flutter/presentation/pages/homePage/widgets/expertises_card.dart';
+import 'package:ohana_webapp_flutter/presentation/widgets/composants/expertises_card.dart';
+import 'package:ohana_webapp_flutter/presentation/widgets/composants/text_format/circular_text_overlay.dart';
 import 'package:ohana_webapp_flutter/presentation/widgets/patterns/custom_banner.dart';
-import 'package:ohana_webapp_flutter/presentation/widgets/composants/custom_icon_button.dart';
-import 'package:ohana_webapp_flutter/presentation/widgets/composants/custom_underlined_title.dart';
+import 'package:ohana_webapp_flutter/presentation/widgets/composants/button_format/custom_icon_button.dart';
+import 'package:ohana_webapp_flutter/presentation/widgets/composants/text_format/custom_underlined_title.dart';
+import 'package:ohana_webapp_flutter/presentation/widgets/patterns/partners_carousel.dart';
 import 'package:ohana_webapp_flutter/presentation/widgets/patterns/strong_points_section.dart';
 
 class HomePageLargeScreen extends StatelessWidget {
@@ -68,20 +70,17 @@ class HomePageLargeScreen extends StatelessWidget {
               //     child: const Text('Go to contact'))
               const CustomBanner(
                 message: "BIENVENUE A OHANA ENTREPRISE",
-                imagePath: 'assets/homepage_image/desktop_source_code.jpg',
+                imagePath:
+                    'assets/homepage_image/programming-background-collage.jpg',
               ),
               const ExpertisesList(),
-              const SizedBox(
-                height: 70,
-              ),
+              const SizedBox(height: 70),
               const StrongPointsSection(),
-              const SizedBox(
-                height: 50,
-              ),
+              const SizedBox(height: 50),
               const OurPartners(),
-              const SizedBox(
-                height: 50,
-              ),
+              const SizedBox(height: 50),
+              const CustomTextCircleImage(),
+              const SizedBox(height: 50),
               FooterLargeScreen(
                 mediaScreenWidth: screenSize.width,
               ),
@@ -187,15 +186,11 @@ class OurPartners extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
+    return const Column(
       children: [
-        const CustomUnderlineTitle(title: 'IL NOUS FONT CONFIANCE'),
-        const SizedBox(
-          height: spaceBetweenBigTitleAndTextBody,
-        ),
-        Image.asset(
-          'assets/homepage_image/partners_image.webp',
-        )
+        CustomUnderlineTitle(title: 'IL NOUS FONT CONFIANCE'),
+        SizedBox(height: spaceBetweenBigTitleAndTextBody),
+        PartnersCarousel(),
       ],
     );
   }

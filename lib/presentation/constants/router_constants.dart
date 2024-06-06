@@ -2,7 +2,10 @@
 const String contactUs = '/contact-us';
 const String root = '/';
 
+const String aboutUs = '/about-us';
+const String blog = '/blog';
 const String expertise = '/services';
+const String carreers = '/carreers';
 
 const String devServices = "services/dev-services";
 const String web = "services/dev-services/web";

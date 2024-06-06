@@ -35,3 +35,6 @@ flutter:
     - assets/services_images/cyber_services/
     - assets/services_images/dev_services/catalog_images/
     - assets/services_images/dev_services/web/
+    - assets/about_us_image/
+    - assets/logo_partners/
+    - assets/blog_images/

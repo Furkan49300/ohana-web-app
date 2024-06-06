@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:ohana_webapp_flutter/presentation/constants/dimensions.dart';
-import 'package:ohana_webapp_flutter/presentation/widgets/composants/custom_text_list.dart';
-import 'package:ohana_webapp_flutter/presentation/widgets/composants/custom_underlined_title.dart';
+import 'package:ohana_webapp_flutter/presentation/widgets/composants/text_format/custom_text_list.dart';
+import 'package:ohana_webapp_flutter/presentation/widgets/composants/text_format/custom_underlined_title.dart';
 
 class StrongPointsSection extends StatelessWidget {
   const StrongPointsSection(

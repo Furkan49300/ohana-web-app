@@ -15,7 +15,7 @@ class CustomBanner extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     Size mediaScreenSize = MediaQuery.of(context).size;
-    double containerHeight = mediaScreenSize.height / 2;
+    double containerHeight = mediaScreenSize.height / 1.5;
 
     return Stack(
       children: [

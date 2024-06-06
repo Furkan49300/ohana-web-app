@@ -37,11 +37,13 @@ class DropdownMenuAboutUs extends StatelessWidget {
               children: [
                 // header section
                 DropdownHeaderSection(
-                    title: "Découvrez-Nous",
-                    description:
-                        "Qui nous sommes, comment nous contater et où en savoir plus",
-                    sectionWidth: sectionWidth,
-                    paddingValue: paddingValue),
+                  title: "Découvrez-Nous",
+                  description:
+                      "Qui nous sommes, comment nous contater et où en savoir plus",
+                  sectionWidth: sectionWidth,
+                  paddingValue: paddingValue,
+                  routeName: aboutUs,
+                ),
                 const VerticalDivider(),
                 // 1st section
                 Container(
@@ -105,11 +107,9 @@ class DropdownMenuAboutUs extends StatelessWidget {
                       SizedBox(height: 10),
                       SocialMediaButtons(),
                       SizedBox(height: 5),
-                      NavbarLink(text: "BLOG", routeName: ""),
+                      NavbarLink(text: "BLOG", routeName: blog),
                       SizedBox(height: 5),
-                      NavbarLink(text: "OFFRES D'EMPLOI", routeName: ""),
-                      SizedBox(height: 5),
-                      NavbarLink(text: "ESPACE CANDIDAT", routeName: ""),
+                      NavbarLink(text: "OFFRES D'EMPLOI", routeName: "")
                     ],
                   ),
                 ),

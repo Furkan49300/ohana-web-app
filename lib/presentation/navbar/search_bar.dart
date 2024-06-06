@@ -5,8 +5,8 @@ import 'package:ohana_webapp_flutter/presentation/bloc/dropdown_menu_bloc.dart';
 import 'package:ohana_webapp_flutter/presentation/bloc/dropdown_menu_state.dart';
 import 'package:ohana_webapp_flutter/presentation/constants/animation_constants.dart';
 import 'package:ohana_webapp_flutter/presentation/constants/colors.dart';
-import 'package:ohana_webapp_flutter/presentation/widgets/composants/button.dart';
-import 'package:ohana_webapp_flutter/presentation/widgets/composants/custom_input_field.dart';
+import 'package:ohana_webapp_flutter/presentation/widgets/composants/button_format/button.dart';
+import 'package:ohana_webapp_flutter/presentation/widgets/composants/button_format/custom_input_field.dart';
 
 class SearchNavBar extends StatelessWidget {
   final String placeholder;

@@ -77,9 +77,14 @@ class AboutUsDrawerSection extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.end,
               ),
             ),
-            CustomListTile(title: "BLOG"),
-            CustomListTile(title: "OFFRES D'EMPLOI"),
-            CustomListTile(title: "ESPACE CANDIDAT"),
+            CustomListTile(
+              title: "BLOG",
+              routeName: blog,
+            ),
+            CustomListTile(
+              title: "OFFRES D'EMPLOI",
+              routeName: carreers,
+            )
           ],
         )
       ],

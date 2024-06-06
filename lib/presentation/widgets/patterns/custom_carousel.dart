@@ -1,7 +1,7 @@
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:ohana_webapp_flutter/presentation/constants/dimensions.dart';
-import 'package:ohana_webapp_flutter/presentation/widgets/composants/custom_underlined_title.dart';
+import 'package:ohana_webapp_flutter/presentation/widgets/composants/text_format/custom_underlined_title.dart';
 
 class CustomCarousel extends StatelessWidget {
   const CustomCarousel(
@@ -10,12 +10,19 @@ class CustomCarousel extends StatelessWidget {
       this.animationDuration = 4,
       this.carouselHeight = 316,
       this.viewportFraction = 0.3,
-      this.title = ''});
+      this.title = '',
+      this.color = const Color(0xFFD9D9D9),
+      this.paddingLeftRight = 0,
+      this.paddingTopBottom = 0});
+
   final List<Widget> widgets;
   final int animationDuration;
   final String title;
   final double carouselHeight;
+  final Color color;
   final double viewportFraction;
+  final double paddingLeftRight;
+  final double paddingTopBottom;
 
   @override
   Widget build(BuildContext context) {
@@ -31,12 +38,18 @@ class CustomCarousel extends StatelessWidget {
               CustomUnderlineTitle(title: title),
             ],
           ),
-        const SizedBox(
-          height: spaceBetweenBigTitleAndTextBody,
-        ),
+        if (title != '')
+          const SizedBox(
+            height: spaceBetweenBigTitleAndTextBody,
+          ),
         Container(
-          color: const Color(0xFFD9D9D9),
-          padding: const EdgeInsets.only(top: 10, bottom: 10),
+          color: color,
+          padding: EdgeInsets.only(
+            left: paddingLeftRight,
+            top: paddingTopBottom,
+            right: paddingLeftRight,
+            bottom: paddingTopBottom,
+          ),
           child: CarouselSlider(
               items: widgets,
               options: CarouselOptions(
