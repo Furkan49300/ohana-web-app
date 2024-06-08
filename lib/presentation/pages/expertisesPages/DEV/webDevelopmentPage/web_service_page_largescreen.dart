@@ -96,7 +96,7 @@ class WebServicePageLargeScreen extends StatelessWidget {
         const SizedBox(
           height: 10,
         ),
-        FooterLargeScreen(mediaScreenWidth: screenSize.width)
+        FooterLargeScreen()
       ],
     );
   }

@@ -69,9 +69,7 @@ class ContactPage extends StatelessWidget {
               const SizedBox(height: 50),
               const ContactForm(),
               const SizedBox(height: 70),
-              FooterLargeScreen(
-                mediaScreenWidth: screenSize.width,
-              ),
+              FooterLargeScreen(),
             ],
           ),
         ),

@@ -80,7 +80,7 @@ class AboutUsLargeScreen extends StatelessWidget {
         const SizedBox(height: 70),
         _getLocalisation(),
         const SizedBox(height: 70),
-        FooterLargeScreen(mediaScreenWidth: screenSize.width)
+        FooterLargeScreen()
       ],
     );
   }

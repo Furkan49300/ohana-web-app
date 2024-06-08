@@ -108,9 +108,7 @@ class _OffersPageLargeScreenState extends State<OffersPageLargeScreen> {
               const SizedBox(height: 10),
               Button('Contactez-Nous', type: ButtonType.standard, onTap: () {}),
               const SizedBox(height: 40),
-              FooterLargeScreen(
-                mediaScreenWidth: screenSize.width,
-              ),
+              FooterLargeScreen(),
             ],
           ),
         ),

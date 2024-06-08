@@ -35,7 +35,6 @@ class PartnersCarousel extends StatelessWidget {
     return CustomCarousel(
       title: title,
       color: Colors.white,
-      viewportFraction: 1,
       widgets: partnersLogoImage
           .map((enterprise) => MouseRegion(
                 //To Do onTap

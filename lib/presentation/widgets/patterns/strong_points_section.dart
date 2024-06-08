@@ -13,10 +13,10 @@ class StrongPointsSection extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     List<String> defaultTextContent = [
-      'Choississez un accompagnement',
-      'Combinaison entre expertise et rigueur',
+      'Choississez un accompagnement personnalisé',
+      'Une combinaison entre expertise et rigueur',
       'Un service de qualité',
-      'Accueil chaleureux'
+      'Un accueil chaleureux'
     ];
 
     return Column(

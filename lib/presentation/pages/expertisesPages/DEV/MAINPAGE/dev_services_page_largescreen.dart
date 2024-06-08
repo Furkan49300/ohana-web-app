@@ -76,9 +76,7 @@ class DevServicesPageLargeScreen extends StatelessWidget {
               ),
               const SizedBox(height: 100),
               _getWebServicesSections(),
-              FooterLargeScreen(
-                mediaScreenWidth: screenSize.width,
-              ),
+              FooterLargeScreen(),
             ],
           ),
         ),

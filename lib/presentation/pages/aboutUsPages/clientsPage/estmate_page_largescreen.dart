@@ -69,9 +69,7 @@ class EstimatePageLargeScreen extends StatelessWidget {
               const SizedBox(height: 50),
               const DevisForm(),
               const SizedBox(height: 70),
-              FooterLargeScreen(
-                mediaScreenWidth: screenSize.width,
-              ),
+              FooterLargeScreen(),
             ],
           ),
         ),

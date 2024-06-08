@@ -67,7 +67,7 @@ class CarreersPageLargeScreen extends StatelessWidget {
               const SizedBox(height: 50),
               _getListNumber(),
               const SizedBox(height: 50),
-              FooterLargeScreen(mediaScreenWidth: screenSize.width),
+              FooterLargeScreen(),
             ],
           ),
         ),

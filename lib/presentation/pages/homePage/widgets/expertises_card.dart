@@ -36,7 +36,6 @@ class _ExpertisesCardState extends State<ExpertisesCard> {
         padding: EdgeInsets.all(paddingValue),
         decoration: BoxDecoration(
           color: Colors.purple,
-          //borderRadius: BorderRadius.circular(20),
           boxShadow: [
             BoxShadow(
               color: Colors.grey

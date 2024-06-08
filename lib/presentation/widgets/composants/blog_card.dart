@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 
 import 'package:ohana_webapp_flutter/presentation/widgets/composants/text_format/bold_text_customiser.dart';
-import 'package:ohana_webapp_flutter/presentation/widgets/composants/text_format/custom_underlined_title.dart';
 
 class BlogCard extends StatelessWidget {
   const BlogCard(
@@ -12,12 +11,12 @@ class BlogCard extends StatelessWidget {
       required this.textAndBoldListMap,
       required this.title,
       required this.date,
-      this.widget});
+      required this.width});
   final String pathOfTopImage;
   final String title;
   final String date;
-  final Widget? widget;
   final Map<String, dynamic> textAndBoldListMap;
+  final double width;
 
   @override
   Widget build(BuildContext context) {
@@ -25,7 +24,7 @@ class BlogCard extends StatelessWidget {
       padding: const EdgeInsets.all(10),
       child: Container(
         height: 700,
-        width: 422,
+        width: width,
         margin: EdgeInsets.zero,
         padding: EdgeInsets.zero,
         decoration: BoxDecoration(
@@ -46,12 +45,12 @@ class BlogCard extends StatelessWidget {
           children: [
             Image.asset(
               pathOfTopImage,
-              width: 420,
+              width: width,
               height: 340,
               fit: BoxFit.cover,
             ),
             Padding(
-                padding: const EdgeInsets.only(left: 40),
+                padding: const EdgeInsets.only(left: 40, right: 40, top: 20),
                 child: Text(
                   title,
                   style: const TextStyle(
@@ -76,14 +75,6 @@ class BlogCard extends StatelessWidget {
     );
   }
 }
-
-          // Padding(
-          //   padding: const EdgeInsets.only(left: 30, right: 30),
-          //   child: Text(
-          //     '-$date',
-          //     style: const TextStyle(fontSize: 20),
-          //   ),
-          // ),
 
 
 //"My funny text is start : Lorem ipsum dolor sit amet consectetur adipisicing elit. Expedita labore perspiciatis, eaque ducimus nobis molestias blanditiis illum suscipit, deserunt necessitatibus animi dignissimos vero, mollitia facilis repellat vitae. Ipsum, eligendi alias."

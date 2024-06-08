@@ -17,6 +17,7 @@ import 'package:ohana_webapp_flutter/presentation/widgets/composants/button_form
 import 'package:ohana_webapp_flutter/presentation/widgets/composants/custom_smart_paginator.dart';
 import 'package:ohana_webapp_flutter/presentation/widgets/composants/text_format/circular_text_overlay.dart';
 import 'package:ohana_webapp_flutter/presentation/widgets/composants/text_format/custom_underlined_title.dart';
+import 'package:ohana_webapp_flutter/presentation/widgets/patterns/blog_card_pattern.dart';
 import 'package:ohana_webapp_flutter/presentation/widgets/patterns/custom_banner.dart';
 import 'package:ohana_webapp_flutter/presentation/widgets/patterns/custom_carousel.dart';
 import 'package:ohana_webapp_flutter/presentation/widgets/patterns/strong_points_section.dart';
@@ -64,13 +65,13 @@ class BlogPageLargeScreen extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.start,
             children: [
               _getBlogBanner(
-                  mediaScreenSize: screenSize), //blog carousel title embeded
+                  mediaScreenSize: screenSize), //blog carousel title embedded
               const SizedBox(height: 70),
               _getBlogInfosTitleEmbeded(),
               const SizedBox(height: 50),
               _getListNumber(),
               const SizedBox(height: 50),
-              FooterLargeScreen(mediaScreenWidth: screenSize.width),
+              const FooterLargeScreen(),
             ],
           ),
         ),
@@ -239,7 +240,7 @@ class BlogPageLargeScreen extends StatelessWidget {
     );
   }
 
-  Padding _getBlogCards() {
+  Widget _getBlogCards() {
     List<Map> news = [
       {
         'title':
@@ -298,24 +299,8 @@ class BlogPageLargeScreen extends StatelessWidget {
         'date': '10/06/2024'
       },
     ];
-    return Padding(
-      padding: const EdgeInsets.only(left: 50, right: 50),
-      child: Wrap(
-          spacing: 50, //horizontal space between widgets
-          children: news
-              .map((item) => Padding(
-                    padding: const EdgeInsets.only(top: 20),
-                    child: BlogCard(
-                      title: item['title'],
-                      pathOfTopImage: item['imagePath'],
-                      date: item['date'],
-                      textAndBoldListMap: {
-                        'text': item['text'],
-                        'boldTextList': item['boldTextList']
-                      },
-                    ),
-                  ))
-              .toList()),
+    return BlogCardPattern(
+      blogList: news,
     );
   }
 
