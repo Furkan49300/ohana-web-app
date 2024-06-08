@@ -1,8 +1,8 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:ohana_webapp_flutter/presentation/constants/colors.dart';
 import 'package:google_fonts/google_fonts.dart';
 
-import 'package:ohana_webapp_flutter/presentation/constants/dimensions.dart';
 import 'package:ohana_webapp_flutter/presentation/widgets/composants/logo.dart';
 import 'package:ohana_webapp_flutter/presentation/widgets/patterns/social_media_buttons.dart';
 
@@ -15,54 +15,53 @@ class FooterLargeScreen extends StatelessWidget {
     return Column(
       children: [
         _getFooterTopSection(),
-        Container(height: 370, color: purpleLight),
+        Container(
+          height: 300,
+          color: purpleLight,
+          child: const Row(
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            children: [
+              Logo(heightLogo: 200),
+              Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    "DEVELOPPEMENT",
+                    style: TextStyle(fontSize: 25, color: Colors.white),
+                  ),
+                  SizedBox(height: 10),
+                  FooterLink(text: "Web"),
+                  FooterLink(text: "Mobile"),
+                  FooterLink(text: "Logiciels"),
+                  FooterLink(text: "Design"),
+                  FooterLink(text: "Referencement (SEO)"),
+                  FooterLink(text: "IA generative")
+                ],
+              ),
+              Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    "CYBERSECURITE",
+                    style: TextStyle(fontSize: 25, color: Colors.white),
+                  ),
+                  SizedBox(height: 10),
+                  FooterLink(text: "Audit de sécurité"),
+                  FooterLink(text: "Audit de vulnérabilité"),
+                  FooterLink(text: "Audit de conformité"),
+                  FooterLink(text: "Pentesting"),
+                  FooterLink(text: "Accompagnement sur mesure"),
+                  FooterLink(text: "Sécurisation de code logiciels")
+                ],
+              )
+            ],
+          ),
+        ),
         _getFooterBottomSection(screenSizeWidth)
       ],
     );
-    /*return Container(
-      color: Colors.purple,
-      width: screenSizeWidth,
-      height: 300,
-      child: Padding(
-        padding: const EdgeInsets.only(left: spaceLeftBigTitle - 20),
-        child: Column(
-          children: [
-            const SizedBox(
-              height: 50,
-            ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.start,
-              children: [
-                _getColumnOfLink(
-                  footerLinks['column1'],
-                ),
-                const SizedBox(
-                  width: 50,
-                ),
-                _getColumnOfLink(footerLinks['column2']),
-                const SizedBox(
-                  width: 50,
-                ),
-                _getColumnOfLink(footerLinks['column3']),
-              ],
-            ),
-            //---Legale mention
-            const SizedBox(
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  Text(
-                    '@mention légale',
-                    style: TextStyle(color: Colors.white, fontSize: 25),
-                  ),
-                ],
-              ),
-            )
-          ],
-        ),
-      ),
-    );*/
   }
 
   _getFooterTopSection() {
@@ -194,3 +193,35 @@ Map<String, List> footerLinks = {
     'Accompagnement Équipe',
   ]
 };
+
+class FooterLink extends StatefulWidget {
+  final String text;
+  const FooterLink({super.key, required this.text});
+
+  @override
+  State<FooterLink> createState() => _FooterLinkState();
+}
+
+class _FooterLinkState extends State<FooterLink> {
+  bool _isHovered = false;
+  @override
+  Widget build(BuildContext context) {
+    return MouseRegion(
+      cursor: SystemMouseCursors.click,
+      onEnter: (event) {
+        setState(() {
+          _isHovered = true;
+        });
+      },
+      onExit: (event) {
+        setState(() {
+          _isHovered = false;
+        });
+      },
+      child: Text(widget.text,
+          style: TextStyle(
+              fontSize: 15,
+              color: _isHovered ? dropDownHoverColor : Colors.white)),
+    );
+  }
+}
