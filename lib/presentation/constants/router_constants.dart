@@ -6,6 +6,7 @@ const String aboutUs = '/about-us';
 const String blog = '/blog';
 const String expertise = '/services';
 const String carreers = '/carreers';
+const String estimate = 'estimate/';
 
 const String devServices = "services/dev-services";
 const String web = "services/dev-services/web";
@@ -23,3 +24,5 @@ const String pentesting = "services/cyber-services/pentesting";
 const String tailorMadeSupport = "services/cyber-services/tailor-made-support";
 const String softwareCodeSecurity =
     "services/cyber-services/software-code-security";
+
+const String offers = "services/cyber-services/tailor-made-support";

@@ -38,3 +38,6 @@ flutter:
     - assets/about_us_image/
     - assets/logo_partners/
     - assets/blog_images/
+    - assets/offers_images/
+    - assets/alert_svg/
+    - assets/offers_svg/

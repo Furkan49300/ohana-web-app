@@ -1,13 +1,14 @@
 import 'package:flutter/material.dart';
 
 class CustomUnderlineTitle extends StatelessWidget {
-  const CustomUnderlineTitle({
-    super.key,
-    required this.title,
-    this.lineColor = Colors.purple,
-  });
+  const CustomUnderlineTitle(
+      {super.key,
+      required this.title,
+      this.lineColor = Colors.purple,
+      this.textWidth});
   final String title;
   final Color lineColor;
+  final double? textWidth;
 
   @override
   Widget build(BuildContext context) {
@@ -15,10 +16,13 @@ class CustomUnderlineTitle extends StatelessWidget {
       padding: const EdgeInsets.only(bottom: 3),
       decoration: BoxDecoration(
           border: Border(bottom: BorderSide(color: lineColor, width: 5))),
-      child: Text(
-        title,
-        style: const TextStyle(
-            color: Colors.black, fontWeight: FontWeight.bold, fontSize: 35),
+      child: SizedBox(
+        width: textWidth,
+        child: Text(
+          title,
+          style: const TextStyle(
+              color: Colors.black, fontWeight: FontWeight.bold, fontSize: 35),
+        ),
       ),
     );
   }

@@ -6,11 +6,15 @@ class CustomBanner extends StatelessWidget {
       {super.key,
       this.message = '',
       required this.imagePath,
-      this.textColor = Colors.white});
+      this.textColor = Colors.white,
+      this.widget,
+      this.alignement = Alignment.center});
 
   final String message;
   final Color? textColor;
   final String imagePath;
+  final Widget? widget;
+  final Alignment alignement;
 
   @override
   Widget build(BuildContext context) {
@@ -18,6 +22,8 @@ class CustomBanner extends StatelessWidget {
     double containerHeight = mediaScreenSize.height / 1.5;
 
     return Stack(
+      alignment: alignement,
+      clipBehavior: Clip.none,
       children: [
         Container(
           height: containerHeight,
@@ -31,17 +37,18 @@ class CustomBanner extends StatelessWidget {
             //fit the height of container
           ),
         ),
-        SizedBox(
-          height: containerHeight, //Container Height
-          child: Align(
-            alignment: Alignment.center,
-            child: Text(
-              message,
-              style:
-                  GoogleFonts.majorMonoDisplay(color: textColor, fontSize: 40),
+        widget ??
+            SizedBox(
+              height: containerHeight, //Container Height
+              child: Align(
+                alignment: Alignment.center,
+                child: Text(
+                  message,
+                  style: GoogleFonts.majorMonoDisplay(
+                      color: textColor, fontSize: 40),
+                ),
+              ),
             ),
-          ),
-        ),
       ],
     );
   }

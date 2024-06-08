@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 
 import 'package:ohana_webapp_flutter/presentation/bloc/dropdown_menu_bloc.dart';
 import 'package:ohana_webapp_flutter/presentation/bloc/dropdown_menu_event.dart';
@@ -12,18 +13,11 @@ import 'package:ohana_webapp_flutter/presentation/navbar/largescreen/megaDropdow
 import 'package:ohana_webapp_flutter/presentation/navbar/largescreen/megaDropdown/dropdown_menu_offers.dart';
 import 'package:ohana_webapp_flutter/presentation/navbar/largescreen/navigation_bar_contents_largescreen.dart';
 import 'package:ohana_webapp_flutter/presentation/navbar/search_bar.dart';
-import 'package:ohana_webapp_flutter/presentation/widgets/composants/blog_card.dart';
+import 'package:ohana_webapp_flutter/presentation/pages/aboutUsPages/carreersPage/widget/carreer_card.dart';
 import 'package:ohana_webapp_flutter/presentation/widgets/composants/button_format/button.dart';
-import 'package:ohana_webapp_flutter/presentation/widgets/composants/button_format/custom_input_field.dart';
-import 'package:ohana_webapp_flutter/presentation/widgets/composants/custom_painter.dart';
+import 'package:ohana_webapp_flutter/presentation/widgets/composants/input_field/custom_input_field.dart';
 import 'package:ohana_webapp_flutter/presentation/widgets/composants/custom_smart_paginator.dart';
-import 'package:ohana_webapp_flutter/presentation/widgets/composants/expertises_card.dart';
-import 'package:ohana_webapp_flutter/presentation/widgets/composants/text_format/circular_text_overlay.dart';
-import 'package:ohana_webapp_flutter/presentation/widgets/composants/text_format/custom_underlined_title.dart';
 import 'package:ohana_webapp_flutter/presentation/widgets/patterns/custom_banner.dart';
-import 'package:ohana_webapp_flutter/presentation/widgets/patterns/custom_carousel.dart';
-import 'package:ohana_webapp_flutter/presentation/widgets/patterns/custom_popup.dart';
-import 'package:ohana_webapp_flutter/presentation/widgets/patterns/strong_points_section.dart';
 
 class CarreersPageLargeScreen extends StatelessWidget {
   const CarreersPageLargeScreen({super.key});
@@ -68,8 +62,8 @@ class CarreersPageLargeScreen extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.start,
             children: [
               _getBanner(screenSize: screenSize),
-              const SizedBox(height: 5),
-              _getOffersItems(),
+              const SizedBox(height: 30),
+              _getCarrersItems(),
               const SizedBox(height: 50),
               _getListNumber(),
               const SizedBox(height: 50),
@@ -83,195 +77,124 @@ class CarreersPageLargeScreen extends StatelessWidget {
 
 //BANNER
   _getBanner({required Size screenSize}) {
-    return Stack(
-      children: [
-        const CustomBanner(imagePath: ''),
-        SizedBox(
-            // width: mediaScreenWidth,
-            // height: ImageDimensionType
-            //     .defaultCarouselImage.heightVal, //Container Height
-            child: Column(
-          mainAxisAlignment: MainAxisAlignment.end, //start at the start
-          crossAxisAlignment: CrossAxisAlignment.center,
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            const Text(
-              "TROUVER COMMENT PARTICIPER AVEC NOUS",
-              style: TextStyle(fontSize: 35, fontWeight: FontWeight.bold),
-            ),
-            const SizedBox(height: 10),
-            Row(
-              children: [
-                const CustomInputField(placeholder: 'Chercher une offres'),
-                const SizedBox(
-                  width: 10,
-                ),
-                Button("RECHERCHER", type: ButtonType.standard, onTap: () {}),
-              ],
-            ),
-            _getExpertisesCards(),
-            const SizedBox(height: 100),
-          ],
-        )),
-      ],
+    return CustomBanner(
+      imagePath: 'assets/offers_images/person-with-hiring-sign-by-window.jpg',
+      widget: SizedBox(
+          child: Column(
+        mainAxisAlignment: MainAxisAlignment.center, //start at the start
+        crossAxisAlignment: CrossAxisAlignment.center,
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          const Text(
+            "REJOINDRE NOTRE EQUIPE ?",
+            style: TextStyle(
+                fontSize: 50, fontWeight: FontWeight.bold, color: Colors.white),
+          ),
+          const SizedBox(height: 10),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              const CustomInputField(placeholder: 'Chercher une offres'),
+              const SizedBox(
+                width: 10,
+              ),
+              Button("RECHERCHER", type: ButtonType.standard, onTap: () {}),
+            ],
+          ),
+          _getExpertisesCards(),
+          const SizedBox(height: 100),
+        ],
+      )),
     );
   }
 
 //get  svg of expertises
   _getExpertisesCards() {
-    return const Row(
+    return Row(
       mainAxisSize: MainAxisSize.min,
       children: [
-        ExpertisesCard(svgLink: 'devLogo.svg'),
-        ExpertisesCard(svgLink: 'design.svg'),
-        ExpertisesCard(svgLink: 'locked.svg'),
-        ExpertisesCard(svgLink: 'ref.svg'),
-        ExpertisesCard(svgLink: 'testValidate.svg'),
-        ExpertisesCard(svgLink: 'increase_model2.svg'),
+        _getCustomExpertiseCard(
+            svgPath: 'assets/services_icons/dev_services/devLogo.svg'),
+        _getCustomExpertiseCard(
+            svgPath: 'assets/services_icons/dev_services/design.svg'),
+        _getCustomExpertiseCard(
+            svgPath: 'assets/services_icons/dev_services/locked.svg'),
+        _getCustomExpertiseCard(
+            svgPath: 'assets/services_icons/dev_services/testValidate.svg'),
+        _getCustomExpertiseCard(
+            svgPath: 'assets/services_icons/dev_services/increase.svg'),
       ],
+    );
+  }
+
+  _getCustomExpertiseCard({required String svgPath}) {
+    Color color = Colors.black.withOpacity(0.5);
+    double size = 30;
+    return Container(
+      padding: const EdgeInsets.all(22),
+      margin: const EdgeInsets.only(top: 10, right: 10),
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(partialCircularItem),
+        color: color,
+      ),
+      child: SvgPicture.asset(
+        svgPath,
+        height: size,
+        width: size,
+      ),
     );
   }
 
 // OFFRES
-  _getOffersItems() {
+
+  _getCarrersItems() {
     List listOfOffers = [
       {
         'title': 'Développeur React',
-        'image': 'devReact.jpeg',
+        'image': 'assets/offers_images/React-Developer-Tools.png',
         'keyWords': ['île de France', 'Stage', '2 mois'],
         'date': '15 Mai 2025',
-        'popup': ''
       },
       {
         'title': 'Designer UI',
-        'image': 'Cover.jpg',
+        'image':
+            'assets/offers_images/original-a76def72cdea25d560956e824f479901.png',
         'keyWords': ['île de France', 'Stage', '2 mois'],
         'date': '15 Mai 2025',
-        'popup': 'this is a simple PopUp',
+        'alert': 'Cette offres à expirée il y a deux jours ',
         'description': '',
       },
       {
         'title': 'Gestionnaire du réseuax',
-        'image': 'reseau.jpg',
+        'image': 'assets/offers_images/conception-reseaux__1100.jpg',
         'keyWords': ['île de France', 'Stage', '2 mois'],
         'date': '15 Mai 2025',
-        'popup': '',
         'description': '',
       },
       {
         'title': 'Développeur mobile flutter',
-        'image': 'phone1.jpg',
+        'image':
+            'assets/offers_images/avntages-inconvennients-flutter-application-mobile-hybride_banner.jpg',
         'keyWords': ['Afrique', 'CDI', '2 mois'],
         'date': '15 Mai 2025',
-        'popup': '',
         'description': '',
+        'alert': 'Cette offres a expirée',
       },
     ];
 
     return Column(
-      crossAxisAlignment: CrossAxisAlignment.center,
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
         for (Map items
             in listOfOffers) //LIST_OF_OFFERS is inside widget_utils.dart doc
-          Padding(
-            padding: const EdgeInsets.only(bottom: 25),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.start,
-              children: [
-                const SizedBox(width: 2 * spaceLeftBigTitle),
-                Stack(
-                  children: [
-                    Container(
-                        width: 1000,
-                        decoration: BoxDecoration(
-                            border: Border.all(width: 0.6),
-                            borderRadius:
-                                BorderRadius.circular(partialCircularItem)),
-                        child: _getCard(
-                            title: items['title'],
-                            keyWords: items['keyWords'],
-                            imageLink: items['image'],
-                            date: items['date'])),
-                    //button see more
-                    Positioned(
-                        right: 30,
-                        bottom: 30,
-                        child: ClipRRect(
-                          borderRadius:
-                              BorderRadius.circular(partialCircularItem),
-                          child: Button(
-                            'Voir l\'offre',
-                            type: ButtonType.standard,
-                            paddingLeftRight: 15.0,
-                            paddingTopBottom: 15.0,
-                            onTap: () {},
-                          ),
-                        )),
-                  ],
-                ),
-                const SizedBox(width: 10),
-                if (items['popup'] != '') CustomPopup(text: items['popup']),
-              ],
-            ),
-          ),
-      ],
-    );
-  }
-
-  _getCard({title, keyWords, imageLink, date}) {
-    return Row(
-      mainAxisSize: MainAxisSize.min,
-      crossAxisAlignment: CrossAxisAlignment.start,
-      mainAxisAlignment: MainAxisAlignment.start,
-      children: [
-        ClipRRect(
-          borderRadius: const BorderRadius.only(
-              topLeft: Radius.circular(partialCircularItem),
-              bottomLeft: Radius.circular(partialCircularItem)),
-          child: Image.asset(
-            imageLink,
-            height: 220,
-            width: 170,
-          ),
-        ),
-        Padding(
-          padding:
-              const EdgeInsets.only(left: 30), //space between image and title
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              Text(
-                title,
-                style:
-                    const TextStyle(fontSize: 35, fontWeight: FontWeight.bold),
-              ),
-              Row(
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  Padding(
-                      padding: const EdgeInsets.only(top: 20, left: 0),
-                      child: Wrap(spacing: 10, children: [
-                        for (var item in keyWords)
-                          Button(
-                            item,
-                            type: ButtonType.gray,
-                            onTap: () {},
-                          ),
-                      ]))
-                ],
-              ),
-              const SizedBox(
-                height: 10,
-              ),
-              Text(
-                date,
-                style: const TextStyle(fontSize: 25),
-              )
-            ],
-          ),
-        )
+          CustomCarreerCard(
+            title: items['title'],
+            keyWords: items['keyWords'],
+            imagePath: items['image'],
+            date: items['date'],
+            alert: items['alert'],
+            onTap: () {},
+          )
       ],
     );
   }

@@ -12,7 +12,7 @@ import 'package:ohana_webapp_flutter/presentation/navbar/largescreen/megaDropdow
 import 'package:ohana_webapp_flutter/presentation/navbar/largescreen/megaDropdown/dropdown_menu_offers.dart';
 import 'package:ohana_webapp_flutter/presentation/navbar/largescreen/navigation_bar_contents_largescreen.dart';
 import 'package:ohana_webapp_flutter/presentation/navbar/search_bar.dart';
-import 'package:ohana_webapp_flutter/presentation/widgets/composants/expertises_card.dart';
+import 'package:ohana_webapp_flutter/presentation/pages/homePage/widgets/expertises_card.dart';
 import 'package:ohana_webapp_flutter/presentation/widgets/composants/text_format/circular_text_overlay.dart';
 import 'package:ohana_webapp_flutter/presentation/widgets/patterns/custom_banner.dart';
 import 'package:ohana_webapp_flutter/presentation/widgets/composants/button_format/custom_icon_button.dart';
@@ -136,42 +136,6 @@ class ExpertisesList extends StatelessWidget {
               ExpertisesCard(
                   svgLink: 'dev_services/increase.svg', title: 'IA GENERATIVE'),
             ],
-          )
-        ],
-      ),
-    );
-  }
-
-  _getExpertiseBloc(String svgLink, String title) {
-    return Container(
-      margin: const EdgeInsets.only(bottom: 20),
-      padding: const EdgeInsets.all(20),
-      decoration: BoxDecoration(
-        color: Colors.purple,
-        //borderRadius: BorderRadius.circular(20),
-        boxShadow: [
-          BoxShadow(
-            color:
-                Colors.grey.withOpacity(0.4), // Couleur de l'ombre avec opacité
-            spreadRadius: 5, // Rayon de diffusion de l'ombre
-            blurRadius: 7, // Rayon de flou de l'ombre
-            offset: const Offset(0, 3),
-          ),
-        ],
-      ),
-      child: Column(
-        children: [
-          CustomIconButton(
-            iconPath: 'assets/services_icons/$svgLink',
-            hoverDisabled: true,
-            size: 200,
-          ),
-          const SizedBox(
-            height: 10,
-          ),
-          Text(
-            title,
-            style: const TextStyle(color: Colors.white, fontSize: 15),
           )
         ],
       ),

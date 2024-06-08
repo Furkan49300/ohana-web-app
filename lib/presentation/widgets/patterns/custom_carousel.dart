@@ -13,12 +13,13 @@ class CustomCarousel extends StatelessWidget {
       this.title = '',
       this.color = const Color(0xFFD9D9D9),
       this.paddingLeftRight = 0,
-      this.paddingTopBottom = 0});
-
+      this.paddingTopBottom = 0,
+      this.autoPlay = true});
   final List<Widget> widgets;
   final int animationDuration;
   final String title;
-  final double carouselHeight;
+  final bool autoPlay;
+  final double? carouselHeight;
   final Color color;
   final double viewportFraction;
   final double paddingLeftRight;
@@ -26,6 +27,24 @@ class CustomCarousel extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    return LayoutBuilder(builder: (context, constraints) {
+      if (constraints.maxWidth < smallBreakpoint) {
+        return _getCustomCarouselSlider(
+          viewport: 1,
+          titleWidth: constraints.maxWidth - 400,
+        );
+      } else {
+        return _getCustomCarouselSlider(
+          viewport: viewportFraction,
+        );
+      }
+    });
+  }
+
+  _getCustomCarouselSlider({
+    required double viewport,
+    double? titleWidth,
+  }) {
     return Column(
       children: [
         if (title != '')
@@ -35,7 +54,10 @@ class CustomCarousel extends StatelessWidget {
               const SizedBox(
                 width: spaceLeftBigTitle,
               ),
-              CustomUnderlineTitle(title: title),
+              CustomUnderlineTitle(
+                title: title,
+                textWidth: titleWidth,
+              ),
             ],
           ),
         if (title != '')
@@ -55,8 +77,8 @@ class CustomCarousel extends StatelessWidget {
               options: CarouselOptions(
                   initialPage: 0,
                   height: carouselHeight,
-                  viewportFraction: viewportFraction,
-                  autoPlay: true,
+                  viewportFraction: viewport,
+                  autoPlay: autoPlay,
                   enlargeCenterPage: true,
                   autoPlayInterval: Duration(seconds: animationDuration))),
         ),

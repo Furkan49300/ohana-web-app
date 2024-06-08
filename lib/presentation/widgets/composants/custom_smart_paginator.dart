@@ -13,8 +13,8 @@ class CustomSmartPaginator extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.center,
+    return Wrap(
+      spacing: 5,
       children: [
         Button(
           '<<',
@@ -29,7 +29,7 @@ class CustomSmartPaginator extends StatelessWidget {
         ),
         for (var i = startIndicator; i <= endIndicator; i++)
           Padding(
-              padding: const EdgeInsets.only(left: 10, right: 10),
+              padding: const EdgeInsets.only(left: 10, right: 10, bottom: 5),
               child: Button(
                 i.toString(),
                 type: ButtonType.number,

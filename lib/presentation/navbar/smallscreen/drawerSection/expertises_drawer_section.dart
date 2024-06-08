@@ -51,7 +51,7 @@ class ExpertisesDrawerSection extends StatelessWidget {
                 },
                 icon: const Icon(Icons.arrow_forward, size: 15)),
           ]),
-          children: [
+          children: const [
             CustomListTile(title: "AUDIT DE SECURITE"),
             CustomListTile(title: "AUDIT DE VULNERABILITE"),
             CustomListTile(title: "AUDIT DE CONFORMITE"),

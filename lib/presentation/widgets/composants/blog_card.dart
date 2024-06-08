@@ -11,10 +11,12 @@ class BlogCard extends StatelessWidget {
       required this.pathOfTopImage,
       required this.textAndBoldListMap,
       required this.title,
-      required this.date});
+      required this.date,
+      this.widget});
   final String pathOfTopImage;
   final String title;
   final String date;
+  final Widget? widget;
   final Map<String, dynamic> textAndBoldListMap;
 
   @override

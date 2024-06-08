@@ -13,17 +13,16 @@ class FooterLargeScreen extends StatelessWidget {
     return Container(
       color: Colors.purple,
       width: mediaScreenWidth,
-      height: 350,
+      height: 300,
       child: Padding(
-        padding: const EdgeInsets.only(left: spaceLeftBigTitle),
+        padding: const EdgeInsets.only(left: spaceLeftBigTitle - 20),
         child: Column(
           children: [
-            _getSocialNetworkAndLogo(),
             const SizedBox(
-              height: 10,
+              height: 50,
             ),
             Row(
-              crossAxisAlignment: CrossAxisAlignment.start,
+              mainAxisAlignment: MainAxisAlignment.start,
               children: [
                 _getColumnOfLink(
                   footerLinks['column1'],

@@ -84,7 +84,7 @@ class DropdownMenuAboutUs extends StatelessWidget {
                       SizedBox(height: 10),
                       NavbarLink(text: "NOS PARTENAIRES", routeName: ""),
                       SizedBox(height: 5),
-                      NavbarLink(text: "DEVIS", routeName: ""),
+                      NavbarLink(text: "DEVIS", routeName: estimate),
                       SizedBox(height: 5),
                       NavbarLink(
                           text: "CONTACTEZ-NOUS !", routeName: contactUs),
@@ -109,7 +109,7 @@ class DropdownMenuAboutUs extends StatelessWidget {
                       SizedBox(height: 5),
                       NavbarLink(text: "BLOG", routeName: blog),
                       SizedBox(height: 5),
-                      NavbarLink(text: "OFFRES D'EMPLOI", routeName: "")
+                      NavbarLink(text: "OFFRES D'EMPLOI", routeName: carreers)
                     ],
                   ),
                 ),

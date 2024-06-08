@@ -33,6 +33,7 @@ class CustomListText extends StatelessWidget {
 class BulletPoint extends StatelessWidget {
   final String text;
   final Color? textColor;
+  final IconData? icon;
   final double? fontSize;
   final double? width;
   const BulletPoint(
@@ -40,7 +41,8 @@ class BulletPoint extends StatelessWidget {
       required this.text,
       this.textColor,
       this.fontSize,
-      this.width});
+      this.width,
+      this.icon});
 
   @override
   Widget build(BuildContext context) {
@@ -49,7 +51,7 @@ class BulletPoint extends StatelessWidget {
       child: Row(
         mainAxisSize: MainAxisSize.min,
         children: [
-          Icon(Icons.brightness_1,
+          Icon(icon ?? Icons.brightness_1,
               size: 10.0, color: textColor), // Cette icône sert de puce
           /*Text("• ",
               style: TextStyle(

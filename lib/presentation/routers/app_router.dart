@@ -2,13 +2,16 @@ import "package:flutter/material.dart";
 import "package:ohana_webapp_flutter/presentation/pages/aboutUsPages/about_us_largescreen.dart";
 import "package:ohana_webapp_flutter/presentation/pages/aboutUsPages/blogPage/blog_page_largescreen.dart";
 import "package:ohana_webapp_flutter/presentation/pages/aboutUsPages/carreersPage/carreers_page_largescreen.dart";
+import "package:ohana_webapp_flutter/presentation/pages/aboutUsPages/clientsPage/estmate_page_largescreen.dart";
 
-import "package:ohana_webapp_flutter/presentation/pages/aboutUsPages/contactPage/contact_page.dart";
+import "package:ohana_webapp_flutter/presentation/pages/aboutUsPages/contactPage/contact_page_largescreen.dart";
+import "package:ohana_webapp_flutter/presentation/pages/expertisesPages/DEV/MAINPAGE/dev_services_page_largescreen.dart";
 import "package:ohana_webapp_flutter/presentation/pages/homePage/home_page.dart";
 import "package:ohana_webapp_flutter/presentation/pages/no_existing_page.dart";
 import "package:ohana_webapp_flutter/presentation/constants/router_constants.dart";
 import "package:ohana_webapp_flutter/presentation/pages/expertisesPages/MAINPAGE/services_largescreen_page.dart";
 import "package:ohana_webapp_flutter/presentation/pages/expertisesPages/DEV/webDevelopmentPage/web_service_page_largescreen.dart";
+import "package:ohana_webapp_flutter/presentation/pages/offersPages/MAINPAGE/widgets/offers_page_largescreen.dart";
 
 class AppRouter {
   Route onGenerateRoute(RouteSettings routeSettings) {
@@ -37,6 +40,16 @@ class AppRouter {
       case blog:
         return MaterialPageRoute(builder: (e) => const BlogPageLargeScreen());
 
+      case offers:
+        return MaterialPageRoute(builder: (e) => const OffersPageLargeScreen());
+
+      case devServices:
+        return MaterialPageRoute(
+            builder: (e) => const DevServicesPageLargeScreen());
+
+      case estimate:
+        return MaterialPageRoute(
+            builder: (e) => const EstimatePageLargeScreen());
       default:
         return MaterialPageRoute(builder: (e) => const NoExistingPage());
     }

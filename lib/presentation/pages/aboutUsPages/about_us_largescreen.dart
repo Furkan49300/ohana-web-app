@@ -328,52 +328,32 @@ _getOurTeamWork(mediaScreenWidth) {
   return Container(
       padding: const EdgeInsets.only(left: spaceLeftBigTitle),
       width: mediaScreenWidth,
-      child: CustomTextBlock(
+      child: const CustomTextBlock(
         image:
             'assets/about_us_image/group-people-holding-hand-assemble-togetherness.jpg',
         widget: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            const Text(
+            Text(
               'À Propos de Notre Équipe',
               style: TextStyle(fontSize: 35, fontWeight: FontWeight.bold),
             ),
-            const SizedBox(
+            SizedBox(
               height: 30,
             ),
-            const BoldTextCustomizer(
+            BoldTextCustomizer(
                 width: 800,
                 text:
                     'Chez OHana Entreprise, nous sommes fiers de notre équipe dévouée et talentueuse qui œuvre chaque jour pour offrir des solutions innovantes et personnalisées à nos clients. Notre équipe est composée de professionnels passionnés par le développement web et mobile, chacun apportant son expertise unique et sa créativité au service de vos projets.',
                 boldTextList: ['OHana Entreprise']),
-            const SizedBox(
+            SizedBox(
               height: 10,
             ),
-            const BoldTextCustomizer(
+            BoldTextCustomizer(
                 width: 800,
                 text:
                     "Que ce soit pour la conception d'un site web intuitif, le développement d'une application mobile performante ou la mise en place de solutions sur mesure, notre équipe est là pour vous accompagner à chaque étape du processus. Forts d'une expérience diversifiée et d'une volonté constante d'excellence, nous sommes toujours à l'affût des dernières technologies et tendances du marché pour vous garantir des solutions à la pointe de l'innovation.",
                 boldTextList: ['']),
-            const SizedBox(
-              height: 20,
-            ),
-            TextButton(
-              onPressed: () {},
-              style: TextButton.styleFrom(
-                foregroundColor: Colors.white, // Couleur du texte du bouton
-                backgroundColor: Colors.purple, // Couleur de fond du bouton
-              ),
-              child: const Padding(
-                padding: EdgeInsets.all(8.0),
-                child: Text(
-                  'Voir Plus',
-                  style: TextStyle(
-                    fontSize: 20,
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
-              ),
-            )
           ],
         ),
       ));

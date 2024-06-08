@@ -6,6 +6,7 @@ import 'package:ohana_webapp_flutter/presentation/bloc/dropdown_menu_bloc.dart';
 import 'package:ohana_webapp_flutter/presentation/bloc/dropdown_menu_state.dart';
 import 'package:ohana_webapp_flutter/presentation/constants/animation_constants.dart';
 import 'package:ohana_webapp_flutter/presentation/constants/colors.dart';
+import 'package:ohana_webapp_flutter/presentation/constants/router_constants.dart';
 import 'package:ohana_webapp_flutter/presentation/navbar/largescreen/megaDropdown/dropdown_header_section.dart';
 import 'package:ohana_webapp_flutter/presentation/navbar/largescreen/navbar_link.dart';
 import 'package:ohana_webapp_flutter/presentation/navbar/navbar_menu_title.dart';
@@ -35,11 +36,13 @@ class DropdownMenuOffers extends StatelessWidget {
               children: [
                 // header section
                 DropdownHeaderSection(
-                    title: "Offres",
-                    description:
-                        "Profitez de nos solutions, adaptées à chaque budget, pour booster votre entreprise dès aujourd'hui",
-                    sectionWidth: sectionWidth,
-                    paddingValue: paddingValue),
+                  title: "Offres",
+                  description:
+                      "Profitez de nos solutions, adaptées à chaque budget, pour booster votre entreprise dès aujourd'hui",
+                  sectionWidth: sectionWidth,
+                  paddingValue: paddingValue,
+                  routeName: offers,
+                ),
                 const VerticalDivider(),
                 // 1st section
                 Container(
