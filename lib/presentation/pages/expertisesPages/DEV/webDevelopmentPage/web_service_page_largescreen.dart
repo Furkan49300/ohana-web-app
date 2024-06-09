@@ -5,8 +5,8 @@ import 'package:flutter/widgets.dart';
 import "package:google_fonts/google_fonts.dart";
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import 'package:ohana_webapp_flutter/presentation/bloc/dropdown_menu_bloc.dart';
-import 'package:ohana_webapp_flutter/presentation/bloc/dropdown_menu_event.dart';
+import 'package:ohana_webapp_flutter/presentation/bloc/navbar_dropdown/dropdown_menu_bloc.dart';
+import 'package:ohana_webapp_flutter/presentation/bloc/navbar_dropdown/dropdown_menu_event.dart';
 import 'package:ohana_webapp_flutter/presentation/constants/dimensions.dart';
 import 'package:ohana_webapp_flutter/presentation/footer/footer_large_screen.dart';
 import 'package:ohana_webapp_flutter/presentation/navbar/largescreen/megaDropdown/dropdown_menu_about_us.dart';
