@@ -17,83 +17,7 @@ class FooterLargeScreen extends StatelessWidget {
     return Column(
       children: [
         _getFooterTopSection(),
-        Container(
-          height: 300,
-          color: purpleLight,
-          child: const Row(
-            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              Logo(heightLogo: 200),
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Text(
-                    "DEVELOPPEMENT",
-                    style: TextStyle(fontSize: 25, color: Colors.white),
-                  ),
-                  SizedBox(height: 10),
-                  FooterLink(text: "Web", routeName: web),
-                  FooterLink(text: "Mobile"),
-                  FooterLink(text: "Logiciels"),
-                  FooterLink(text: "Design"),
-                  FooterLink(text: "Referencement (SEO)"),
-                  FooterLink(text: "IA generative")
-                ],
-              ),
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Text(
-                    "CYBERSECURITE",
-                    style: TextStyle(fontSize: 25, color: Colors.white),
-                  ),
-                  SizedBox(height: 10),
-                  FooterLink(text: "Audit de sécurité"),
-                  FooterLink(text: "Audit de vulnérabilité"),
-                  FooterLink(text: "Audit de conformité"),
-                  FooterLink(text: "Pentesting"),
-                  FooterLink(text: "Accompagnement sur mesure"),
-                  FooterLink(text: "Sécurisation de code logiciels")
-                ],
-              ),
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Text(
-                    "OFFRES",
-                    style: TextStyle(fontSize: 25, color: Colors.white),
-                  ),
-                  SizedBox(height: 10),
-                  FooterLink(text: "Produits sur mesure"),
-                  FooterLink(text: "Conseil"),
-                  FooterLink(text: "Production design sprint"),
-                  FooterLink(text: "Catalogue tarifs"),
-                ],
-              ),
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Text(
-                    "NOUS CONNAITRE",
-                    style: TextStyle(fontSize: 25, color: Colors.white),
-                  ),
-                  SizedBox(height: 10),
-                  SocialMediaButtons(),
-                  FooterLink(text: "OHana Entreprise"),
-                  FooterLink(text: "Blog"),
-                  FooterLink(text: "Offres d'emploi"),
-                  FooterLink(text: "Devis", routeName: estimate),
-                  FooterLink(text: "Contactez-nous !"),
-                ],
-              )
-            ],
-          ),
-        ),
+        _getFooterMiddleSection(),
         _getFooterBottomSection(screenSizeWidth)
       ],
     );
@@ -125,6 +49,86 @@ class FooterLargeScreen extends StatelessWidget {
               icon: Icons.access_time,
               title: "HORAIRES",
               content: "Du Lundi au Vendredi,\n9h - 17h"),
+        ],
+      ),
+    );
+  }
+
+  _getFooterMiddleSection() {
+    return Container(
+      height: 300,
+      color: purpleLight,
+      child: const Row(
+        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: [
+          Logo(heightLogo: 200),
+          Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Text(
+                "DEVELOPPEMENT",
+                style: TextStyle(fontSize: 25, color: Colors.white),
+              ),
+              SizedBox(height: 10),
+              FooterLink(text: "Web", routeName: web),
+              FooterLink(text: "Mobile"),
+              FooterLink(text: "Logiciels"),
+              FooterLink(text: "Design"),
+              FooterLink(text: "Referencement (SEO)"),
+              FooterLink(text: "IA generative")
+            ],
+          ),
+          Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Text(
+                "CYBERSECURITE",
+                style: TextStyle(fontSize: 25, color: Colors.white),
+              ),
+              SizedBox(height: 10),
+              FooterLink(text: "Audit de sécurité"),
+              FooterLink(text: "Audit de vulnérabilité"),
+              FooterLink(text: "Audit de conformité"),
+              FooterLink(text: "Pentesting"),
+              FooterLink(text: "Accompagnement sur mesure"),
+              FooterLink(text: "Sécurisation de code logiciels")
+            ],
+          ),
+          Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Text(
+                "OFFRES",
+                style: TextStyle(fontSize: 25, color: Colors.white),
+              ),
+              SizedBox(height: 10),
+              FooterLink(text: "Produits sur mesure"),
+              FooterLink(text: "Conseil"),
+              FooterLink(text: "Production design sprint"),
+              FooterLink(text: "Catalogue tarifs"),
+            ],
+          ),
+          Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Text(
+                "NOUS CONNAITRE",
+                style: TextStyle(fontSize: 25, color: Colors.white),
+              ),
+              SizedBox(height: 10),
+              SocialMediaButtons(),
+              FooterLink(text: "OHana Entreprise"),
+              FooterLink(text: "Blog"),
+              FooterLink(text: "Offres d'emploi"),
+              FooterLink(text: "Devis", routeName: estimate),
+              FooterLink(text: "Contactez-nous !"),
+            ],
+          )
         ],
       ),
     );
