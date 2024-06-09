@@ -299,6 +299,7 @@ class BlogPageLargeScreen extends StatelessWidget {
         'date': '10/06/2024'
       },
     ];
+
     return BlogCardPattern(
       blogList: news,
     );

@@ -1,9 +1,11 @@
 import "package:flutter/material.dart";
+import 'package:flutter_bloc/flutter_bloc.dart';
+
+import "package:ohana_webapp_flutter/presentation/bloc/blog_post/blog_post_bloc.dart";
 import "package:ohana_webapp_flutter/presentation/pages/aboutUsPages/about_us_largescreen.dart";
 import "package:ohana_webapp_flutter/presentation/pages/aboutUsPages/blogPage/blog_page_largescreen.dart";
 import "package:ohana_webapp_flutter/presentation/pages/aboutUsPages/carreersPage/carreers_page_largescreen.dart";
 import "package:ohana_webapp_flutter/presentation/pages/aboutUsPages/estimatePage/estimate_page_largescreen.dart";
-
 import "package:ohana_webapp_flutter/presentation/pages/aboutUsPages/contactPage/contact_page_largescreen.dart";
 import "package:ohana_webapp_flutter/presentation/pages/expertisesPages/DEV/MAINPAGE/dev_services_page_largescreen.dart";
 import "package:ohana_webapp_flutter/presentation/pages/homePage/home_page.dart";
@@ -14,10 +16,16 @@ import "package:ohana_webapp_flutter/presentation/pages/expertisesPages/DEV/webD
 import "package:ohana_webapp_flutter/presentation/pages/offersPages/MAINPAGE/widgets/offers_page_largescreen.dart";
 
 class AppRouter {
+  final BlogPostBloc _blogPostBloc = BlogPostBloc();
+
   Route onGenerateRoute(RouteSettings routeSettings) {
     switch (routeSettings.name) {
       case root:
-        return MaterialPageRoute(builder: (e) => const HomePage());
+        return MaterialPageRoute(
+            builder: (e) => BlocProvider.value(
+                  value: _blogPostBloc,
+                  child: const HomePage(),
+                ));
 
       case contactUs:
         return MaterialPageRoute(builder: (e) => const ContactPage());
@@ -38,7 +46,11 @@ class AppRouter {
             builder: (e) => const CarreersPageLargeScreen());
 
       case blog:
-        return MaterialPageRoute(builder: (e) => const BlogPageLargeScreen());
+        return MaterialPageRoute(
+            builder: (e) => BlocProvider.value(
+                  value: _blogPostBloc,
+                  child: const BlogPageLargeScreen(),
+                ));
 
       case offers:
         return MaterialPageRoute(builder: (e) => const OffersPageLargeScreen());
@@ -53,5 +65,9 @@ class AppRouter {
       default:
         return MaterialPageRoute(builder: (e) => const NoExistingPage());
     }
+  }
+
+  void dispose() {
+    _blogPostBloc.close();
   }
 }

@@ -9,12 +9,18 @@ void main() {
   runApp(const MainApp());
 }
 
-class MainApp extends StatelessWidget {
+class MainApp extends StatefulWidget {
   const MainApp({super.key});
 
   @override
+  State<MainApp> createState() => _MainAppState();
+}
+
+class _MainAppState extends State<MainApp> {
+  final AppRouter _appRouter = AppRouter();
+
+  @override
   Widget build(BuildContext context) {
-    final AppRouter appRouter = AppRouter();
     return BlocProvider<DropdownMenuBloc>(
       create: (context) => DropdownMenuBloc(),
       child: MaterialApp(
@@ -23,8 +29,14 @@ class MainApp extends StatelessWidget {
         theme: ThemeData(
             textTheme:
                 GoogleFonts.dmSansTextTheme(Theme.of(context).textTheme)),
-        onGenerateRoute: appRouter.onGenerateRoute,
+        onGenerateRoute: _appRouter.onGenerateRoute,
       ),
     );
+  }
+
+  @override
+  void dispose() {
+    _appRouter.dispose();
+    super.dispose();
   }
 }

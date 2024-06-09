@@ -1,9 +1,14 @@
 import 'package:intl/intl.dart';
+import 'package:ohana_webapp_flutter/data/exception/blog_post_network_exception.dart';
+import 'package:ohana_webapp_flutter/data/exception/blog_post_server_exception.dart';
+import 'dart:async';
+import 'dart:math';
 
 import 'package:ohana_webapp_flutter/logic/entities/blog_post.dart';
 import 'package:ohana_webapp_flutter/logic/repositories/blog_post_repository.dart';
 
 class BlogPostHardCodedRepository implements BlogPostRepository {
+  final Random _random = Random();
   List<Map> blogPosts = [
     {
       'id': 1,
@@ -69,9 +74,19 @@ class BlogPostHardCodedRepository implements BlogPostRepository {
   ];
 
   @override
-  List<BlogPost> getAllBlogPosts() {
-    DateFormat dateFormat = DateFormat("dd/MM/yyyy");
+  Future<List<BlogPost>> getAllBlogPosts() async {
+    await Future.delayed(
+        const Duration(seconds: 2)); // Simule un délai de réseau
 
+    // Simule une erreur de 20% du temps
+    double randomValue = _random.nextDouble();
+    if (randomValue < 0.2) {
+      throw BlogPostNetworkException('Erreur réseau');
+    } else if (randomValue < 0.4) {
+      throw BlogPostServerException('Erreur server');
+    }
+
+    DateFormat dateFormat = DateFormat("dd/MM/yyyy");
     return blogPosts.map((item) {
       return BlogPost(
           item["id"],
