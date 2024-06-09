@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:ohana_webapp_flutter/presentation/constants/router_constants.dart';
 import 'package:ohana_webapp_flutter/presentation/widgets/composants/button_format/custom_icon_button.dart';
 
@@ -54,10 +55,12 @@ class _ExpertisesCardState extends State<ExpertisesCard> {
           ),
           child: Column(
             children: [
-              CustomIconButton(
-                iconPath: 'assets/services_icons/${widget.svgLink}',
-                hoverDisabled: true,
-                size: widget.size,
+              SvgPicture.asset(
+                colorFilter:
+                    const ColorFilter.mode(Colors.white, BlendMode.srcIn),
+                'assets/services_icons/${widget.svgLink}',
+                width: widget.size,
+                height: widget.size,
               ),
               if (widget.title != '')
                 const SizedBox(

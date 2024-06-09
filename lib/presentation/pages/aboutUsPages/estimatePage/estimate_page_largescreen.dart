@@ -13,9 +13,9 @@ import 'package:ohana_webapp_flutter/presentation/navbar/largescreen/megaDropdow
 import 'package:ohana_webapp_flutter/presentation/navbar/largescreen/megaDropdown/dropdown_menu_offers.dart';
 import 'package:ohana_webapp_flutter/presentation/navbar/largescreen/navigation_bar_contents_largescreen.dart';
 import 'package:ohana_webapp_flutter/presentation/navbar/search_bar.dart';
+import 'package:ohana_webapp_flutter/presentation/widgets/composants/input_field/custom_input_field.dart';
 import 'package:ohana_webapp_flutter/presentation/widgets/patterns/custom_banner.dart';
 import 'package:ohana_webapp_flutter/presentation/widgets/composants/button_format/button.dart';
-import 'package:ohana_webapp_flutter/presentation/widgets/composants/input_field/custom_input_field.dart';
 import 'package:ohana_webapp_flutter/presentation/widgets/patterns/text_check_case.dart';
 
 class EstimatePageLargeScreen extends StatelessWidget {
@@ -92,13 +92,15 @@ class DevisForm extends StatelessWidget {
     double spaceBetween = 30;
     double widthBalance = 1 / 2;
     double screenWidth = MediaQuery.of(context).size.width;
-    String? selectedOffers;
+    String selectedOffers = "Service de développement";
     final List<String> options = [
       //different type of services
       'Service de développement',
       'Service site vitrine',
       'Service audit vulnérabilité',
-      'pentesting',
+      'Pentesting',
+      'Référencement naturel',
+      'Autres',
     ];
     //Body
     return Column(
@@ -108,52 +110,75 @@ class DevisForm extends StatelessWidget {
         const SizedBox(height: 5),
         _getTitle("Nom"),
         CustomInputField(
-          placeholder: 'Jean',
+          placeholder: 'Nom',
           widthBalance: widthBalance,
         ),
         SizedBox(height: spaceBetween),
         _getTitle('Prénom'),
         const SizedBox(height: 5),
         CustomInputField(
-          placeholder: 'Dupont',
+          placeholder: 'Prénom',
           widthBalance: widthBalance,
         ),
         SizedBox(height: spaceBetween),
         _getTitle('Email'),
         const SizedBox(height: 5),
         CustomInputField(
-          placeholder: 'jeandupont@...com',
+          placeholder: 'exemple@email.com',
           widthBalance: widthBalance,
         ),
         SizedBox(height: spaceBetween),
-        DropdownButton<String>(
-          underline: const SizedBox(),
-          value: selectedOffers,
-          hint: SizedBox(
-            width: screenWidth * (widthBalance - 0.01),
-            child: const Text(
-              'prestations',
-              style: TextStyle(fontSize: 20),
-            ),
-          ),
-          items: options.map((String value) {
-            return DropdownMenuItem<String>(
-              value: value,
-              child: Text(value),
-            );
-          }).toList(),
-          onChanged: (String? newValue) {
-            //handler
-          },
-        ),
+        const ServicesDropdown(),
         SizedBox(height: spaceBetween),
         Button('Envoyer', type: ButtonType.standard, onTap: () {}),
         const SizedBox(height: 15),
         const TextCheckCase(
           text:
-              'Les informations recueillies à partir de ce formulaire sont traitées par Digitemis pour donner suite à votre demande de contact. Pour connaître et/ou exercer vos droits, référez-vous à la politique de Digitemis sur la protection des données, cliquez ici .',
+              'Les informations recueillies à partir de ce formulaire sont traitées par OHana pour donner suite à votre demande de contact. Pour connaître et/ou exercer vos droits, référez-vous à la politique de OHana sur la protection des données, cliquez ici.',
         )
       ],
+    );
+  }
+}
+
+class ServicesDropdown extends StatefulWidget {
+  const ServicesDropdown({super.key});
+
+  @override
+  State<ServicesDropdown> createState() => _ServicesDropdownState();
+}
+
+class _ServicesDropdownState extends State<ServicesDropdown> {
+  String? _selectedValue;
+
+  @override
+  Widget build(BuildContext context) {
+    final List<String> options = [
+      //different type of services
+      'Service de développement',
+      'Service site vitrine',
+      'Service audit vulnérabilité',
+      'Pentesting',
+      'Référencement naturel',
+      'Autres',
+    ];
+    return DropdownButton<String>(
+      hint: const Text(
+        'Selectionner la prestation',
+        style: TextStyle(fontSize: 15),
+      ),
+      value: _selectedValue,
+      onChanged: (String? newValue) {
+        setState(() {
+          _selectedValue = newValue;
+        });
+      },
+      items: options.map<DropdownMenuItem<String>>((String value) {
+        return DropdownMenuItem<String>(
+          value: value,
+          child: Text(value),
+        );
+      }).toList(),
     );
   }
 }

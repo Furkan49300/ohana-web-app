@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 
 import 'package:ohana_webapp_flutter/presentation/bloc/dropdown_menu_bloc.dart';
 import 'package:ohana_webapp_flutter/presentation/bloc/dropdown_menu_event.dart';
@@ -59,10 +60,10 @@ class ServicesPageLargeScreen extends StatelessWidget {
   }
 
   _content(Size screenSize, context) {
-    return Column(
+    return const Column(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
-        const ServicesBanner(
+        ServicesBanner(
           title: 'Nos services',
           imagePath:
               'assets/services_images/services_acceuil_official_free_image.webp',
@@ -71,15 +72,15 @@ class ServicesPageLargeScreen extends StatelessWidget {
           boldTextList: ['développement', 'cybersécurité'],
           titleColor: Colors.black,
         ),
-        const SizedBox(
+        SizedBox(
           height: 60,
         ),
-        const ServicesCards(),
-        const SizedBox(
+        ServicesCards(),
+        SizedBox(
           height: 40,
         ),
-        const StrongPointsSection(),
-        const SizedBox(
+        StrongPointsSection(),
+        SizedBox(
           height: 70,
         ),
         FooterLargeScreen()
@@ -208,44 +209,49 @@ class ServicesCards extends StatelessWidget {
       onTap: () {
         Navigator.of(context).pushNamed(routeName);
       },
-      child: Container(
-        padding: const EdgeInsets.only(left: 70, bottom: 20),
-        height: heightBloc,
-        width: widthBloc,
-        child: Stack(
-          children: [
-            Image.asset(
-              imagePath,
-              width: widthBloc,
-              height: heightBloc,
-              fit: BoxFit.cover,
-            ),
-            Padding(
-              padding: const EdgeInsets.only(
-                  left: 40, right: 40, top: 10, bottom: 10),
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.end,
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  CustomIconButton(
-                    iconPath: svgLink,
-                    size: 100,
-                    primaryColor: Colors.white,
-                  ),
-                  const SizedBox(
-                    height: 20,
-                  ),
-                  Text(
-                    title,
-                    style: const TextStyle(
-                        color: Colors.white,
-                        fontSize: 20,
-                        fontWeight: FontWeight.bold),
-                  )
-                ],
+      child: MouseRegion(
+        cursor: SystemMouseCursors.grab,
+        child: Container(
+          padding: const EdgeInsets.only(left: 70, bottom: 20),
+          height: heightBloc,
+          width: widthBloc,
+          child: Stack(
+            children: [
+              Image.asset(
+                imagePath,
+                width: widthBloc,
+                height: heightBloc,
+                fit: BoxFit.cover,
               ),
-            ),
-          ],
+              Padding(
+                padding: const EdgeInsets.only(
+                    left: 40, right: 40, top: 10, bottom: 10),
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.end,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    SvgPicture.asset(
+                      colorFilter:
+                          const ColorFilter.mode(Colors.white, BlendMode.srcIn),
+                      svgLink,
+                      width: 100,
+                      height: 100,
+                    ),
+                    const SizedBox(
+                      height: 20,
+                    ),
+                    Text(
+                      title,
+                      style: const TextStyle(
+                          color: Colors.white,
+                          fontSize: 20,
+                          fontWeight: FontWeight.bold),
+                    )
+                  ],
+                ),
+              ),
+            ],
+          ),
         ),
       ),
     );

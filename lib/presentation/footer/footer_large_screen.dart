@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:ohana_webapp_flutter/presentation/constants/colors.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:ohana_webapp_flutter/presentation/constants/router_constants.dart';
 
 import 'package:ohana_webapp_flutter/presentation/widgets/composants/logo.dart';
 import 'package:ohana_webapp_flutter/presentation/widgets/patterns/social_media_buttons.dart';
@@ -33,7 +34,7 @@ class FooterLargeScreen extends StatelessWidget {
                     style: TextStyle(fontSize: 25, color: Colors.white),
                   ),
                   SizedBox(height: 10),
-                  FooterLink(text: "Web"),
+                  FooterLink(text: "Web", routeName: web),
                   FooterLink(text: "Mobile"),
                   FooterLink(text: "Logiciels"),
                   FooterLink(text: "Design"),
@@ -86,7 +87,7 @@ class FooterLargeScreen extends StatelessWidget {
                   FooterLink(text: "OHana Entreprise"),
                   FooterLink(text: "Blog"),
                   FooterLink(text: "Offres d'emploi"),
-                  FooterLink(text: "Devis"),
+                  FooterLink(text: "Devis", routeName: estimate),
                   FooterLink(text: "Contactez-nous !"),
                 ],
               )
@@ -230,7 +231,8 @@ Map<String, List> footerLinks = {
 
 class FooterLink extends StatefulWidget {
   final String text;
-  const FooterLink({super.key, required this.text});
+  final String routeName;
+  const FooterLink({super.key, required this.text, this.routeName = ""});
 
   @override
   State<FooterLink> createState() => _FooterLinkState();
@@ -240,22 +242,25 @@ class _FooterLinkState extends State<FooterLink> {
   bool _isHovered = false;
   @override
   Widget build(BuildContext context) {
-    return MouseRegion(
-      cursor: SystemMouseCursors.click,
-      onEnter: (event) {
-        setState(() {
-          _isHovered = true;
-        });
-      },
-      onExit: (event) {
-        setState(() {
-          _isHovered = false;
-        });
-      },
-      child: Text(widget.text,
-          style: TextStyle(
-              fontSize: 15,
-              color: _isHovered ? dropDownHoverColor : Colors.white)),
+    return GestureDetector(
+      onTap: () => Navigator.of(context).pushNamed(widget.routeName),
+      child: MouseRegion(
+        cursor: SystemMouseCursors.click,
+        onEnter: (event) {
+          setState(() {
+            _isHovered = true;
+          });
+        },
+        onExit: (event) {
+          setState(() {
+            _isHovered = false;
+          });
+        },
+        child: Text(widget.text,
+            style: TextStyle(
+                fontSize: 15,
+                color: _isHovered ? dropDownHoverColor : Colors.white)),
+      ),
     );
   }
 }

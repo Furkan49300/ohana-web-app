@@ -58,17 +58,17 @@ class ContactPage extends StatelessWidget {
         child: Container(
           width: screenSize.width,
           color: Colors.white,
-          child: Column(
+          child: const Column(
             mainAxisAlignment: MainAxisAlignment.start,
             children: [
-              const CustomBanner(
+              CustomBanner(
                 message: "Contact",
                 imagePath:
                     'assets/homepage_image/programming-background-collage.jpg',
               ),
-              const SizedBox(height: 50),
-              const ContactForm(),
-              const SizedBox(height: 70),
+              SizedBox(height: 50),
+              ContactForm(),
+              SizedBox(height: 70),
               FooterLargeScreen(),
             ],
           ),
@@ -94,44 +94,43 @@ class ContactForm extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         const SizedBox(height: 5),
-        _getTitle("Bernard"),
+        _getTitle("Nom"),
         const CustomInputField(
-          placeholder: 'Jean',
+          placeholder: 'Nom',
           widthBalance: 1 / 2,
         ),
         SizedBox(height: spaceBetween),
         _getTitle('Prénom'),
         const SizedBox(height: 5),
         const CustomInputField(
-          placeholder: 'Dupont',
+          placeholder: 'Prénom',
           widthBalance: 1 / 2,
         ),
         SizedBox(height: spaceBetween),
         _getTitle('Email'),
         const SizedBox(height: 5),
         const CustomInputField(
-          placeholder: 'jeandupont@...com',
+          placeholder: 'exemple@email.com',
           widthBalance: 1 / 2,
         ),
         SizedBox(height: spaceBetween),
-        _getTitle('Subject'),
+        _getTitle('Sujet'),
         const SizedBox(height: 5),
         const CustomInputField(
-          placeholder: 'Subject',
+          placeholder: 'Ecrire le sujet du message',
           widthBalance: 1 / 2,
         ),
         SizedBox(height: spaceBetween),
         const SizedBox(height: 5),
         const CustomTextarea(
-          placeholder:
-              "Je m'appelle Jean Dupont et je me permets de vous contacter au sujet ...",
+          placeholder: "Message ...",
         ),
         const SizedBox(height: 10),
         Button('Envoyer', type: ButtonType.standard, onTap: () {}),
         const SizedBox(height: 15),
         const TextCheckCase(
           text:
-              'Les informations recueillies à partir de ce formulaire sont traitées par Digitemis pour donner suite à votre demande de contact. Pour connaître et/ou exercer vos droits, référez-vous à la politique de Digitemis sur la protection des données, cliquez ici .',
+              'Les informations recueillies à partir de ce formulaire sont traitées par Digitemis pour donner suite à votre demande de contact. Pour connaître et/ou exercer vos droits, référez-vous à la politique de OHana sur la protection des données, cliquez ici.',
         )
       ],
     );

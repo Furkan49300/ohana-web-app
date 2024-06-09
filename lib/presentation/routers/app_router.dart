@@ -2,7 +2,7 @@ import "package:flutter/material.dart";
 import "package:ohana_webapp_flutter/presentation/pages/aboutUsPages/about_us_largescreen.dart";
 import "package:ohana_webapp_flutter/presentation/pages/aboutUsPages/blogPage/blog_page_largescreen.dart";
 import "package:ohana_webapp_flutter/presentation/pages/aboutUsPages/carreersPage/carreers_page_largescreen.dart";
-import "package:ohana_webapp_flutter/presentation/pages/aboutUsPages/clientsPage/estmate_page_largescreen.dart";
+import "package:ohana_webapp_flutter/presentation/pages/aboutUsPages/estimatePage/estimate_page_largescreen.dart";
 
 import "package:ohana_webapp_flutter/presentation/pages/aboutUsPages/contactPage/contact_page_largescreen.dart";
 import "package:ohana_webapp_flutter/presentation/pages/expertisesPages/DEV/MAINPAGE/dev_services_page_largescreen.dart";

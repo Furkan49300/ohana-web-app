@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:url_launcher/url_launcher.dart';
+
 import 'package:ohana_webapp_flutter/presentation/constants/colors.dart';
 
 class CustomIconButton extends StatefulWidget {
@@ -8,13 +10,15 @@ class CustomIconButton extends StatefulWidget {
   final Color hoverColor;
   final Color primaryColor;
   final bool hoverDisabled;
+  final String url;
   const CustomIconButton(
       {super.key,
       required this.iconPath,
       this.size = 30,
       this.hoverColor = dropDownHoverColor,
       this.primaryColor = Colors.white,
-      this.hoverDisabled = false});
+      this.hoverDisabled = false,
+      required this.url});
 
   @override
   State<CustomIconButton> createState() => _CustomIconButtonState();
@@ -22,6 +26,13 @@ class CustomIconButton extends StatefulWidget {
 
 class _CustomIconButtonState extends State<CustomIconButton> {
   bool _isHovered = false;
+
+  Future<void> _launchURL(url) async {
+    final Uri uri = Uri.parse(url);
+    if (!await launchUrl(uri)) {
+      throw 'Could not launch $uri';
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -39,7 +50,9 @@ class _CustomIconButtonState extends State<CustomIconButton> {
         });
       },
       child: IconButton(
-        onPressed: () {},
+        onPressed: () {
+          _launchURL(widget.url);
+        },
         icon: SvgPicture.asset(
           colorFilter: ColorFilter.mode(iconColor, BlendMode.srcIn),
           widget.iconPath,

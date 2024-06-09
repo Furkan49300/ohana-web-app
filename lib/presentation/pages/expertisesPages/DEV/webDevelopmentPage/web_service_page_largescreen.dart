@@ -2,7 +2,6 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter/widgets.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 import "package:google_fonts/google_fonts.dart";
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -18,8 +17,6 @@ import 'package:ohana_webapp_flutter/presentation/navbar/search_bar.dart';
 import 'package:ohana_webapp_flutter/presentation/pages/expertisesPages/widgets/services_banner.dart';
 import 'package:ohana_webapp_flutter/presentation/widgets/composants/infos_pannel.dart';
 import 'package:ohana_webapp_flutter/presentation/widgets/composants/text_format/custom_text_list.dart';
-import 'package:ohana_webapp_flutter/presentation/widgets/composants/text_format/custom_underlined_title.dart';
-import 'package:ohana_webapp_flutter/presentation/widgets/composants/text_format/text_wrap_with_title.dart';
 import 'package:ohana_webapp_flutter/presentation/widgets/patterns/custom_carousel.dart';
 import 'package:ohana_webapp_flutter/presentation/widgets/composants/text_format/bold_text_customiser.dart';
 import 'package:ohana_webapp_flutter/presentation/widgets/patterns/custom_text_block.dart';
@@ -96,7 +93,7 @@ class WebServicePageLargeScreen extends StatelessWidget {
         const SizedBox(
           height: 10,
         ),
-        FooterLargeScreen()
+        const FooterLargeScreen()
       ],
     );
   }

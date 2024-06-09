@@ -1,4 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+
+import 'package:ohana_webapp_flutter/presentation/bloc/dropdown_menu_bloc.dart';
+import 'package:ohana_webapp_flutter/presentation/bloc/dropdown_menu_event.dart';
 import 'package:ohana_webapp_flutter/presentation/constants/colors.dart';
 
 class NavbarMenuTitle extends StatefulWidget {
@@ -19,6 +23,7 @@ class _NavbarMenuTitleState extends State<NavbarMenuTitle> {
     var globalColor = _isHovered ? dropDownHoverColor : Colors.white;
     return GestureDetector(
       onTap: () {
+        context.read<DropdownMenuBloc>().add(HideMenuEvent());
         Navigator.of(context).pushNamed(widget.routeName);
       },
       child: MouseRegion(
