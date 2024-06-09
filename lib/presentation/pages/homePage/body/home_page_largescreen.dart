@@ -116,8 +116,7 @@ class ExpertisesList extends StatelessWidget {
             alignment: WrapAlignment.center,
             children: [
               ExpertisesCard(
-                  svgLink: 'dev_services/devLogo.svg',
-                  title: 'DÉVELOPPEMENT  LOGICIELS'),
+                  svgLink: 'dev_services/devLogo.svg', title: 'DÉVELOPPEMENT'),
               ExpertisesCard(
                   svgLink: 'dev_services/design.svg', title: 'DESIGN'),
               ExpertisesCard(

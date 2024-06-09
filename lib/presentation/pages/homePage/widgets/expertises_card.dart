@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:ohana_webapp_flutter/presentation/constants/router_constants.dart';
 import 'package:ohana_webapp_flutter/presentation/widgets/composants/button_format/custom_icon_button.dart';
 
 class ExpertisesCard extends StatefulWidget {
@@ -19,50 +20,56 @@ class _ExpertisesCardState extends State<ExpertisesCard> {
   @override
   Widget build(BuildContext context) {
     double paddingValue = _isHovered ? 25 : 20;
-    return MouseRegion(
-      cursor: SystemMouseCursors.click,
-      onEnter: (event) {
-        setState(() {
-          _isHovered = true;
-        });
+
+    return GestureDetector(
+      onTap: () {
+        Navigator.of(context).pushNamed(devServices);
       },
-      onExit: (event) {
-        setState(() {
-          _isHovered = false;
-        });
-      },
-      child: Container(
-        margin: const EdgeInsets.only(bottom: 20),
-        padding: EdgeInsets.all(paddingValue),
-        decoration: BoxDecoration(
-          color: Colors.purple,
-          boxShadow: [
-            BoxShadow(
-              color: Colors.grey
-                  .withOpacity(0.4), // Couleur de l'ombre avec opacité
-              spreadRadius: 5, // Rayon de diffusion de l'ombre
-              blurRadius: 7, // Rayon de flou de l'ombre
-              offset: const Offset(0, 3),
-            ),
-          ],
-        ),
-        child: Column(
-          children: [
-            CustomIconButton(
-              iconPath: 'assets/services_icons/${widget.svgLink}',
-              hoverDisabled: true,
-              size: widget.size,
-            ),
-            if (widget.title != '')
-              const SizedBox(
-                height: 10,
+      child: MouseRegion(
+        cursor: SystemMouseCursors.click,
+        onEnter: (event) {
+          setState(() {
+            _isHovered = true;
+          });
+        },
+        onExit: (event) {
+          setState(() {
+            _isHovered = false;
+          });
+        },
+        child: Container(
+          margin: const EdgeInsets.only(bottom: 20),
+          padding: EdgeInsets.all(paddingValue),
+          decoration: BoxDecoration(
+            color: Colors.purple,
+            boxShadow: [
+              BoxShadow(
+                color: Colors.grey
+                    .withOpacity(0.4), // Couleur de l'ombre avec opacité
+                spreadRadius: 5, // Rayon de diffusion de l'ombre
+                blurRadius: 7, // Rayon de flou de l'ombre
+                offset: const Offset(0, 3),
               ),
-            if (widget.title != '')
-              Text(
-                widget.title,
-                style: const TextStyle(color: Colors.white, fontSize: 15),
-              )
-          ],
+            ],
+          ),
+          child: Column(
+            children: [
+              CustomIconButton(
+                iconPath: 'assets/services_icons/${widget.svgLink}',
+                hoverDisabled: true,
+                size: widget.size,
+              ),
+              if (widget.title != '')
+                const SizedBox(
+                  height: 10,
+                ),
+              if (widget.title != '')
+                Text(
+                  widget.title,
+                  style: const TextStyle(color: Colors.white, fontSize: 15),
+                )
+            ],
+          ),
         ),
       ),
     );

@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:ohana_webapp_flutter/presentation/constants/colors.dart';
 import 'package:google_fonts/google_fonts.dart';
 
@@ -20,11 +21,12 @@ class FooterLargeScreen extends StatelessWidget {
           color: purpleLight,
           child: const Row(
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               Logo(heightLogo: 200),
               Column(
-                mainAxisAlignment: MainAxisAlignment.center,
                 crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Text(
                     "DEVELOPPEMENT",
@@ -40,8 +42,8 @@ class FooterLargeScreen extends StatelessWidget {
                 ],
               ),
               Column(
-                mainAxisAlignment: MainAxisAlignment.center,
                 crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Text(
                     "CYBERSECURITE",
@@ -54,6 +56,38 @@ class FooterLargeScreen extends StatelessWidget {
                   FooterLink(text: "Pentesting"),
                   FooterLink(text: "Accompagnement sur mesure"),
                   FooterLink(text: "Sécurisation de code logiciels")
+                ],
+              ),
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Text(
+                    "OFFRES",
+                    style: TextStyle(fontSize: 25, color: Colors.white),
+                  ),
+                  SizedBox(height: 10),
+                  FooterLink(text: "Produits sur mesure"),
+                  FooterLink(text: "Conseil"),
+                  FooterLink(text: "Production design sprint"),
+                  FooterLink(text: "Catalogue tarifs"),
+                ],
+              ),
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Text(
+                    "NOUS CONNAITRE",
+                    style: TextStyle(fontSize: 25, color: Colors.white),
+                  ),
+                  SizedBox(height: 10),
+                  SocialMediaButtons(),
+                  FooterLink(text: "OHana Entreprise"),
+                  FooterLink(text: "Blog"),
+                  FooterLink(text: "Offres d'emploi"),
+                  FooterLink(text: "Devis"),
+                  FooterLink(text: "Contactez-nous !"),
                 ],
               )
             ],
