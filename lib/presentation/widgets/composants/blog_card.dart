@@ -64,7 +64,7 @@ class BlogCard extends StatelessWidget {
                 child: BoldTextCustomizer(
                   maxLines: 8,
                   text: textAndBoldListMap['text'],
-                  boldTextList: textAndBoldListMap['boldTextList'],
+                  boldTextList: const [''],
                   isOverflowEllipsis: true,
                 ),
               ),

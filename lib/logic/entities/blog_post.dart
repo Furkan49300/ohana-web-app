@@ -7,7 +7,14 @@ class BlogPost {
   final String description;
   final DateTime creationDate;
   final BlogPostContent content;
+  final String imagePath;
 
-  const BlogPost(this.id, this.title, this.description, this.creationDate,
-      this.content, this.author);
+  const BlogPost(
+      {required this.id,
+      required this.title,
+      required this.description,
+      required this.creationDate,
+      required this.content,
+      required this.author,
+      required this.imagePath});
 }

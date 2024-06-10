@@ -1,6 +1,9 @@
 import 'package:flutter/cupertino.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:ohana_webapp_flutter/presentation/constants/colors.dart';
+import 'package:ohana_webapp_flutter/presentation/constants/router_constants.dart';
 import 'package:ohana_webapp_flutter/presentation/pages/offersPages/MAINPAGE/widgets/circular_image_loader.dart';
+import 'package:ohana_webapp_flutter/presentation/widgets/composants/button_format/button.dart';
 import 'package:ohana_webapp_flutter/presentation/widgets/composants/text_format/custom_text_list.dart';
 import 'package:ohana_webapp_flutter/presentation/widgets/patterns/custom_banner.dart';
 import 'package:flutter/material.dart';
@@ -76,7 +79,21 @@ class DevServicesPageLargeScreen extends StatelessWidget {
               ),
               const SizedBox(height: 100),
               _getWebServicesSections(),
-              FooterLargeScreen(),
+              const SizedBox(height: 20),
+              const SizedBox(
+                width: 900,
+                child: Text(
+                  "Besoin d'aide ou de plus d'informations ? Contactez-nous dès aujourd'hui et découvrez comment nous pouvons transformer vos idées en réalité numérique !",
+                  textAlign: TextAlign.center,
+                  style: TextStyle(fontSize: 19),
+                ),
+              ),
+              const SizedBox(height: 10),
+              Button('Contactez-Nous',
+                  type: ButtonType.standard,
+                  onTap: () => Navigator.of(context).pushNamed(contactUs)),
+              const SizedBox(height: 90),
+              const FooterLargeScreen(),
             ],
           ),
         ),
@@ -107,101 +124,153 @@ class DevServicesPageLargeScreen extends StatelessWidget {
   }
 
   _getWebServicesSections() {
-    List devServices = [
+    List<Map<String, dynamic>> devServices = [
       {
         'title': "E-commerce et Solutions de Vente en Ligne",
         'imagePath':
-            "assets/services_images/dev_services/Accessibility-for-your-Online-eCommerce-Store.jpg",
+            "assets/services_images/dev_services/advanced-features-of-ecommerce-app.webp",
         'description':
             "Nous créons des boutiques en ligne robustes, sécurisées et conviviales pour stimuler les ventes et la croissance de votre entreprise. Nos solutions e-commerce sont conçues pour offrir une expérience d'achat fluide et agréable.",
         "strongPoint": [
           {
             'point': " Ajout et gestion facile des produits.",
-            'svgLink': 'assets/services_icons/products-svgrepo-com.svg'
+            'svgLink':
+                'assets/services_icons/dev_services/products-svgrepo-com.svg'
           },
           {
             'point':
                 " Intégration de diverses méthodes de paiement sécurisées.",
-            'svgLink': 'assets/services_icons/payment-euro-svgrepo-com.svg'
+            'svgLink':
+                'assets/services_icons/dev_services/payment-euro-svgrepo-com.svg'
           },
           {
             'point': " Expérience d'achat fluide sur les appareils mobiles.",
-            'svgLink': 'assets/services_icons/shopping-card-svgrepo-com.svg'
+            'svgLink':
+                'assets/services_icons/dev_services/shopping-card-svgrepo-com.svg'
           },
           {
             'point':
                 " Outils de promotion, de réduction et de fidélisation des clients",
-            'svgLink': 'assets/services_icons/tools-svgrepo-com.svg'
+            'svgLink':
+                'assets/services_icons/dev_services/tools-svgrepo-com.svg'
           },
         ]
       },
       {
         'title': "Développement de Portails Web",
-        'imagePath': "assets/services_images/dev_services/computer.jpeg",
+        'imagePath':
+            "assets/services_images/dev_services/custom-web-application-development-in-kenya-galactik-it-solutions1.webp",
         'description':
             "Nous développons des portails web interactifs et dynamiques pour divers secteurs d'activité. Nos portails web sont conçus pour gérer un grand nombre d'utilisateurs et pour offrir des fonctionnalités avancées.",
         "strongPoint": [
           {
             'point': " Systèmes de gestion de contenu (CMS) puissants.",
-            'svgLink': 'assets/services_icons/interface-control-svgrepo-com.svg'
+            'svgLink':
+                'assets/services_icons/dev_services/interface-control-svgrepo-com.svg'
           },
           {
             'point':
                 "Protocoles de sécurité robustes pour protéger les données sensibles.",
-            'svgLink': 'assets/services_icons/dns-svgrepo-com.svg'
+            'svgLink': 'assets/services_icons/dev_services/dns-svgrepo-com.svg'
           },
           {
             'point':
                 " Connexion avec d'autres systèmes et services via des API.",
-            'svgLink': 'assets/services_icons/api-interface-svgrepo-com.svg'
+            'svgLink':
+                'assets/services_icons/dev_services/api-interface-svgrepo-com.svg'
           },
           {
             'point':
                 " Outils de promotion, de réduction et de fidélisation des clients",
-            'svgLink': 'assets/services_icons/tools-svgrepo-com.svg'
+            'svgLink':
+                'assets/services_icons/dev_services/tools-svgrepo-com.svg'
           },
         ]
       },
       {
         'title': " Applications SaaS (Software as a Service)",
-        'imagePath': "assets/services_images/dev_services/SaaS-1-1920x1024.jpg",
+        'imagePath':
+            "assets/services_images/dev_services/5218d3fd-9ee6-47f7-9621-b4b7a0d24c2d.webp",
         "strongPoint": [
           {
             'point': "Capacité à gérer une croissance rapide de l'utilisateur.",
-            'svgLink': 'assets/services_icons/load-factor-svgrepo-com.svg'
+            'svgLink':
+                'assets/services_icons/dev_services/load-factor-svgrepo-com.svg'
           },
           {
             'point': "Mises à jour et maintenance centralisées.",
-            'svgLink': 'assets/services_icons/update-svgrepo-com.svg'
+            'svgLink':
+                'assets/services_icons/dev_services/update-svgrepo-com.svg'
           },
           {
             'point':
                 " Accessible via les navigateurs web sur tous les appareils.",
-            'svgLink': 'assets/services_icons/navigation-2-svgrepo-com.svg'
+            'svgLink':
+                'assets/services_icons/dev_services/navigation-2-svgrepo-com.svg'
           },
           {
             'point': "Protection avancée des données clients et entreprise",
             'svgLink':
-                'assets/services_icons/hikiryomon-three-lines-in-a-circle-family-crest-svgrepo-com.svg'
+                'assets/services_icons/dev_services/hikiryomon-three-lines-in-a-circle-family-crest-svgrepo-com.svg'
           },
         ]
       },
     ];
     return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      mainAxisSize: MainAxisSize.min,
       children: devServices
           .map((item) => SizedBox(
-                child: Row(
-                  children: [
-                    CircularImageLoader(
-                      imagePath: item['imagePath'],
-                    ),
-                    const SizedBox(
-                      width: 400,
-                      child: CustomListText(
-                        textList: [],
+                child: Padding(
+                  padding: const EdgeInsets.only(
+                    bottom: 40,
+                  ),
+                  child: Row(
+                    mainAxisSize: MainAxisSize.min,
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    children: [
+                      CircularImageLoader(
+                        imagePath: item['imagePath'],
+                        width: 820,
+                        height: 550,
                       ),
-                    )
-                  ],
+                      const SizedBox(width: 20),
+                      SizedBox(
+                          child: Column(
+                              mainAxisAlignment: MainAxisAlignment.start,
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                            for (var strongPoint in item['strongPoint'])
+                              Padding(
+                                padding: const EdgeInsets.only(bottom: 10.0),
+                                child: Row(
+                                  children: [
+                                    Container(
+                                      padding: const EdgeInsets.all(10.0),
+                                      decoration: BoxDecoration(
+                                          color: purpleNeutral,
+                                          borderRadius: BorderRadius.circular(
+                                            completeCirvularItem,
+                                          )),
+                                      child: SvgPicture.asset(
+                                        strongPoint['svgLink'],
+                                        width: 30,
+                                        height: 30,
+                                        colorFilter: const ColorFilter.mode(
+                                            Colors.white, BlendMode.srcIn),
+                                      ),
+                                    ),
+                                    const SizedBox(width: 10),
+                                    Text(
+                                      strongPoint['point'],
+                                      style: const TextStyle(fontSize: 19),
+                                    )
+                                  ],
+                                ),
+                              )
+                          ]))
+                    ],
+                  ),
                 ),
               ))
           .toList(),

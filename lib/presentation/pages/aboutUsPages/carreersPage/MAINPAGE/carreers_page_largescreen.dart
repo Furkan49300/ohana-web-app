@@ -7,6 +7,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:ohana_webapp_flutter/presentation/bloc/navbar_dropdown/dropdown_menu_bloc.dart';
 import 'package:ohana_webapp_flutter/presentation/bloc/navbar_dropdown/dropdown_menu_event.dart';
 import 'package:ohana_webapp_flutter/presentation/constants/dimensions.dart';
+import 'package:ohana_webapp_flutter/presentation/constants/router_constants.dart';
 import 'package:ohana_webapp_flutter/presentation/footer/footer_large_screen.dart';
 import 'package:ohana_webapp_flutter/presentation/navbar/largescreen/megaDropdown/dropdown_menu_about_us.dart';
 import 'package:ohana_webapp_flutter/presentation/navbar/largescreen/megaDropdown/dropdown_menu_expertises.dart';
@@ -63,11 +64,11 @@ class CarreersPageLargeScreen extends StatelessWidget {
             children: [
               _getBanner(screenSize: screenSize),
               const SizedBox(height: 30),
-              _getCarrersItems(),
+              _getCarrersItems(context),
               const SizedBox(height: 50),
               _getListNumber(),
               const SizedBox(height: 50),
-              FooterLargeScreen(),
+              const FooterLargeScreen(),
             ],
           ),
         ),
@@ -145,9 +146,9 @@ class CarreersPageLargeScreen extends StatelessWidget {
     );
   }
 
-// OFFRES
+// OFFRES/CONTRACT
 
-  _getCarrersItems() {
+  _getCarrersItems(context) {
     List listOfOffers = [
       {
         'title': 'Développeur React',
@@ -193,7 +194,9 @@ class CarreersPageLargeScreen extends StatelessWidget {
             imagePath: items['image'],
             date: items['date'],
             alert: items['alert'],
-            onTap: () {},
+            onTap: () {
+              Navigator.of(context).pushNamed(singleCarreer);
+            },
           )
       ],
     );

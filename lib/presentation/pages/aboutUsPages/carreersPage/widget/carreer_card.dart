@@ -5,34 +5,38 @@ import 'package:ohana_webapp_flutter/presentation/constants/dimensions.dart';
 import 'package:ohana_webapp_flutter/presentation/widgets/composants/button_format/button.dart';
 
 class CustomCarreerCard extends StatelessWidget {
-  const CustomCarreerCard(
-      {super.key,
-      required this.imagePath,
-      required this.title,
-      required this.date,
-      this.alert,
-      required this.keyWords,
-      required this.onTap});
+  const CustomCarreerCard({
+    super.key,
+    required this.imagePath,
+    required this.title,
+    required this.date,
+    this.alert,
+    required this.keyWords,
+    required this.onTap,
+    this.widthBalence = 0.6,
+  });
   final String imagePath;
   final String title;
   final String date;
+  final double widthBalence;
   final Function onTap;
   final String? alert;
   final List<String> keyWords;
 
   @override
   Widget build(BuildContext context) {
+    double screenWidth = MediaQuery.of(context).size.width;
     return Padding(
       padding: const EdgeInsets.all(20),
       child: Stack(
-        children: [_getCard(), _getButton()],
+        children: [_getCard(screenWidth), _getButton()],
       ),
     );
   }
 
-  _getCard() {
+  _getCard(screenWidth) {
     return Container(
-      width: 1000,
+      width: screenWidth * widthBalence,
       decoration: BoxDecoration(
           border: Border.all(width: 0.6),
           borderRadius: BorderRadius.circular(partialCircularItem)),

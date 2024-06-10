@@ -2,9 +2,13 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:ohana_webapp_flutter/presentation/bloc/blog_post/blocs/recent_blog_posts_bloc.dart';
+import 'package:ohana_webapp_flutter/presentation/bloc/blog_post/blog_post_event.dart';
+import 'package:ohana_webapp_flutter/presentation/bloc/blog_post/blog_post_state.dart';
 
 import 'package:ohana_webapp_flutter/presentation/bloc/navbar_dropdown/dropdown_menu_bloc.dart';
 import 'package:ohana_webapp_flutter/presentation/bloc/navbar_dropdown/dropdown_menu_event.dart';
+import 'package:ohana_webapp_flutter/presentation/constants/colors.dart';
 import 'package:ohana_webapp_flutter/presentation/constants/dimensions.dart';
 import 'package:ohana_webapp_flutter/presentation/footer/footer_large_screen.dart';
 import 'package:ohana_webapp_flutter/presentation/navbar/largescreen/megaDropdown/dropdown_menu_about_us.dart';
@@ -19,8 +23,19 @@ import 'package:ohana_webapp_flutter/presentation/widgets/composants/text_format
 import 'package:ohana_webapp_flutter/presentation/widgets/patterns/partners_carousel.dart';
 import 'package:ohana_webapp_flutter/presentation/widgets/patterns/strong_points_section.dart';
 
-class HomePageLargeScreen extends StatelessWidget {
+class HomePageLargeScreen extends StatefulWidget {
   const HomePageLargeScreen({super.key});
+
+  @override
+  State<HomePageLargeScreen> createState() => _HomePageLargeScreenState();
+}
+
+class _HomePageLargeScreenState extends State<HomePageLargeScreen> {
+  @override
+  void initState() {
+    context.read<RecentBlogPostsBloc>().add(FetchMostRecentBlogPosts(2));
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -164,28 +179,22 @@ _getTwoLastBlogs() {
 }
 
 Widget _getBlogCards() {
-  List<Map> homeBlogs = [
-    {
-      'title':
-          'Développez Votre Première Application Mobile en Flutter : Un Guide Pas à Pas',
-      'imagePath': 'assets/blog_images/flutterCover.webp',
-      'text':
-          "Ce tutoriel vous guidera à travers le processus de développement d'une application mobile de base avec Flutter, y compris la configuration de l'environnement, la création d'une interface utilisateur et le déploiement de l'application. ",
-      'boldTextList': [''],
-      'date': '05/06/2024'
+  return BlocBuilder<RecentBlogPostsBloc, BlogPostState>(
+    builder: (context, state) {
+      if (state is RecentBlogPostLoaded) {
+        return BlogCardPattern(
+          blogList: state.blogPosts,
+          cardWidth: 600,
+        );
+      } else if (state is BlogPostInitial) {
+        return const CircularProgressIndicator();
+      } else if (state is BlogPostError) {
+        return SizedBox(
+            height: 100,
+            child: Text('Something went wrong : ${state.errorMessage}'));
+      } else {
+        return const SizedBox(height: 100, child: Text('Something went wrong'));
+      }
     },
-    {
-      'title':
-          "Étude de Cas : Réussite de la Transformation Numérique de l'Entreprise ABC",
-      'imagePath': 'assets/blog_images/UnArticleABC-720x544.png',
-      'text':
-          "Découvrez comment nous avons aidé l'entreprise ABC à transformer son site web en une plateforme numérique moderne, en améliorant l'expérience utilisateur et en augmentant les conversions de 30%.",
-      'boldTextList': [''],
-      'date': '06/06/2024'
-    },
-  ];
-  return BlogCardPattern(
-    blogList: homeBlogs,
-    cardWidth: 600,
   );
 }

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import 'package:ohana_webapp_flutter/presentation/constants/router_constants.dart';
+import 'package:ohana_webapp_flutter/presentation/pages/homePage/body/home_page_largescreen.dart';
 
 class NoExistingPage extends StatelessWidget {
   const NoExistingPage({super.key});
@@ -10,18 +11,36 @@ class NoExistingPage extends StatelessWidget {
     Size screenSize = MediaQuery.of(context).size;
     return Scaffold(
       body: Expanded(
-        child: Container(
+        child: SizedBox(
           width: screenSize.width,
-          color: Colors.purple,
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
+          child: Stack(
+            alignment: Alignment.center,
             children: [
-              Text('NO EXISTING PAGE'),
-              ElevatedButton(
-                  onPressed: () {
-                    Navigator.of(context).pushNamed(root);
-                  },
-                  child: Text('Go Home'))
+              Image.asset(
+                'assets/alert_images/1_7KCpGW9_D2rIlNV2JhFspQ.webp',
+                fit: BoxFit.cover,
+                width: screenSize.width,
+                height: screenSize.height,
+              ),
+              Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  const Text(
+                    "Page Introuvable",
+                    style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
+                  ),
+                  const Text(
+                    "Sorry, the page you are looking for does not exist.",
+                    style: TextStyle(fontSize: 16),
+                  ),
+                  ElevatedButton(
+                    onPressed: () {
+                      Navigator.of(context).pushNamed(root);
+                    },
+                    child: const Text('Retour à la page d\'accueil'),
+                  ),
+                ],
+              )
             ],
           ),
         ),

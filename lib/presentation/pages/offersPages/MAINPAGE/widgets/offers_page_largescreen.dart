@@ -110,8 +110,8 @@ class _OffersPageLargeScreenState extends State<OffersPageLargeScreen> {
               Button('Contactez-Nous',
                   type: ButtonType.standard,
                   onTap: () => Navigator.of(context).pushNamed(contactUs)),
-              const SizedBox(height: 40),
-              FooterLargeScreen(),
+              const SizedBox(height: 140),
+              const FooterLargeScreen(),
             ],
           ),
         ),
@@ -253,15 +253,18 @@ class _OffersPageLargeScreenState extends State<OffersPageLargeScreen> {
           viewportFraction: 1,
         ),
         items: offersList
-            .map((list) => Wrap(
-                  spacing: 250,
-                  children: list
-                      .map((offers) => _getCard(
-                          imagePath: offers['imagePath'],
-                          title: offers['title'],
-                          description: offers['description'],
-                          svgLink: offers['svgLink']))
-                      .toList(),
+            .map((list) => Padding(
+                  padding: const EdgeInsets.only(left: 70, right: 70),
+                  child: Wrap(
+                    spacing: 150,
+                    children: list
+                        .map((offers) => _getCard(
+                            imagePath: offers['imagePath'],
+                            title: offers['title'],
+                            description: offers['description'],
+                            svgLink: offers['svgLink']))
+                        .toList(),
+                  ),
                 ))
             .toList());
   }

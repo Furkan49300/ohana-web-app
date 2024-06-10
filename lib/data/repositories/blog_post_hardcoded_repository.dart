@@ -5,10 +5,12 @@ import 'dart:async';
 import 'dart:math';
 
 import 'package:ohana_webapp_flutter/logic/entities/blog_post.dart';
+import 'package:ohana_webapp_flutter/logic/entities/blog_post_content.dart';
 import 'package:ohana_webapp_flutter/logic/repositories/blog_post_repository.dart';
 
 class BlogPostHardCodedRepository implements BlogPostRepository {
   final Random _random = Random();
+  DateFormat dateFormat = DateFormat("dd/MM/yyyy");
   List<Map> blogPosts = [
     {
       'id': 1,
@@ -75,8 +77,8 @@ class BlogPostHardCodedRepository implements BlogPostRepository {
 
   @override
   Future<List<BlogPost>> getAllBlogPosts() async {
-    await Future.delayed(
-        const Duration(seconds: 2)); // Simule un délai de réseau
+    // Simule un délai de réseau
+    await Future.delayed(const Duration(seconds: 2));
 
     // Simule une erreur de 20% du temps
     double randomValue = _random.nextDouble();
@@ -86,15 +88,94 @@ class BlogPostHardCodedRepository implements BlogPostRepository {
       throw BlogPostServerException('Erreur server');
     }
 
-    DateFormat dateFormat = DateFormat("dd/MM/yyyy");
     return blogPosts.map((item) {
       return BlogPost(
-          item["id"],
-          item["title"],
-          item["description"],
-          dateFormat.parse(item["creationDate"]),
-          item["content"],
-          item["author"]);
+          id: item["id"],
+          title: item["title"],
+          description: item["text"],
+          creationDate: dateFormat.parse(item["date"]),
+          content: BlogPostContent(item["text"]),
+          author: "Zouayobo DALI",
+          imagePath: item["imagePath"]);
     }).toList();
+  }
+
+  @override
+  Future<List<BlogPost>> getMostRecentBlogPosts({required int number}) async {
+    List<Map> recentNews = [
+      {
+        'id': 1,
+        'title': 'Optimisation SEO pour les Sites Web en 2024',
+        'imagePath': 'assets/blog_images/homepage-concept-with-search-bar.jpg',
+        'text':
+            "Les dernières techniques de SEO pour aider votre site web à se classer plus haut dans les résultats de recherche",
+        'boldTextList': [''],
+        'date': '15/06/2024'
+      },
+      {
+        'id': 2,
+        'title':
+            'Flutter vs React Native : Quelle Technologie Choisir en 2024 ',
+        'imagePath':
+            'assets/blog_images/representations-user-experience-interface-design.jpg',
+        'text':
+            "Analyse comparative entre Flutter et React Native, couvrant les performances, la facilité d'utilisation, la communauté et les perspectives d'avenir pour aider les développeurs à faire le bon choix.",
+        'boldTextList': [''],
+        'date': '10/06/2024'
+      },
+      {
+        'id': 3,
+        'title':
+            '15 Astuces Indispensables pour Accélérer le Développement Mobile',
+        'imagePath':
+            'assets/blog_images/businessman-checking-stock-market-online.jpg',
+        'text':
+            "Découvrez des astuces pratiques pour optimiser votre flux de travail et développer des applications mobiles plus rapidement et plus efficacement",
+        'boldTextList': [''],
+        'date': '05/06/2024'
+      },
+      {
+        'id': 4,
+        'title':
+            'Les Meilleures Pratiques pour Sécuriser Votre Application Mobile',
+        'imagePath': 'assets/blog_images/iphone1200x628-v4-fr.jpg',
+        'text':
+            "Guide complet sur les mesures de sécurité à prendre lors du développement d'applications mobiles pour protéger les données des utilisateurs",
+        'boldTextList': [''],
+        'date': '05/06/2024'
+      },
+    ];
+
+    // Simule un délai de réseau
+    await Future.delayed(const Duration(seconds: 2));
+
+    // Simule une erreur de 20% du temps
+    double randomValue = _random.nextDouble();
+    if (randomValue < 0.025) {
+      throw BlogPostNetworkException('Erreur réseau');
+    } else if (randomValue < 0.05) {
+      throw BlogPostServerException('Erreur server');
+    }
+
+    // Étape 1 : Creer la liste de BlogPost
+    List<BlogPost> formatetdRecentNews = blogPosts.map((item) {
+      return BlogPost(
+          id: item["id"],
+          title: item["title"],
+          description: item["text"],
+          creationDate: dateFormat.parse(item["date"]),
+          content: BlogPostContent(item["text"]),
+          author: "Zouayobo DALI",
+          imagePath: item["imagePath"]);
+    }).toList();
+
+    // Étape 2 : Trier la liste par date de manière décroissante
+    formatetdRecentNews
+        .sort((a, b) => b.creationDate.compareTo(a.creationDate));
+
+    // Étape 3 : Prendre les deux premiers éléments de la liste triée
+    List<BlogPost> latestItems = formatetdRecentNews.take(number).toList();
+
+    return latestItems;
   }
 }

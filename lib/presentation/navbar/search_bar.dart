@@ -4,13 +4,15 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:ohana_webapp_flutter/presentation/bloc/navbar_dropdown/dropdown_menu_bloc.dart';
 import 'package:ohana_webapp_flutter/presentation/bloc/navbar_dropdown/dropdown_menu_state.dart';
 import 'package:ohana_webapp_flutter/presentation/constants/animation_constants.dart';
-import 'package:ohana_webapp_flutter/presentation/constants/colors.dart';
+import 'package:ohana_webapp_flutter/presentation/constants/router_constants.dart';
 import 'package:ohana_webapp_flutter/presentation/widgets/composants/button_format/button.dart';
 import 'package:ohana_webapp_flutter/presentation/widgets/composants/input_field/custom_input_field.dart';
 
 class SearchNavBar extends StatelessWidget {
   final String placeholder;
-  const SearchNavBar({super.key, required this.placeholder});
+  const SearchNavBar(
+      {super.key, required this.placeholder, this.textEditingController});
+  final TextEditingController? textEditingController;
 
   @override
   Widget build(BuildContext context) {
@@ -28,7 +30,9 @@ class SearchNavBar extends StatelessWidget {
               const SizedBox(
                 width: 10,
               ),
-              Button("RECHERCHER", type: ButtonType.standard, onTap: () {})
+              Button("RECHERCHER", type: ButtonType.standard, onTap: () {
+                Navigator.of(context).pushNamed(search);
+              })
             ]),
           ),
         );

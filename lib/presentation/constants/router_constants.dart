@@ -3,10 +3,12 @@ const String contactUs = '/contact-us';
 const String root = '/';
 
 const String aboutUs = '/about-us';
+const String search = '/search';
 const String blog = '/blog';
 const String expertise = '/services';
 const String carreers = '/carreers';
 const String estimate = 'estimate/';
+const String singleCarreer = '/carreer';
 
 const String devServices = "services/dev-services";
 const String web = "services/dev-services/web";

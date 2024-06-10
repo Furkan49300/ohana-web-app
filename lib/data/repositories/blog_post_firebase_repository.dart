@@ -7,4 +7,10 @@ class BlogPostFirebaseRepository implements BlogPostRepository {
     // TODO: implement getAllBlogPosts
     throw UnimplementedError();
   }
+
+  @override
+  Future<List<BlogPost>> getMostRecentBlogPosts({required int number}) {
+    // TODO: implement getMostRecentBlogPosts
+    throw UnimplementedError();
+  }
 }

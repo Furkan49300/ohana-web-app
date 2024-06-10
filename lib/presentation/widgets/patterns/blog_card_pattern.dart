@@ -1,8 +1,9 @@
 import 'package:flutter/cupertino.dart';
+import 'package:ohana_webapp_flutter/logic/entities/blog_post.dart';
 import 'package:ohana_webapp_flutter/presentation/widgets/composants/blog_card.dart';
 
 class BlogCardPattern extends StatelessWidget {
-  final List<Map> blogList;
+  final List<BlogPost> blogList;
   final double cardWidth;
   const BlogCardPattern(
       {super.key, required this.blogList, this.cardWidth = 422});
@@ -17,13 +18,10 @@ class BlogCardPattern extends StatelessWidget {
               .map((item) => Padding(
                     padding: const EdgeInsets.only(top: 20),
                     child: BlogCard(
-                      title: item['title'],
-                      pathOfTopImage: item['imagePath'],
-                      date: item['date'],
-                      textAndBoldListMap: {
-                        'text': item['text'],
-                        'boldTextList': item['boldTextList']
-                      },
+                      title: item.title,
+                      pathOfTopImage: item.imagePath,
+                      date: item.creationDate.toString(),
+                      textAndBoldListMap: {'text': item.description},
                       width: cardWidth,
                     ),
                   ))

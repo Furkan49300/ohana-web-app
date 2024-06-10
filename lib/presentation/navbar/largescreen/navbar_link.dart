@@ -11,7 +11,12 @@ import 'package:ohana_webapp_flutter/presentation/constants/colors.dart';
 class NavbarLink extends StatefulWidget {
   final String text;
   final String routeName;
-  const NavbarLink({super.key, required this.text, required this.routeName});
+  final VoidCallback? sendBlocEvent;
+  const NavbarLink(
+      {super.key,
+      required this.text,
+      required this.routeName,
+      this.sendBlocEvent});
 
   @override
   State<NavbarLink> createState() => _NavbarLinkState();
@@ -26,6 +31,7 @@ class _NavbarLinkState extends State<NavbarLink> {
     return GestureDetector(
       onTap: () {
         context.read<DropdownMenuBloc>().add(HideMenuEvent());
+        widget.sendBlocEvent;
         Navigator.of(context).pushNamed(widget.routeName);
       },
       child: Row(

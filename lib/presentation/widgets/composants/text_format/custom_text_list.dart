@@ -53,11 +53,6 @@ class BulletPoint extends StatelessWidget {
         children: [
           Icon(icon ?? Icons.brightness_1,
               size: 10.0, color: textColor), // Cette icône sert de puce
-          /*Text("• ",
-              style: TextStyle(
-                fontSize: fontSize,
-                color: textColor,
-              )),*/
           const SizedBox(width: 20),
           SizedBox(
               width: width,
