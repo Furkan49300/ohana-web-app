@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:ohana_webapp_flutter/presentation/widgets/patterns/custom_carousel.dart';
 
 class PartnersCarousel extends StatelessWidget {
@@ -34,22 +35,25 @@ class PartnersCarousel extends StatelessWidget {
     ];
     return CustomCarousel(
       title: title,
-      color: Colors.white,
       widgets: partnersLogoImage
           .map((enterprise) => MouseRegion(
                 //To Do onTap
                 cursor: SystemMouseCursors.click,
                 child: SizedBox(
-                  child: Row(
-                    mainAxisSize: MainAxisSize.min,
-                    mainAxisAlignment: MainAxisAlignment.center,
+                  child: Wrap(
+                    alignment: WrapAlignment.center,
+                    crossAxisAlignment: WrapCrossAlignment.center,
+                    spacing: 10,
                     children: [
-                      Image.asset(
-                        enterprise['imagePath'],
-                        width: 200,
-                        fit: BoxFit.cover,
+                      Padding(
+                        padding: const EdgeInsets.only(bottom: 5),
+                        child: Image.asset(
+                          enterprise['imagePath'],
+                          width: 200,
+                          height: 200,
+                          fit: BoxFit.cover,
+                        ),
                       ),
-                      const SizedBox(width: 30),
                       Text(
                         enterprise['title'],
                         style: const TextStyle(

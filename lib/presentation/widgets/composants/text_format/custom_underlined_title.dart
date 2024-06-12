@@ -16,7 +16,11 @@ class CustomUnderlineTitle extends StatelessWidget {
       padding: const EdgeInsets.only(bottom: 3),
       width: textWidth,
       decoration: BoxDecoration(
-          border: Border(bottom: BorderSide(color: lineColor, width: 5))),
+          border: Border(
+              bottom: BorderSide(
+        color: lineColor,
+        width: 5,
+      ))),
       child: SizedBox(
         width: textWidth,
         child: Text(

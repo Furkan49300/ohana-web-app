@@ -60,30 +60,31 @@ class ServicesPageLargeScreen extends StatelessWidget {
   }
 
   _content(Size screenSize, context) {
-    return const Column(
+    return Column(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
         ServicesBanner(
+          screenSizeWidth: screenSize.width,
           title: 'Nos services',
           imagePath:
               'assets/services_images/services_acceuil_official_free_image.webp',
           text:
               'Nous proposons differents types de services de développement et de cybersécurité, Nous n\'hésitons pas à mettre notre coeur à l\'ouvrage car le développement est avant tout une activité qui nous passionne et nous voulons faire profiter de cette passion à tout nos clients et potentiel client',
-          boldTextList: ['développement', 'cybersécurité'],
+          boldTextList: const ['développement', 'cybersécurité'],
           titleColor: Colors.black,
         ),
-        SizedBox(
+        const SizedBox(
           height: 60,
         ),
-        ServicesCards(),
-        SizedBox(
+        const ServicesCards(),
+        const SizedBox(
           height: 40,
         ),
-        StrongPointsSection(),
-        SizedBox(
+        const StrongPointsSection(),
+        const SizedBox(
           height: 70,
         ),
-        FooterLargeScreen()
+        const FooterLargeScreen()
       ],
     );
   }

@@ -100,7 +100,6 @@ class _BlogPageLargeScreenState extends State<BlogPageLargeScreen> {
       builder: (context, state) {
         if (state is RecentBlogPostLoaded) {
           return CustomCarousel(
-              color: Colors.white,
               viewportFraction: 1,
               carouselHeight: height,
               widgets: state.blogPosts

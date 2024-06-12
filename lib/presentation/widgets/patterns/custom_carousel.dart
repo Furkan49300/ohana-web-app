@@ -11,24 +11,18 @@ class CustomCarousel extends StatelessWidget {
       this.carouselHeight = 316,
       this.viewportFraction = 0.3,
       this.title = '',
-      this.color = const Color(0xFFD9D9D9),
-      this.paddingLeftRight = 0,
-      this.paddingTopBottom = 0,
       this.autoPlay = true});
   final List<Widget> widgets;
   final int animationDuration;
   final String title;
   final bool autoPlay;
   final double? carouselHeight;
-  final Color color;
   final double viewportFraction;
-  final double paddingLeftRight;
-  final double paddingTopBottom;
 
   @override
   Widget build(BuildContext context) {
     return LayoutBuilder(builder: (context, constraints) {
-      if (constraints.maxWidth < smallBreakpoint) {
+      if (constraints.maxWidth <= 912) {
         return _getCustomCarouselSlider(
           viewport: 1,
           titleWidth: constraints.maxWidth - 400,
@@ -48,40 +42,26 @@ class CustomCarousel extends StatelessWidget {
     return Column(
       children: [
         if (title != '')
-          Row(
-            mainAxisAlignment: MainAxisAlignment.start,
-            children: [
-              const SizedBox(
-                width: spaceLeftBigTitle,
-              ),
-              CustomUnderlineTitle(
-                title: title,
-                textWidth: titleWidth,
-              ),
-            ],
+          Padding(
+            padding: const EdgeInsets.only(left: spaceLeftBigTitle),
+            child: CustomUnderlineTitle(
+              title: title,
+              textWidth: titleWidth,
+            ),
           ),
         if (title != '')
           const SizedBox(
             height: spaceBetweenBigTitleAndTextBody,
           ),
-        Container(
-          color: color,
-          padding: EdgeInsets.only(
-            left: paddingLeftRight,
-            top: paddingTopBottom,
-            right: paddingLeftRight,
-            bottom: paddingTopBottom,
-          ),
-          child: CarouselSlider(
-              items: widgets,
-              options: CarouselOptions(
-                  initialPage: 0,
-                  height: carouselHeight,
-                  viewportFraction: viewport,
-                  autoPlay: autoPlay,
-                  enlargeCenterPage: true,
-                  autoPlayInterval: Duration(seconds: animationDuration))),
-        ),
+        CarouselSlider(
+            items: widgets,
+            options: CarouselOptions(
+                initialPage: 0,
+                height: carouselHeight,
+                viewportFraction: viewport,
+                autoPlay: autoPlay,
+                enlargeCenterPage: true,
+                autoPlayInterval: Duration(seconds: animationDuration))),
       ],
     );
   }

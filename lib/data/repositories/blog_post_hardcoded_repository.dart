@@ -22,7 +22,7 @@ class BlogPostHardCodedRepository implements BlogPostRepository {
           "url_image": "http://ffefr.com",
           "subtitle": "",
           "video": "",
-          'text': r'''
+          'text': '''
                             [
                               {"insert": "Flutter Quill Example\\n", "attributes": {"header": 1}},
                               {"insert": "Introduction\\n", "attributes": {"header": 2}},
@@ -42,17 +42,19 @@ class BlogPostHardCodedRepository implements BlogPostRepository {
                               {"insert": "Embeds (videos, tweets, etc.)\\n"},
                               {"insert": "\\n"},
                               {"insert": "Example Usage\\n", "attributes": {"header": 2}},
+                              {"insert": "\\n"},
                               {"insert": "Below is an example of how you can use Flutter Quill in your Flutter application:\\n"},
                               {"insert": "1. Add the flutter_quill package to your pubspec.yaml file:\\n", "attributes": {"list": "ordered"}},
                               {"insert": "```yaml\\ndependencies:\\n  flutter:\\n    sdk: flutter\\n  flutter_quill: ^2.0.0\\n```\\n"},
                               {"insert": "2. Import the package in your Dart file:\\n", "attributes": {"list": "ordered"}},
                               {"insert": "```dart\\nimport 'package:flutter_quill/flutter_quill.dart' as quill;\\n```\\n"},
                               {"insert": "3. Initialize a QuillController with your content:\\n", "attributes": {"list": "ordered"}},
-                              {"insert": "```dart\\nfinal document = quill.Document.fromJson(jsonDecode(jsonString));\\nfinal controller = quill.QuillController(document: document, selection: TextSelection.collapsed(offset: 0));\\n```\\n jjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjj"},
+                              {"insert": "```dart\\nfinal document = quill.Document.fromJson(jsonDecode(jsonString));\\nfinal controller = quill.QuillController(document: document, selection: TextSelection.collapsed(offset: 0));\\n```\\n "},
                               {"insert": "4. Use the QuillEditor widget to display the editor:\\n", "attributes": {"list": "ordered"}},
                               {"insert": "```dart\\nquill.QuillEditor.basic(controller: controller, readOnly: false);\\n```\\n"},
                               {"insert": "\\n"},
                               {"insert": "Conclusion\\n", "attributes": {"header": 2}},
+                              {"insert": "\\n"},
                               {"insert": "Flutter Quill is a powerful and flexible rich text editor that can help you build great user experiences in your Flutter applications. Whether you need to create a simple note-taking app or a full-featured content management system, Flutter Quill has you covered.\\n"},
                               {"insert": "\\n"},
                               {"insert": "For more information, visit the ", "attributes": {"italic": true}},
@@ -67,7 +69,8 @@ class BlogPostHardCodedRepository implements BlogPostRepository {
           "video": "",
           'text': r'''
                       [
-                        {"insert": "Advanced Features\n", "attributes": {"header": 2}},
+                        {"insert": "Advanced Features", "attributes": {"header": 2}},
+                        {"insert": "\\n"},
                         {"insert": "In addition to the basic features, Flutter Quill also offers some advanced capabilities:\n"},
                         {"insert": "• ", "attributes": {"list": "bullet"}},
                         {"insert": "Custom text styling with attributes like color and font size\n"},
@@ -83,7 +86,7 @@ class BlogPostHardCodedRepository implements BlogPostRepository {
                         {"insert": "2. Implement save and load functions to store user notes:\n", "attributes": {"list": "ordered"}},
                         {"insert": "```dart\nvoid saveNote(Document document) {\n  // Save document to local storage\n}\n\nDocument loadNote() {\n  // Load document from local storage\n}\n```\\n"},
                         {"insert": "3. Integrate the Quill package into your app's dependencies:\n", "attributes": {"list": "ordered"}},
-                        {"insert": "```yaml\\ndependencies:\\n  flutter:\\n    sdk: flutter\\n  flutter_quill: ^2.0.0\\n```\\n"},
+                        {"insert": "```yaml dependencies:   flutter:    sdk: flutter ,  flutter_quill: ^2.0.0```"},
                         {"insert": "\\n"},
                         {"insert": "Conclusion\n", "attributes": {"header": 2}},
                         {"insert": "With its advanced features and ease of integration, Flutter Quill is a top choice for developers looking to add rich text editing capabilities to their Flutter apps. Start building your next great app with Flutter Quill today!\n"},

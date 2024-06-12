@@ -18,7 +18,9 @@ class StrongPointsSection extends StatelessWidget {
       'Un service de qualité',
       'Un accueil chaleureux'
     ];
-
+    Size screenSize = MediaQuery.of(context).size;
+    double widthBalance = 0.3;
+    double heightBalance = 0.55;
     return Column(
         crossAxisAlignment: CrossAxisAlignment.start, //begin at Start
         mainAxisSize: MainAxisSize.min,
@@ -36,17 +38,16 @@ class StrongPointsSection extends StatelessWidget {
             children: [
               Image.asset(
                 'buisness.jpg',
-                width: width,
-                height: height,
+                height: screenSize.height * heightBalance,
               ),
               textWidget ??
                   Container(
-                    height: height,
-                    padding: const EdgeInsets.only(left: 20, right: 50),
+                    height: screenSize.height * heightBalance,
                     color: Colors.purple,
                     child: Align(
                       alignment: Alignment.center,
                       child: CustomListText(
+                        width: screenSize.width * widthBalance - 0.1,
                         textList: defaultTextContent,
                         textColor: Colors.white,
                         fontSize: 20,

@@ -12,11 +12,13 @@ class ServicesBanner extends StatelessWidget {
       required this.imagePath,
       this.message = '',
       required this.title,
-      this.titleColor});
+      this.titleColor,
+      required this.screenSizeWidth});
   final String text;
   final String title;
   final String message;
   final Color? titleColor;
+  final double screenSizeWidth;
   final String imagePath;
   final List<String> boldTextList;
   @override
@@ -38,7 +40,6 @@ class ServicesBanner extends StatelessWidget {
               right: spaceLeftBigTitle / 2,
               top: 10,
             ),
-            width: 990,
             height: 300,
             color: Colors.white,
             child: Column(
@@ -56,6 +57,7 @@ class ServicesBanner extends StatelessWidget {
                   text: text,
                   boldTextList: boldTextList,
                   boldListTextMode: true,
+                  width: (screenSizeWidth * 0.55),
                 ),
               ],
             ),

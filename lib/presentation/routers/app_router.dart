@@ -76,6 +76,7 @@ class AppRouter {
                   providers: [
                     BlocProvider.value(value: _allBlogPostsBloc),
                     BlocProvider.value(value: _recentBlogPostsBloc),
+                    BlocProvider.value(value: _singleBlogPostsBloc),
                   ],
                   child: const BlogPageLargeScreen(),
                 ));

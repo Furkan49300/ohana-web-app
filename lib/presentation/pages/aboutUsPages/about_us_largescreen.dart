@@ -329,31 +329,10 @@ _getOurTeamWork(mediaScreenWidth) {
         child: CustomTextBlock(
           image:
               'assets/about_us_image/group-people-holding-hand-assemble-togetherness.jpg',
-          widget: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text(
-                'À Propos de Notre Équipe',
-                style: TextStyle(fontSize: 35, fontWeight: FontWeight.bold),
-              ),
-              SizedBox(
-                height: 30,
-              ),
-              BoldTextCustomizer(
-                  width: 800,
-                  text:
-                      'Chez OHana Entreprise, nous sommes fiers de notre équipe dévouée et talentueuse qui œuvre chaque jour pour offrir des solutions innovantes et personnalisées à nos clients. Notre équipe est composée de professionnels passionnés par le développement web et mobile, chacun apportant son expertise unique et sa créativité au service de vos projets.',
-                  boldTextList: ['OHana Entreprise']),
-              SizedBox(
-                height: 10,
-              ),
-              BoldTextCustomizer(
-                  width: 800,
-                  text:
-                      "Que ce soit pour la conception d'un site web intuitif, le développement d'une application mobile performante ou la mise en place de solutions sur mesure, notre équipe est là pour vous accompagner à chaque étape du processus. Forts d'une expérience diversifiée et d'une volonté constante d'excellence, nous sommes toujours à l'affût des dernières technologies et tendances du marché pour vous garantir des solutions à la pointe de l'innovation.",
-                  boldTextList: ['']),
-            ],
-          ),
+          title: 'À Propos de Notre Équipe',
+          text:
+              'Chez OHana Entreprise, nous sommes fiers de notre équipe dévouée et talentueuse qui œuvre chaque jour pour offrir des solutions innovantes et personnalisées à nos clients. Notre équipe est composée de professionnels passionnés par le développement web et mobile, chacun apportant son expertise unique et sa créativité au service de vos projets. \n  Que ce soit pour la conception d\'un site web intuitif, le développement d\'une application mobile performante ou la mise en place de solutions sur mesure, notre équipe est là pour vous accompagner à chaque étape du processus. Forts d\'une expérience diversifiée et d\'une volonté constante d\'excellence, nous sommes toujours à l\'affût des dernières technologies et tendances du marché pour vous garantir des solutions à la pointe de l\'innovation.',
+          boldList: ['OHana Entreprise'],
         ),
       ));
 }
