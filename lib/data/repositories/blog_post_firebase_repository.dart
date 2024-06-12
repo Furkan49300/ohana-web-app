@@ -13,4 +13,10 @@ class BlogPostFirebaseRepository implements BlogPostRepository {
     // TODO: implement getMostRecentBlogPosts
     throw UnimplementedError();
   }
+
+  @override
+  Future<BlogPost> getSingleBlogPost({required String id}) {
+    // TODO: implement getSpecificBlogPosts
+    throw UnimplementedError();
+  }
 }

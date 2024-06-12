@@ -5,15 +5,17 @@ import 'package:flutter/widgets.dart';
 import 'package:ohana_webapp_flutter/presentation/widgets/composants/text_format/bold_text_customiser.dart';
 
 class BlogCard extends StatelessWidget {
-  const BlogCard(
-      {super.key,
-      required this.pathOfTopImage,
-      required this.textAndBoldListMap,
-      required this.title,
-      required this.date,
-      required this.width});
+  const BlogCard({
+    super.key,
+    required this.pathOfTopImage,
+    required this.textAndBoldListMap,
+    required this.title,
+    required this.date,
+    required this.width,
+  });
   final String pathOfTopImage;
   final String title;
+
   final String date;
   final Map<String, dynamic> textAndBoldListMap;
   final double width;

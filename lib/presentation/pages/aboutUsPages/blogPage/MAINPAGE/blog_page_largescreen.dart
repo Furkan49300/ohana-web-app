@@ -17,15 +17,10 @@ import 'package:ohana_webapp_flutter/presentation/navbar/largescreen/megaDropdow
 import 'package:ohana_webapp_flutter/presentation/navbar/largescreen/megaDropdown/dropdown_menu_offers.dart';
 import 'package:ohana_webapp_flutter/presentation/navbar/largescreen/navigation_bar_contents_largescreen.dart';
 import 'package:ohana_webapp_flutter/presentation/navbar/search_bar.dart';
-import 'package:ohana_webapp_flutter/presentation/widgets/composants/blog_card.dart';
-import 'package:ohana_webapp_flutter/presentation/widgets/composants/button_format/button.dart';
 import 'package:ohana_webapp_flutter/presentation/widgets/composants/custom_smart_paginator.dart';
-import 'package:ohana_webapp_flutter/presentation/widgets/composants/text_format/circular_text_overlay.dart';
 import 'package:ohana_webapp_flutter/presentation/widgets/composants/text_format/custom_underlined_title.dart';
 import 'package:ohana_webapp_flutter/presentation/widgets/patterns/blog_card_pattern.dart';
-import 'package:ohana_webapp_flutter/presentation/widgets/patterns/custom_banner.dart';
 import 'package:ohana_webapp_flutter/presentation/widgets/patterns/custom_carousel.dart';
-import 'package:ohana_webapp_flutter/presentation/widgets/patterns/strong_points_section.dart';
 
 class BlogPageLargeScreen extends StatefulWidget {
   const BlogPageLargeScreen({super.key});
@@ -100,45 +95,6 @@ class _BlogPageLargeScreenState extends State<BlogPageLargeScreen> {
   _getBlogBanner({required Size mediaScreenSize}) {
     double height = mediaScreenSize.height / 1.4;
     double width = mediaScreenSize.width;
-    // List<Map> recentNews = [
-    //   {
-    //     'title': 'Optimisation SEO pour les Sites Web en 2024',
-    //     'imagePath': 'assets/blog_images/homepage-concept-with-search-bar.jpg',
-    //     'text':
-    //         "Les dernières techniques de SEO pour aider votre site web à se classer plus haut dans les résultats de recherche",
-    //     'boldTextList': [''],
-    //     'date': '15/06/2024'
-    //   },
-    //   {
-    //     'title':
-    //         'Flutter vs React Native : Quelle Technologie Choisir en 2024 ',
-    //     'imagePath':
-    //         'assets/blog_images/representations-user-experience-interface-design.jpg',
-    //     'text':
-    //         "Analyse comparative entre Flutter et React Native, couvrant les performances, la facilité d'utilisation, la communauté et les perspectives d'avenir pour aider les développeurs à faire le bon choix.",
-    //     'boldTextList': [''],
-    //     'date': '10/06/2024'
-    //   },
-    //   {
-    //     'title':
-    //         '15 Astuces Indispensables pour Accélérer le Développement Mobile',
-    //     'imagePath':
-    //         'assets/blog_images/businessman-checking-stock-market-online.jpg',
-    //     'text':
-    //         "Découvrez des astuces pratiques pour optimiser votre flux de travail et développer des applications mobiles plus rapidement et plus efficacement",
-    //     'boldTextList': [''],
-    //     'date': '05/06/2024'
-    //   },
-    //   {
-    //     'title':
-    //         'Les Meilleures Pratiques pour Sécuriser Votre Application Mobile',
-    //     'imagePath': 'assets/blog_images/iphone1200x628-v4-fr.jpg',
-    //     'text':
-    //         "Guide complet sur les mesures de sécurité à prendre lors du développement d'applications mobiles pour protéger les données des utilisateurs",
-    //     'boldTextList': [''],
-    //     'date': '05/06/2024'
-    //   },
-    // ];
 
     return BlocBuilder<RecentBlogPostsBloc, BlogPostState>(
       builder: (context, state) {

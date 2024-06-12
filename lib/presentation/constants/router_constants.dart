@@ -8,6 +8,7 @@ const String blog = '/blog';
 const String expertise = '/services';
 const String carreers = '/carreers';
 const String estimate = 'estimate/';
+const String singleBlog = 'single-blog/';
 const String singleCarreer = '/carreer';
 
 const String devServices = "services/dev-services";

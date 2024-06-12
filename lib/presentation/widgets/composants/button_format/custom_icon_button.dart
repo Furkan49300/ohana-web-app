@@ -29,8 +29,10 @@ class _CustomIconButtonState extends State<CustomIconButton> {
 
   Future<void> _launchURL(url) async {
     final Uri uri = Uri.parse(url);
-    if (!await launchUrl(uri)) {
-      throw 'Could not launch $uri';
+    if (await canLaunchUrl(uri)) {
+      await launchUrl(uri);
+    } else {
+      throw 'Impossible d\'ouvrir le lien $url';
     }
   }
 

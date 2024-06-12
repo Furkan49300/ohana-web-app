@@ -3,8 +3,10 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 import "package:ohana_webapp_flutter/presentation/bloc/blog_post/blocs/all_blog_posts_bloc.dart";
 import "package:ohana_webapp_flutter/presentation/bloc/blog_post/blocs/recent_blog_posts_bloc.dart";
+import "package:ohana_webapp_flutter/presentation/bloc/blog_post/blocs/single_blog_post_bloc.dart";
 import "package:ohana_webapp_flutter/presentation/pages/aboutUsPages/about_us_largescreen.dart";
 import "package:ohana_webapp_flutter/presentation/pages/aboutUsPages/blogPage/MAINPAGE/blog_page_largescreen.dart";
+import "package:ohana_webapp_flutter/presentation/pages/aboutUsPages/blogPage/single_blogpost_page_largescreen.dart";
 import "package:ohana_webapp_flutter/presentation/pages/aboutUsPages/carreersPage/MAINPAGE/carreers_page_largescreen.dart";
 import "package:ohana_webapp_flutter/presentation/pages/aboutUsPages/carreersPage/single_carreer_page_largescreen.dart";
 import "package:ohana_webapp_flutter/presentation/pages/aboutUsPages/estimatePage/estimate_page_largescreen.dart";
@@ -21,14 +23,18 @@ import "package:ohana_webapp_flutter/presentation/pages/searchPage/search_page_l
 class AppRouter {
   final AllBlogPostsBloc _allBlogPostsBloc = AllBlogPostsBloc();
   final RecentBlogPostsBloc _recentBlogPostsBloc = RecentBlogPostsBloc();
+  final SingleBlogPostBloc _singleBlogPostsBloc = SingleBlogPostBloc();
 
   Route onGenerateRoute(RouteSettings routeSettings) {
     switch (routeSettings.name) {
       case root:
 //HOME
         return MaterialPageRoute(
-            builder: (e) => BlocProvider.value(
-                  value: _recentBlogPostsBloc,
+            builder: (e) => MultiBlocProvider(
+                  providers: [
+                    BlocProvider.value(value: _recentBlogPostsBloc),
+                    BlocProvider.value(value: _singleBlogPostsBloc),
+                  ],
                   child: const HomePage(),
                 ));
 
@@ -73,6 +79,14 @@ class AppRouter {
                   ],
                   child: const BlogPageLargeScreen(),
                 ));
+//SINGLE BLOG VIEW
+
+      case singleBlog:
+        return MaterialPageRoute(
+            builder: (e) => BlocProvider.value(
+                  value: _singleBlogPostsBloc,
+                  child: const SingleBlogPostPageLargeScreen(),
+                ));
 
 //OFFERS
 
@@ -104,5 +118,6 @@ class AppRouter {
   void dispose() {
     _allBlogPostsBloc.close();
     _recentBlogPostsBloc.close();
+    _singleBlogPostsBloc.close();
   }
 }

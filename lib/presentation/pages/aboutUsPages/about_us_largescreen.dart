@@ -208,31 +208,31 @@ _getSingleSiteView({mediaScreenWidth, place, image, text, boldTextList}) {
 _getOurValues() {
   List<Map<String, String>> ourPrinciples = [
     {
-      'svgName': 'medal.svg',
+      'svgName': 'assets/values_icons/medal.svg',
       'title': "L'Excellence",
       "text":
           "Necessitatibus voluptatum, consequuntur magnam numquam corporis est optio laudantium placeat",
     },
     {
-      'svgName': 'heart.svg',
+      'svgName': 'assets/values_icons/heart.svg',
       'title': "L'intégrité",
       "text":
           "Necessitatibus voluptatum, consequuntur magnam numquam corporis est optio laudantium placeat",
     },
     {
-      'svgName': 'trust-wallet-svgrepo-com.svg',
+      'svgName': 'assets/values_icons/trust-wallet-svgrepo-com.svg',
       'title': "Confiance",
       "text":
           "Necessitatibus voluptatum, consequuntur magnam numquam corporis est optio laudantium placeat",
     },
     {
-      'svgName': 'rocket-innovation-space-svgrepo-com.svg',
+      'svgName': 'assets/values_icons/rocket-innovation-space-svgrepo-com.svg',
       'title': "L'innovation",
       "text":
           "Necessitatibus voluptatum, consequuntur magnam numquam corporis est optio laudantium placeat",
     },
     {
-      'svgName': 'burning-passion-svgrepo-com.svg',
+      'svgName': 'assets/values_icons/burning-passion-svgrepo-com.svg',
       'title': "Passion",
       "text":
           "Necessitatibus voluptatum, consequuntur magnam numquam corporis est optio laudantium placeat",
@@ -245,14 +245,12 @@ _getOurValues() {
     children: [
       const CustomUnderlineTitle(
         title: 'Nos Valeurs',
-
-        // start: true,
-        // lineSize: 180,
       ),
       const SizedBox(
         height: 50,
       ),
       Wrap(
+        alignment: WrapAlignment.center,
         spacing: 50,
         children: [
           for (var item in ourPrinciples)
@@ -325,36 +323,37 @@ _getSingleValueBlock({svgName, title, text}) {
 
 //------Our TEAM
 _getOurTeamWork(mediaScreenWidth) {
-  return Container(
-      padding: const EdgeInsets.only(left: spaceLeftBigTitle),
+  return SizedBox(
       width: mediaScreenWidth,
-      child: const CustomTextBlock(
-        image:
-            'assets/about_us_image/group-people-holding-hand-assemble-togetherness.jpg',
-        widget: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Text(
-              'À Propos de Notre Équipe',
-              style: TextStyle(fontSize: 35, fontWeight: FontWeight.bold),
-            ),
-            SizedBox(
-              height: 30,
-            ),
-            BoldTextCustomizer(
-                width: 800,
-                text:
-                    'Chez OHana Entreprise, nous sommes fiers de notre équipe dévouée et talentueuse qui œuvre chaque jour pour offrir des solutions innovantes et personnalisées à nos clients. Notre équipe est composée de professionnels passionnés par le développement web et mobile, chacun apportant son expertise unique et sa créativité au service de vos projets.',
-                boldTextList: ['OHana Entreprise']),
-            SizedBox(
-              height: 10,
-            ),
-            BoldTextCustomizer(
-                width: 800,
-                text:
-                    "Que ce soit pour la conception d'un site web intuitif, le développement d'une application mobile performante ou la mise en place de solutions sur mesure, notre équipe est là pour vous accompagner à chaque étape du processus. Forts d'une expérience diversifiée et d'une volonté constante d'excellence, nous sommes toujours à l'affût des dernières technologies et tendances du marché pour vous garantir des solutions à la pointe de l'innovation.",
-                boldTextList: ['']),
-          ],
+      child: const Center(
+        child: CustomTextBlock(
+          image:
+              'assets/about_us_image/group-people-holding-hand-assemble-togetherness.jpg',
+          widget: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                'À Propos de Notre Équipe',
+                style: TextStyle(fontSize: 35, fontWeight: FontWeight.bold),
+              ),
+              SizedBox(
+                height: 30,
+              ),
+              BoldTextCustomizer(
+                  width: 800,
+                  text:
+                      'Chez OHana Entreprise, nous sommes fiers de notre équipe dévouée et talentueuse qui œuvre chaque jour pour offrir des solutions innovantes et personnalisées à nos clients. Notre équipe est composée de professionnels passionnés par le développement web et mobile, chacun apportant son expertise unique et sa créativité au service de vos projets.',
+                  boldTextList: ['OHana Entreprise']),
+              SizedBox(
+                height: 10,
+              ),
+              BoldTextCustomizer(
+                  width: 800,
+                  text:
+                      "Que ce soit pour la conception d'un site web intuitif, le développement d'une application mobile performante ou la mise en place de solutions sur mesure, notre équipe est là pour vous accompagner à chaque étape du processus. Forts d'une expérience diversifiée et d'une volonté constante d'excellence, nous sommes toujours à l'affût des dernières technologies et tendances du marché pour vous garantir des solutions à la pointe de l'innovation.",
+                  boldTextList: ['']),
+            ],
+          ),
         ),
       ));
 }

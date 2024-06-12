@@ -17,6 +17,10 @@ class BlogPostUsecase {
     return blogPostRepository.getMostRecentBlogPosts(number: number);
   }
 
+  Future<BlogPost> getSingleBlogPost(String id) {
+    return blogPostRepository.getSingleBlogPost(id: id);
+  }
+
   // Future<List<BlogPost>> searchBlogPostsByName(int number) {
   //   return blogPostRepository.getMostRecentBlogPosts(number: number);
   // }

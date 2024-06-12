@@ -1,12 +1,12 @@
 import 'package:ohana_webapp_flutter/logic/entities/blog_post_content.dart';
 
 class BlogPost {
-  final double id;
+  final String id;
   final String title;
   final String author;
   final String description;
   final DateTime creationDate;
-  final BlogPostContent content;
+  final List<BlogPostContent> content;
   final String imagePath;
 
   const BlogPost(

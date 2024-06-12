@@ -12,8 +12,11 @@ dependencies:
   equatable: ^2.0.0
   carousel_slider: ^4.2.1
   flutter_svg: ^2.0.10+1
+  intl: ^0.18.1
   url_launcher: ^6.0.20
-  intl: ^0.17.0
+  flutter_quill: ^9.3.11
+
+  
 
 dev_dependencies:
   flutter_test:
@@ -43,3 +46,4 @@ flutter:
     - assets/alert_svg/
     - assets/offers_svg/
     - assets/alert_images/
+    - assets/values_icons/
