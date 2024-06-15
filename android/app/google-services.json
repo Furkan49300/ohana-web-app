@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "315460266086",
+    "project_id": "ohanawebapp-4801a",
+    "storage_bucket": "ohanawebapp-4801a.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:315460266086:android:b07b82156d6c5d3ddea5a7",
+        "android_client_info": {
+          "package_name": "com.example.ohana_webapp_flutter"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCcP1_7xzB6mkhk0jTnroaeENvC5iwq_BE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

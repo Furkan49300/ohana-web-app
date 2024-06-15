@@ -3,25 +3,49 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:ohana_webapp_flutter/logic/entities/job_offer.dart';
+import 'package:ohana_webapp_flutter/presentation/bloc/blog_post/blog_post_event.dart';
+import 'package:ohana_webapp_flutter/presentation/bloc/carreers/job_offer_bloc.dart';
+import 'package:ohana_webapp_flutter/presentation/bloc/carreers/job_offer_event.dart';
+import 'package:ohana_webapp_flutter/presentation/bloc/carreers/job_offer_state.dart';
 
 import 'package:ohana_webapp_flutter/presentation/bloc/navbar_dropdown/dropdown_menu_bloc.dart';
 import 'package:ohana_webapp_flutter/presentation/bloc/navbar_dropdown/dropdown_menu_event.dart';
 import 'package:ohana_webapp_flutter/presentation/constants/dimensions.dart';
 import 'package:ohana_webapp_flutter/presentation/constants/router_constants.dart';
-import 'package:ohana_webapp_flutter/presentation/footer/footer_large_screen.dart';
+import 'package:ohana_webapp_flutter/presentation/footer/footer_screen_fit.dart';
 import 'package:ohana_webapp_flutter/presentation/navbar/largescreen/megaDropdown/dropdown_menu_about_us.dart';
 import 'package:ohana_webapp_flutter/presentation/navbar/largescreen/megaDropdown/dropdown_menu_expertises.dart';
 import 'package:ohana_webapp_flutter/presentation/navbar/largescreen/megaDropdown/dropdown_menu_offers.dart';
 import 'package:ohana_webapp_flutter/presentation/navbar/largescreen/navigation_bar_contents_largescreen.dart';
 import 'package:ohana_webapp_flutter/presentation/navbar/search_bar.dart';
-import 'package:ohana_webapp_flutter/presentation/pages/aboutUsPages/carreersPage/widget/carreer_card.dart';
+import 'package:ohana_webapp_flutter/presentation/pages/aboutUsPages/carreersPage/widget/job_offer_card.dart';
 import 'package:ohana_webapp_flutter/presentation/widgets/composants/button_format/button.dart';
 import 'package:ohana_webapp_flutter/presentation/widgets/composants/input_field/custom_input_field.dart';
 import 'package:ohana_webapp_flutter/presentation/widgets/composants/custom_smart_paginator.dart';
 import 'package:ohana_webapp_flutter/presentation/widgets/patterns/custom_banner.dart';
 
-class CarreersPageLargeScreen extends StatelessWidget {
+class CarreersPageLargeScreen extends StatefulWidget {
   const CarreersPageLargeScreen({super.key});
+
+  @override
+  State<CarreersPageLargeScreen> createState() =>
+      _CarreersPageLargeScreenState();
+}
+
+class _CarreersPageLargeScreenState extends State<CarreersPageLargeScreen> {
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    context.read<JobOfferBloc>().add(FetchAllJobOfferEvent());
+  }
+
+  @override
+  void dispose() {
+    // TODO: implement dispose
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -68,7 +92,7 @@ class CarreersPageLargeScreen extends StatelessWidget {
               const SizedBox(height: 50),
               _getListNumber(),
               const SizedBox(height: 50),
-              const FooterLargeScreen(),
+              const Footer(),
             ],
           ),
         ),
@@ -147,63 +171,45 @@ class CarreersPageLargeScreen extends StatelessWidget {
   }
 
 // OFFRES/CONTRACT
-
   _getCarrersItems(context) {
-    List listOfOffers = [
-      {
-        'title': 'Développeur React',
-        'image': 'assets/offers_images/React-Developer-Tools.png',
-        'keyWords': ['île de France', 'Stage', '2 mois'],
-        'date': '15 Mai 2025',
+    return BlocBuilder<JobOfferBloc, JobOfferState>(
+      builder: (context, state) {
+        if (state is AllJobOffersStates) {
+          return Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              for (JobOffer item in state
+                  .jobOffers) //LIST_OF_OFFERS is inside widget_utils.dart doc
+                CustomJobOfferCard(
+                  id: '',
+                  title: item.title,
+                  keyWords: [
+                    item.place,
+                    item.contract,
+                    item.duration,
+                    item.salary
+                  ],
+                  imagePath: item.imagePath,
+                  date: item.pulishDate,
+                  alert: item.alert,
+                  onTap: () {
+                    Navigator.of(context).pushNamed(singleCarreer);
+                  },
+                )
+            ],
+          );
+        } else if (state is JobOfferError) {
+          return Center(
+            child: Text('Something is wrong :${state.errorMessage}'),
+          );
+        } else {
+          return const CircularProgressIndicator();
+        }
       },
-      {
-        'title': 'Designer UI',
-        'image':
-            'assets/offers_images/original-a76def72cdea25d560956e824f479901.png',
-        'keyWords': ['île de France', 'Stage', '2 mois'],
-        'date': '15 Mai 2025',
-        'alert': 'Cette offres à expirée il y a deux jours ',
-        'description': '',
-      },
-      {
-        'title': 'Gestionnaire du réseuax',
-        'image': 'assets/offers_images/conception-reseaux__1100.jpg',
-        'keyWords': ['île de France', 'Stage', '2 mois'],
-        'date': '15 Mai 2025',
-        'description': '',
-      },
-      {
-        'title': 'Développeur mobile flutter',
-        'image':
-            'assets/offers_images/avntages-inconvennients-flutter-application-mobile-hybride_banner.jpg',
-        'keyWords': ['Afrique', 'CDI', '2 mois'],
-        'date': '15 Mai 2025',
-        'description': '',
-        'alert': 'Cette offres a expirée',
-      },
-    ];
-
-    return Column(
-      mainAxisAlignment: MainAxisAlignment.center,
-      children: [
-        for (Map items
-            in listOfOffers) //LIST_OF_OFFERS is inside widget_utils.dart doc
-          CustomCarreerCard(
-            title: items['title'],
-            keyWords: items['keyWords'],
-            imagePath: items['image'],
-            date: items['date'],
-            alert: items['alert'],
-            onTap: () {
-              Navigator.of(context).pushNamed(singleCarreer);
-            },
-          )
-      ],
     );
   }
 
 //NUMBER LIST
-
   _getListNumber() {
     return CustomSmartPaginator(
       startIndicator: 1,
@@ -211,6 +217,4 @@ class CarreersPageLargeScreen extends StatelessWidget {
       onTap: () {},
     );
   }
-
-//---------
 }

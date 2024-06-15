@@ -11,7 +11,7 @@ import 'package:ohana_webapp_flutter/presentation/bloc/navbar_dropdown/dropdown_
 import 'package:ohana_webapp_flutter/presentation/constants/colors.dart';
 import 'package:ohana_webapp_flutter/presentation/constants/dimensions.dart';
 import 'package:ohana_webapp_flutter/presentation/constants/router_constants.dart';
-import 'package:ohana_webapp_flutter/presentation/footer/footer_large_screen.dart';
+import 'package:ohana_webapp_flutter/presentation/footer/footer_screen_fit.dart';
 import 'package:ohana_webapp_flutter/presentation/navbar/largescreen/megaDropdown/dropdown_menu_about_us.dart';
 import 'package:ohana_webapp_flutter/presentation/navbar/largescreen/megaDropdown/dropdown_menu_expertises.dart';
 import 'package:ohana_webapp_flutter/presentation/navbar/largescreen/megaDropdown/dropdown_menu_offers.dart';
@@ -111,7 +111,7 @@ class _OffersPageLargeScreenState extends State<OffersPageLargeScreen> {
                   type: ButtonType.standard,
                   onTap: () => Navigator.of(context).pushNamed(contactUs)),
               const SizedBox(height: 140),
-              const FooterLargeScreen(),
+              const Footer(),
             ],
           ),
         ),

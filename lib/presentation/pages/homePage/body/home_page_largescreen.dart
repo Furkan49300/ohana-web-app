@@ -9,7 +9,7 @@ import 'package:ohana_webapp_flutter/presentation/bloc/blog_post/blog_post_state
 import 'package:ohana_webapp_flutter/presentation/bloc/navbar_dropdown/dropdown_menu_bloc.dart';
 import 'package:ohana_webapp_flutter/presentation/bloc/navbar_dropdown/dropdown_menu_event.dart';
 import 'package:ohana_webapp_flutter/presentation/constants/dimensions.dart';
-import 'package:ohana_webapp_flutter/presentation/footer/footer_large_screen.dart';
+import 'package:ohana_webapp_flutter/presentation/footer/footer_screen_fit.dart';
 import 'package:ohana_webapp_flutter/presentation/navbar/largescreen/megaDropdown/dropdown_menu_about_us.dart';
 import 'package:ohana_webapp_flutter/presentation/navbar/largescreen/megaDropdown/dropdown_menu_expertises.dart';
 import 'package:ohana_webapp_flutter/presentation/navbar/largescreen/megaDropdown/dropdown_menu_offers.dart';
@@ -88,7 +88,7 @@ class _HomePageLargeScreenState extends State<HomePageLargeScreen> {
               const SizedBox(height: 50),
               _getTwoLastBlogs(),
               const SizedBox(height: 150),
-              const FooterLargeScreen(),
+              const Footer(),
             ],
           ),
         ),

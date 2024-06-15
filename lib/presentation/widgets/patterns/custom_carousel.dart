@@ -24,26 +24,26 @@ class CustomCarousel extends StatelessWidget {
     return LayoutBuilder(builder: (context, constraints) {
       if (constraints.maxWidth <= 912) {
         return _getCustomCarouselSlider(
-          viewport: 1,
-          titleWidth: constraints.maxWidth - 400,
-        );
+            viewport: 1,
+            titleWidth: constraints.maxWidth - 400,
+            carouselHeight: 400);
       } else {
         return _getCustomCarouselSlider(
           viewport: viewportFraction,
+          carouselHeight: carouselHeight,
         );
       }
     });
   }
 
-  _getCustomCarouselSlider({
-    required double viewport,
-    double? titleWidth,
-  }) {
+  _getCustomCarouselSlider(
+      {required double viewport,
+      double? titleWidth,
+      required double? carouselHeight}) {
     return Column(
       children: [
         if (title != '')
-          Padding(
-            padding: const EdgeInsets.only(left: spaceLeftBigTitle),
+          Center(
             child: CustomUnderlineTitle(
               title: title,
               textWidth: titleWidth,

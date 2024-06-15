@@ -7,7 +7,7 @@ import 'package:ohana_webapp_flutter/presentation/bloc/navbar_dropdown/dropdown_
 import 'package:ohana_webapp_flutter/presentation/bloc/navbar_dropdown/dropdown_menu_event.dart';
 import 'package:ohana_webapp_flutter/presentation/constants/colors.dart';
 import 'package:ohana_webapp_flutter/presentation/constants/dimensions.dart';
-import 'package:ohana_webapp_flutter/presentation/footer/footer_large_screen.dart';
+import 'package:ohana_webapp_flutter/presentation/footer/footer_screen_fit.dart';
 import 'package:ohana_webapp_flutter/presentation/navbar/largescreen/megaDropdown/dropdown_menu_about_us.dart';
 import 'package:ohana_webapp_flutter/presentation/navbar/largescreen/megaDropdown/dropdown_menu_expertises.dart';
 import 'package:ohana_webapp_flutter/presentation/navbar/largescreen/megaDropdown/dropdown_menu_offers.dart';
@@ -58,18 +58,18 @@ class EstimatePageLargeScreen extends StatelessWidget {
         child: Container(
           width: screenSize.width,
           color: Colors.white,
-          child: Column(
+          child: const Column(
             mainAxisAlignment: MainAxisAlignment.start,
             children: [
-              const CustomBanner(
+              CustomBanner(
                 message: "Devis",
                 imagePath: 'assets/bg-devis.jpg',
                 textColor: purpleNeutral,
               ),
-              const SizedBox(height: 50),
-              const DevisForm(),
-              const SizedBox(height: 70),
-              FooterLargeScreen(),
+              SizedBox(height: 50),
+              DevisForm(),
+              SizedBox(height: 70),
+              Footer(),
             ],
           ),
         ),
@@ -91,17 +91,6 @@ class DevisForm extends StatelessWidget {
     //my Local Variable
     double spaceBetween = 30;
     double widthBalance = 1 / 2;
-    double screenWidth = MediaQuery.of(context).size.width;
-    String selectedOffers = "Service de développement";
-    final List<String> options = [
-      //different type of services
-      'Service de développement',
-      'Service site vitrine',
-      'Service audit vulnérabilité',
-      'Pentesting',
-      'Référencement naturel',
-      'Autres',
-    ];
     //Body
     return Column(
       mainAxisAlignment: MainAxisAlignment.start,

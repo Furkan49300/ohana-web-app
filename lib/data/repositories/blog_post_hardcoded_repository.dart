@@ -5,6 +5,7 @@ import 'dart:async';
 import 'dart:math';
 
 import 'package:ohana_webapp_flutter/logic/entities/blog_post.dart';
+import 'package:ohana_webapp_flutter/logic/entities/job_offer.dart';
 import 'package:ohana_webapp_flutter/logic/repositories/blog_post_repository.dart';
 
 class BlogPostHardCodedRepository implements BlogPostRepository {

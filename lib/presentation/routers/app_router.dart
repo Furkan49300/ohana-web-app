@@ -4,6 +4,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import "package:ohana_webapp_flutter/presentation/bloc/blog_post/blocs/all_blog_posts_bloc.dart";
 import "package:ohana_webapp_flutter/presentation/bloc/blog_post/blocs/recent_blog_posts_bloc.dart";
 import "package:ohana_webapp_flutter/presentation/bloc/blog_post/blocs/single_blog_post_bloc.dart";
+import "package:ohana_webapp_flutter/presentation/bloc/carreers/job_offer_bloc.dart";
 import "package:ohana_webapp_flutter/presentation/pages/aboutUsPages/about_us_largescreen.dart";
 import "package:ohana_webapp_flutter/presentation/pages/aboutUsPages/blogPage/MAINPAGE/blog_page_largescreen.dart";
 import "package:ohana_webapp_flutter/presentation/pages/aboutUsPages/blogPage/single_blogpost_page_largescreen.dart";
@@ -24,6 +25,7 @@ class AppRouter {
   final AllBlogPostsBloc _allBlogPostsBloc = AllBlogPostsBloc();
   final RecentBlogPostsBloc _recentBlogPostsBloc = RecentBlogPostsBloc();
   final SingleBlogPostBloc _singleBlogPostsBloc = SingleBlogPostBloc();
+  final JobOfferBloc _singleCarreerBloc = JobOfferBloc();
 
   Route onGenerateRoute(RouteSettings routeSettings) {
     switch (routeSettings.name) {
@@ -48,19 +50,21 @@ class AppRouter {
             builder: (e) => const ServicesPageLargeScreen());
 
       case web:
-        return MaterialPageRoute(
-            builder: (e) => const WebServicePageLargeScreen());
+        return MaterialPageRoute(builder: (e) => WebServicePageLargeScreen());
 
 //ABOUT US
 
       case aboutUs:
-        return MaterialPageRoute(builder: (e) => const AboutUsLargeScreen());
+        return MaterialPageRoute(builder: (e) => AboutUsLargeScreen());
 
 //CARREERS
 
       case carreers:
         return MaterialPageRoute(
-            builder: (e) => const CarreersPageLargeScreen());
+            builder: (e) => BlocProvider.value(
+                  value: _singleCarreerBloc,
+                  child: const CarreersPageLargeScreen(),
+                ));
 
 //SINGLE CARREER
 

@@ -20,7 +20,7 @@ class StrongPointsSection extends StatelessWidget {
     ];
     Size screenSize = MediaQuery.of(context).size;
     double widthBalance = 0.3;
-    double heightBalance = 0.55;
+    double height = 412;
     return Column(
         crossAxisAlignment: CrossAxisAlignment.start, //begin at Start
         mainAxisSize: MainAxisSize.min,
@@ -38,11 +38,13 @@ class StrongPointsSection extends StatelessWidget {
             children: [
               Image.asset(
                 'buisness.jpg',
-                height: screenSize.height * heightBalance,
+                height: height,
+                width: screenSize.width * widthBalance,
+                fit: BoxFit.cover,
               ),
               textWidget ??
                   Container(
-                    height: screenSize.height * heightBalance,
+                    height: height,
                     color: Colors.purple,
                     child: Align(
                       alignment: Alignment.center,

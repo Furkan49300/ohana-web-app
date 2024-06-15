@@ -7,7 +7,7 @@ import 'package:ohana_webapp_flutter/presentation/bloc/navbar_dropdown/dropdown_
 import 'package:ohana_webapp_flutter/presentation/bloc/navbar_dropdown/dropdown_menu_event.dart';
 import 'package:ohana_webapp_flutter/presentation/constants/dimensions.dart';
 import 'package:ohana_webapp_flutter/presentation/constants/router_constants.dart';
-import 'package:ohana_webapp_flutter/presentation/footer/footer_large_screen.dart';
+import 'package:ohana_webapp_flutter/presentation/footer/footer_screen_fit.dart';
 import 'package:ohana_webapp_flutter/presentation/navbar/largescreen/megaDropdown/dropdown_menu_about_us.dart';
 import 'package:ohana_webapp_flutter/presentation/navbar/largescreen/megaDropdown/dropdown_menu_expertises.dart';
 import 'package:ohana_webapp_flutter/presentation/navbar/largescreen/megaDropdown/dropdown_menu_offers.dart';
@@ -15,7 +15,6 @@ import 'package:ohana_webapp_flutter/presentation/navbar/largescreen/navigation_
 import 'package:ohana_webapp_flutter/presentation/navbar/search_bar.dart';
 import 'package:ohana_webapp_flutter/presentation/pages/expertisesPages/widgets/services_banner.dart';
 import 'package:ohana_webapp_flutter/presentation/widgets/patterns/custom_carousel.dart';
-import 'package:ohana_webapp_flutter/presentation/widgets/composants/button_format/custom_icon_button.dart';
 import 'package:ohana_webapp_flutter/presentation/widgets/patterns/strong_points_section.dart';
 
 class ServicesPageLargeScreen extends StatelessWidget {
@@ -84,7 +83,7 @@ class ServicesPageLargeScreen extends StatelessWidget {
         const SizedBox(
           height: 70,
         ),
-        const FooterLargeScreen()
+        const Footer()
       ],
     );
   }

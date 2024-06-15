@@ -8,16 +8,16 @@ class Button extends StatefulWidget {
   final VoidCallback onTap;
   final double paddingLeftRight;
   final double paddingTopBottom;
+  final MouseCursor mouseCursor;
 
-  const Button(
-    this.content, {
-    super.key,
-    required this.type,
-    required this.onTap,
-    this.fontSizeVal = 17,
-    this.paddingLeftRight = 20.0,
-    this.paddingTopBottom = 5.0,
-  });
+  const Button(this.content,
+      {super.key,
+      required this.type,
+      required this.onTap,
+      this.fontSizeVal = 17,
+      this.paddingLeftRight = 20.0,
+      this.paddingTopBottom = 5.0,
+      this.mouseCursor = SystemMouseCursors.click});
 
   @override
   _ButtonState createState() => _ButtonState();
@@ -29,6 +29,7 @@ class _ButtonState extends State<Button> {
   @override
   Widget build(BuildContext context) {
     return InkWell(
+      mouseCursor: widget.mouseCursor,
       onTap: widget.onTap,
       onHover: (val) {
         setState(() {
