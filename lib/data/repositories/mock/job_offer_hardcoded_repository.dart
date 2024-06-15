@@ -1,6 +1,6 @@
 import 'dart:math';
 
-import 'package:ohana_webapp_flutter/data/custom_convertor.dart';
+import 'package:ohana_webapp_flutter/data/repositories/mock/custom_convertor.dart';
 import 'package:ohana_webapp_flutter/data/exception/job_offer_network_exceptions.dart';
 import 'package:ohana_webapp_flutter/data/exception/job_offer_server_exceptions.dart';
 import 'package:ohana_webapp_flutter/logic/entities/job_offer.dart';

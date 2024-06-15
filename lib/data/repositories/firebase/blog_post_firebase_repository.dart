@@ -1,7 +1,7 @@
 import 'package:ohana_webapp_flutter/logic/entities/blog_post.dart';
 import 'package:ohana_webapp_flutter/logic/repositories/blog_post_repository.dart';
 import 'package:firebase_core/firebase_core.dart';
-import 'package:ohana_webapp_flutter/firebase_options.dart';
+import 'package:ohana_webapp_flutter/data/repositories/firebase/firebase_options.dart';
 
 class BlogPostFirebaseRepository implements BlogPostRepository {
   @override
