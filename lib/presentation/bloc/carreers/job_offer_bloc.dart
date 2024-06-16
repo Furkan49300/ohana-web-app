@@ -12,7 +12,7 @@ class JobOfferBloc extends Bloc<CarreersEvent, JobOfferState> {
         // Récupérer les offres
         final List<JobOffer> allJobOffers = await JobOfferUsecase(
                 jobOffersRepository: JobOfferHardCodedRepository())
-            .getAllBlogArticles();
+            .getAllJobOffers();
 
         // Retourner les offres
         emit(AllJobOffersStates(allJobOffers));

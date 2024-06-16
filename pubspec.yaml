@@ -17,8 +17,7 @@ dependencies:
   flutter_quill: ^9.3.11
   transformable_list_view: ^0.5.0
   firebase_core: ^3.1.0
-
-  
+  cloud_firestore: ^5.0.1 
 
 dev_dependencies:
   flutter_test:

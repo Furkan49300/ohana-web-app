@@ -9,7 +9,7 @@ class JobOfferUsecase {
       : jobOffersRepository =
             jobOffersRepository ?? JobOfferHardCodedRepository();
 
-  Future<List<JobOffer>> getAllBlogArticles() {
+  Future<List<JobOffer>> getAllJobOffers() {
     return jobOffersRepository.getAllJobOffers();
   }
 }
