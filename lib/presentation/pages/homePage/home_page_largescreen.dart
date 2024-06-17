@@ -179,7 +179,7 @@ _getTwoLastBlogs() {
 Widget _getBlogCards() {
   return BlocBuilder<RecentBlogPostsBloc, BlogPostState>(
     builder: (context, state) {
-      if (state is RecentBlogPostLoaded) {
+      if (state is BlogPostLoaded) {
         return BlogCardPattern(
           blogList: state.blogPosts,
           cardWidth: 600,

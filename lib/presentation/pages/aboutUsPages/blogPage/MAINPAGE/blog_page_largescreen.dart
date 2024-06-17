@@ -4,7 +4,7 @@ import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:ohana_webapp_flutter/logic/entities/blog_post.dart';
 import 'package:ohana_webapp_flutter/presentation/bloc/blog_post/blocs/all_blog_posts_bloc.dart';
-import 'package:ohana_webapp_flutter/presentation/bloc/blog_post/blocs/paginted_blog_posts_bloc.dart';
+import 'package:ohana_webapp_flutter/presentation/bloc/blog_post/blocs/paginated_blog_posts_bloc.dart';
 import 'package:ohana_webapp_flutter/presentation/bloc/blog_post/blocs/recent_blog_posts_bloc.dart';
 import 'package:ohana_webapp_flutter/presentation/bloc/blog_post/blog_post_event.dart';
 import 'package:ohana_webapp_flutter/presentation/bloc/blog_post/blog_post_state.dart';
@@ -36,7 +36,7 @@ class _BlogPageLargeScreenState extends State<BlogPageLargeScreen> {
   @override
   void initState() {
     context.read<RecentBlogPostsBloc>().add(FetchMostRecentBlogPosts(4));
-    context.read<PagintedBlogPostsBloc>().add(FetchFirstBlogPostsPage());
+    context.read<PaginatedBlogPostsBloc>().add(FetchFirstBlogPostsPage());
     super.initState();
   }
 
@@ -100,7 +100,7 @@ class _BlogPageLargeScreenState extends State<BlogPageLargeScreen> {
 
     return BlocBuilder<RecentBlogPostsBloc, BlogPostState>(
       builder: (context, state) {
-        if (state is RecentBlogPostLoaded) {
+        if (state is BlogPostLoaded) {
           return CustomCarousel(
               viewportFraction: 1,
               carouselHeight: height,
@@ -138,7 +138,7 @@ class _BlogPageLargeScreenState extends State<BlogPageLargeScreen> {
   }
 
   Widget _getBlogCards() {
-    return BlocBuilder<PagintedBlogPostsBloc, BlogPostState>(
+    return BlocBuilder<PaginatedBlogPostsBloc, BlogPostState>(
       builder: (context, state) {
         if (state is BlogPostLoaded) {
           return BlogCardPattern(

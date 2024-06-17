@@ -8,7 +8,10 @@ class FetchFirstBlogPostsPage extends BlogPostEvent {}
 
 class FetchPreviousBlogPostsPage extends BlogPostEvent {}
 
-class FetchNextBlogPostsPage extends BlogPostEvent {}
+class FetchNextBlogPostsPage extends BlogPostEvent {
+  final String lastDocumentId;
+  FetchNextBlogPostsPage(this.lastDocumentId);
+}
 
 class FetchNthBlogPostsPage extends BlogPostEvent {}
 
@@ -23,6 +26,5 @@ class FetchSingleBlogPost extends BlogPostEvent {
 
 class FetchMostRecentBlogPosts extends BlogPostEvent {
   final int number;
-
   FetchMostRecentBlogPosts(this.number);
 }

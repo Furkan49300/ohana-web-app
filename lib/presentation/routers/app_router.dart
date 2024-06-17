@@ -2,7 +2,7 @@ import "package:flutter/material.dart";
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import "package:ohana_webapp_flutter/presentation/bloc/blog_post/blocs/all_blog_posts_bloc.dart";
-import "package:ohana_webapp_flutter/presentation/bloc/blog_post/blocs/paginted_blog_posts_bloc.dart";
+import "package:ohana_webapp_flutter/presentation/bloc/blog_post/blocs/paginated_blog_posts_bloc.dart";
 import "package:ohana_webapp_flutter/presentation/bloc/blog_post/blocs/recent_blog_posts_bloc.dart";
 import "package:ohana_webapp_flutter/presentation/bloc/blog_post/blocs/single_blog_post_bloc.dart";
 import "package:ohana_webapp_flutter/presentation/bloc/carreers/job_offer_bloc.dart";
@@ -24,7 +24,8 @@ import "package:ohana_webapp_flutter/presentation/pages/searchPage/search_page_l
 
 class AppRouter {
   final AllBlogPostsBloc _allBlogPostsBloc = AllBlogPostsBloc();
-  final PagintedBlogPostsBloc _paginatedBlogPostsBloc = PagintedBlogPostsBloc();
+  final PaginatedBlogPostsBloc _paginatedBlogPostsBloc =
+      PaginatedBlogPostsBloc();
   final RecentBlogPostsBloc _recentBlogPostsBloc = RecentBlogPostsBloc();
   final SingleBlogPostBloc _singleBlogPostsBloc = SingleBlogPostBloc();
   final JobOfferBloc _singleCarreerBloc = JobOfferBloc();

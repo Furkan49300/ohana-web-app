@@ -5,4 +5,5 @@ abstract class BlogPostRepository {
   Future<List<BlogPost>> getMostRecentBlogPosts({required int number});
   Future<BlogPost> getSingleBlogPost({required String id});
   Future<List<BlogPost>> getFirstBlogPostsPage();
+  Future<List<BlogPost>> getNextBlogPostsPage(String lastDocumentId);
 }

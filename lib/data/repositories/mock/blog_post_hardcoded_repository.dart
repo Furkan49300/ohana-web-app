@@ -413,4 +413,10 @@ class BlogPostHardCodedRepository implements BlogPostRepository {
     // TODO: implement getFirstBlogPostsPage
     throw UnimplementedError();
   }
+
+  @override
+  Future<List<BlogPost>> getNextBlogPostsPage(String lastDocumentId) {
+    // TODO: implement getNextBlogPostsPage
+    throw UnimplementedError();
+  }
 }

@@ -25,9 +25,13 @@ class BlogPostFirebaseRepository implements BlogPostRepository {
   }
 
   @override
-  Future<BlogPost> getSingleBlogPost({required String id}) {
-    // TODO: implement getSpecificBlogPosts
-    throw UnimplementedError();
+  Future<BlogPost> getSingleBlogPost({required String id}) async {
+    // Recuperer le dernier document via son Id
+    DocumentSnapshot querySnapshot =
+        await FirebaseFirestore.instance.collection('blogposts').doc(id).get();
+
+    // Parcourt les documents dans la collection
+    return _blogPostMapping(querySnapshot);
   }
 
   @override
@@ -36,6 +40,26 @@ class BlogPostFirebaseRepository implements BlogPostRepository {
     QuerySnapshot querySnapshot = await FirebaseFirestore.instance
         .collection('blogposts')
         .orderBy('publish_date', descending: true)
+        .limit(pageSize)
+        .get();
+
+    // Parcourt les documents dans la collection
+    return querySnapshot.docs.map(_blogPostMapping).toList();
+  }
+
+  @override
+  Future<List<BlogPost>> getNextBlogPostsPage(String lastDocumentId) async {
+    // 1 - Recuperer le dernier document via son Id
+    DocumentSnapshot lastDocSnapshot = await FirebaseFirestore.instance
+        .collection('blogposts')
+        .doc(lastDocumentId)
+        .get();
+
+    // Step 2: Utiliser startAfter avec le document recuperé
+    QuerySnapshot querySnapshot = await FirebaseFirestore.instance
+        .collection('blogposts')
+        .orderBy('publish_date', descending: true)
+        .startAfterDocument(lastDocSnapshot)
         .limit(pageSize)
         .get();
 

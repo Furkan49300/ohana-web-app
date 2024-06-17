@@ -7,31 +7,15 @@ abstract class BlogPostState extends Equatable {
   List<Object> get props => [];
 }
 
-//Initial
-
 class BlogPostInitial extends BlogPostState {}
 
 class BlogPostLoaded extends BlogPostState {
   final List<BlogPost> blogPosts;
-
   const BlogPostLoaded(this.blogPosts);
 
   @override
   List<Object> get props => [blogPosts];
 }
-
-//RECENT BLOG
-
-class RecentBlogPostLoaded extends BlogPostState {
-  final List<BlogPost> blogPosts;
-
-  const RecentBlogPostLoaded(this.blogPosts);
-
-  @override
-  List<Object> get props => [blogPosts];
-}
-
-// SINGLE BLOG POST
 
 class SingleBlogPostLoaded extends BlogPostState {
   final BlogPost singleBlogPost;
@@ -41,8 +25,6 @@ class SingleBlogPostLoaded extends BlogPostState {
   @override
   List<Object> get props => [singleBlogPost];
 }
-
-//BLOG POST ERROR
 
 class BlogPostError extends BlogPostState {
   final String errorMessage;

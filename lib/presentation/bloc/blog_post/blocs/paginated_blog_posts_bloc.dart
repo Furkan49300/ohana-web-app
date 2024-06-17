@@ -6,9 +6,10 @@ import 'package:ohana_webapp_flutter/logic/usecases/blog_post_usecase.dart';
 import 'package:ohana_webapp_flutter/presentation/bloc/blog_post/blog_post_event.dart';
 import 'package:ohana_webapp_flutter/presentation/bloc/blog_post/blog_post_state.dart';
 
-class PagintedBlogPostsBloc extends Bloc<BlogPostEvent, BlogPostState> {
-  PagintedBlogPostsBloc() : super(BlogPostInitial()) {
+class PaginatedBlogPostsBloc extends Bloc<BlogPostEvent, BlogPostState> {
+  PaginatedBlogPostsBloc() : super(BlogPostInitial()) {
     on<FetchFirstBlogPostsPage>(_onFetchFirstBlogPostsPage);
+    on<FetchNextBlogPostsPage>(_onFetchNextBlogPostsPage);
   }
 
   void _onFetchFirstBlogPostsPage(
@@ -20,6 +21,24 @@ class PagintedBlogPostsBloc extends Bloc<BlogPostEvent, BlogPostState> {
       final List<BlogPost> blogPosts = await BlogPostUsecase(
               blogPostRepository: BlogPostFirebaseRepository())
           .getFirstBlogPostsPage();
+
+      // Retourner les articles du blog
+      emit(BlogPostLoaded(blogPosts));
+    } catch (e) {
+      // Gérer les erreurs
+      emit(BlogPostError(e.toString())); // Affiche un message d'erreur
+    }
+  }
+
+  void _onFetchNextBlogPostsPage(
+      FetchNextBlogPostsPage event, Emitter<BlogPostState> emit) async {
+    emit(BlogPostInitial()); // Affiche le CircularProgressIndicator
+
+    try {
+      // Récupérer la page
+      final List<BlogPost> blogPosts = await BlogPostUsecase(
+              blogPostRepository: BlogPostFirebaseRepository())
+          .getNextBlogPostsPage(event.lastDocumentId);
 
       // Retourner les articles du blog
       emit(BlogPostLoaded(blogPosts));

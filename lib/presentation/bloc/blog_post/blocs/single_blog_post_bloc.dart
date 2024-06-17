@@ -1,4 +1,5 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:ohana_webapp_flutter/data/repositories/firebase/blog_post_firebase_repository.dart';
 
 import 'package:ohana_webapp_flutter/data/repositories/mock/blog_post_hardcoded_repository.dart';
 import 'package:ohana_webapp_flutter/logic/entities/blog_post.dart';
@@ -12,7 +13,7 @@ class SingleBlogPostBloc extends Bloc<BlogPostEvent, BlogPostState> {
       try {
         // Récupérer l'article' du blog
         final BlogPost blogPost = await BlogPostUsecase(
-                blogPostRepository: BlogPostHardCodedRepository())
+                blogPostRepository: BlogPostFirebaseRepository())
             .getSingleBlogPost(event.id);
 
         // Retourner l' articles du blog

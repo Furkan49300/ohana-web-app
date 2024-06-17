@@ -21,7 +21,7 @@ class RecentBlogPostsBloc extends Bloc<BlogPostEvent, BlogPostState> {
           .getMostRecentBlogPosts(event.number);
 
       // Retourner les articles du blog
-      emit(RecentBlogPostLoaded(blogPosts));
+      emit(BlogPostLoaded(blogPosts));
     } catch (e) {
       // Gérer les erreurs
       emit(BlogPostError(e.toString())); // Affiche un message d'erreur
