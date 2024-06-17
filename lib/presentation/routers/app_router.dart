@@ -13,7 +13,7 @@ import "package:ohana_webapp_flutter/presentation/pages/aboutUsPages/carreersPag
 import "package:ohana_webapp_flutter/presentation/pages/aboutUsPages/estimatePage/estimate_page_largescreen.dart";
 import "package:ohana_webapp_flutter/presentation/pages/aboutUsPages/contactPage/contact_page_largescreen.dart";
 import "package:ohana_webapp_flutter/presentation/pages/expertisesPages/DEV/MAINPAGE/dev_services_page_largescreen.dart";
-import "package:ohana_webapp_flutter/presentation/pages/homePage/home_page.dart";
+import "package:ohana_webapp_flutter/presentation/pages/homePage/home_page_largescreen.dart";
 import "package:ohana_webapp_flutter/presentation/pages/no_existing_page.dart";
 import "package:ohana_webapp_flutter/presentation/constants/router_constants.dart";
 import "package:ohana_webapp_flutter/presentation/pages/expertisesPages/MAINPAGE/services_largescreen_page.dart";
@@ -37,7 +37,7 @@ class AppRouter {
                     BlocProvider.value(value: _recentBlogPostsBloc),
                     BlocProvider.value(value: _singleBlogPostsBloc),
                   ],
-                  child: const HomePage(),
+                  child: const HomePageLargeScreen(),
                 ));
 
       case contactUs:

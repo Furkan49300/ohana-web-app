@@ -10,9 +10,11 @@ import 'package:ohana_webapp_flutter/presentation/widgets/composants/input_field
 
 class SearchNavBar extends StatelessWidget {
   final String placeholder;
-  const SearchNavBar(
-      {super.key, required this.placeholder, this.textEditingController});
-  final TextEditingController? textEditingController;
+  SearchNavBar({
+    super.key,
+    required this.placeholder,
+  });
+  final TextEditingController textEditingController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -26,7 +28,10 @@ class SearchNavBar extends StatelessWidget {
             height: state is SearchNavbarShowedState ? 70 : 0,
             color: const Color.fromARGB(255, 190, 151, 218),
             child: Row(mainAxisAlignment: MainAxisAlignment.center, children: [
-              CustomInputField(placeholder: placeholder),
+              CustomInputField(
+                placeholder: placeholder,
+                textEditingController: textEditingController,
+              ),
               const SizedBox(
                 width: 10,
               ),

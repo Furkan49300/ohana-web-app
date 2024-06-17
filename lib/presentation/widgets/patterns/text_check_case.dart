@@ -1,17 +1,18 @@
 import 'package:flutter/material.dart';
 
 class TextCheckCase extends StatefulWidget {
-  const TextCheckCase(
-      {super.key, this.widthBalance = 1 / 2.1, required this.text});
+  TextCheckCase({super.key, this.widthBalance = 1 / 2.1, required this.text});
   final double widthBalance;
   final String text;
+  bool isChecked = false;
 
   @override
-  State<TextCheckCase> createState() => _TextCheckCaseState();
+  State<TextCheckCase> createState() => TextCheckCaseState();
 }
 
-class _TextCheckCaseState extends State<TextCheckCase> {
-  bool _isChecked = false;
+class TextCheckCaseState extends State<TextCheckCase> {
+  bool get isChecked => widget.isChecked;
+
   @override
   Widget build(BuildContext context) {
     double mediaScreenWidth = MediaQuery.of(context).size.width;
@@ -20,15 +21,15 @@ class _TextCheckCaseState extends State<TextCheckCase> {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Checkbox(
-          value: _isChecked,
+          value: widget.isChecked,
           onChanged: (value) {
             setState(() {
-              _isChecked = value ?? false;
+              widget.isChecked = value ?? false;
             });
           },
           checkColor: Colors.white,
           fillColor: MaterialStateColor.resolveWith(
-              (states) => _isChecked ? Colors.purple : Colors.white),
+              (states) => widget.isChecked ? Colors.purple : Colors.white),
         ),
         SizedBox(
           width: mediaScreenWidth * widget.widthBalance,

@@ -13,7 +13,7 @@ import 'package:ohana_webapp_flutter/presentation/footer/footer_screen_fit.dart'
 import 'package:ohana_webapp_flutter/presentation/navbar/largescreen/megaDropdown/dropdown_menu_about_us.dart';
 import 'package:ohana_webapp_flutter/presentation/navbar/largescreen/megaDropdown/dropdown_menu_expertises.dart';
 import 'package:ohana_webapp_flutter/presentation/navbar/largescreen/megaDropdown/dropdown_menu_offers.dart';
-import 'package:ohana_webapp_flutter/presentation/navbar/largescreen/navigation_bar_contents_largescreen.dart';
+import 'package:ohana_webapp_flutter/presentation/navbar/navbar_responsiveness.dart';
 import 'package:ohana_webapp_flutter/presentation/navbar/search_bar.dart';
 import 'package:ohana_webapp_flutter/presentation/pages/homePage/widgets/expertises_card.dart';
 import 'package:ohana_webapp_flutter/presentation/widgets/patterns/blog_card_pattern.dart';
@@ -41,9 +41,8 @@ class _HomePageLargeScreenState extends State<HomePageLargeScreen> {
     Size screenSize = MediaQuery.of(context).size;
     return Scaffold(
         backgroundColor: Colors.white,
-        appBar: PreferredSize(
-            preferredSize: Size(screenSize.width, navBarHeight),
-            child: const NavigationBarContentsLargeScreen()),
+        appBar: NavbarResponsiveness.getNavbar(screenSize.width),
+        endDrawer: NavbarResponsiveness.getEndDrawer(screenSize.width),
         body: Stack(
           children: [
             // CONTENT
@@ -58,7 +57,7 @@ class _HomePageLargeScreenState extends State<HomePageLargeScreen> {
             const DropdownMenuOffers(),
             const DropdownMenuAboutUs(),
             //SEARCH BAR
-            const SearchNavBar(
+            SearchNavBar(
               placeholder:
                   "Cherchez une page, un service, un article, une offre d'emploi...",
             )

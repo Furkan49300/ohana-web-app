@@ -1,0 +1,25 @@
+import 'package:flutter/material.dart';
+import 'package:ohana_webapp_flutter/presentation/constants/dimensions.dart';
+import 'package:ohana_webapp_flutter/presentation/navbar/largescreen/navigation_bar_contents_largescreen.dart';
+import 'package:ohana_webapp_flutter/presentation/navbar/smallscreen/custom_drawer.dart';
+import 'package:ohana_webapp_flutter/presentation/navbar/smallscreen/navigation_bar_contents_smallscreen.dart';
+
+class NavbarResponsiveness {
+  static PreferredSize getNavbar(screenSizeWidth) {
+    return screenSizeWidth > smallBreakpoint
+        ? PreferredSize(
+            preferredSize: Size(screenSizeWidth, navBarHeight),
+            child: const NavigationBarContentsLargeScreen())
+        : PreferredSize(
+            preferredSize: Size(screenSizeWidth, navBarHeight),
+            child: AppBar(
+                automaticallyImplyLeading:
+                    false, // This removes the back button
+                actions: [Container()],
+                flexibleSpace: const NavigationBarContentsSmallScreen()));
+  }
+
+  static getEndDrawer(screenSizeWidth) {
+    return screenSizeWidth > smallBreakpoint ? null : const CustomEndDrawer();
+  }
+}

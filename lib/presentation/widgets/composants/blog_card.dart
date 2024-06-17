@@ -45,11 +45,17 @@ class BlogCard extends StatelessWidget {
           mainAxisSize: MainAxisSize.min,
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            Image.asset(
+            Image.network(
               pathOfTopImage,
               width: width,
               height: 340,
               fit: BoxFit.cover,
+              errorBuilder: (context, error, stackTrace) {
+                return Text(
+                  'Impossible de charger l\'image.\n erreur: $error',
+                  style: const TextStyle(fontSize: 30),
+                );
+              },
             ),
             Padding(
                 padding: const EdgeInsets.only(left: 40, right: 40, top: 20),
@@ -78,5 +84,13 @@ class BlogCard extends StatelessWidget {
   }
 }
 
+
+// Text(
+//                     text,
+//                     maxLines: 8,
+//                     style: const TextStyle(fontSize: 24),
+//                     softWrap: true,
+//                     overflow: TextOverflow.ellipsis,
+//                   )),
 
 //"My funny text is start : Lorem ipsum dolor sit amet consectetur adipisicing elit. Expedita labore perspiciatis, eaque ducimus nobis molestias blanditiis illum suscipit, deserunt necessitatibus animi dignissimos vero, mollitia facilis repellat vitae. Ipsum, eligendi alias."

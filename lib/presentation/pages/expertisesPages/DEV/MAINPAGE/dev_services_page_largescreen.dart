@@ -4,7 +4,6 @@ import 'package:ohana_webapp_flutter/presentation/constants/colors.dart';
 import 'package:ohana_webapp_flutter/presentation/constants/router_constants.dart';
 import 'package:ohana_webapp_flutter/presentation/pages/offersPages/MAINPAGE/widgets/circular_image_loader.dart';
 import 'package:ohana_webapp_flutter/presentation/widgets/composants/button_format/button.dart';
-import 'package:ohana_webapp_flutter/presentation/widgets/composants/text_format/custom_text_list.dart';
 import 'package:ohana_webapp_flutter/presentation/widgets/patterns/custom_banner.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
@@ -45,7 +44,7 @@ class DevServicesPageLargeScreen extends StatelessWidget {
             const DropdownMenuOffers(),
             const DropdownMenuAboutUs(),
             //SEARCH BAR
-            const SearchNavBar(
+            SearchNavBar(
               placeholder:
                   "Cherchez une page, un service, un article, une offre d'emploi...",
             ),

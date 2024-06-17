@@ -3,10 +3,14 @@ import 'package:ohana_webapp_flutter/presentation/constants/colors.dart';
 
 class CustomInputField extends StatelessWidget {
   const CustomInputField(
-      {super.key, required this.placeholder, this.widthBalance = 2 / 3});
+      {super.key,
+      required this.placeholder,
+      this.widthBalance = 2 / 3,
+      required this.textEditingController});
 
   final String placeholder;
   final double widthBalance;
+  final TextEditingController textEditingController;
 
   @override
   Widget build(BuildContext context) {
@@ -15,6 +19,7 @@ class CustomInputField extends StatelessWidget {
     return SizedBox(
       width: screenSizeWidth * widthBalance,
       child: TextField(
+          controller: textEditingController,
           decoration: InputDecoration(
               hintText: placeholder,
               hintStyle: const TextStyle(color: Colors.grey),

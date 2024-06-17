@@ -15,7 +15,10 @@ import 'package:ohana_webapp_flutter/presentation/navbar/largescreen/megaDropdow
 import 'package:ohana_webapp_flutter/presentation/navbar/largescreen/megaDropdown/dropdown_menu_expertises.dart';
 import 'package:ohana_webapp_flutter/presentation/navbar/largescreen/megaDropdown/dropdown_menu_offers.dart';
 import 'package:ohana_webapp_flutter/presentation/navbar/largescreen/navigation_bar_contents_largescreen.dart';
+import 'package:ohana_webapp_flutter/presentation/navbar/navbar_responsiveness.dart';
 import 'package:ohana_webapp_flutter/presentation/navbar/search_bar.dart';
+import 'package:ohana_webapp_flutter/presentation/navbar/smallscreen/custom_drawer.dart';
+import 'package:ohana_webapp_flutter/presentation/navbar/smallscreen/navigation_bar_contents_smallscreen.dart';
 import 'package:ohana_webapp_flutter/presentation/widgets/composants/custom_smart_paginator.dart';
 import 'package:ohana_webapp_flutter/presentation/widgets/composants/text_format/custom_underlined_title.dart';
 import 'package:ohana_webapp_flutter/presentation/widgets/patterns/blog_card_pattern.dart';
@@ -41,9 +44,8 @@ class _BlogPageLargeScreenState extends State<BlogPageLargeScreen> {
     Size screenSize = MediaQuery.of(context).size;
     return Scaffold(
         backgroundColor: Colors.white,
-        appBar: PreferredSize(
-            preferredSize: Size(screenSize.width, navBarHeight),
-            child: const NavigationBarContentsLargeScreen()),
+        appBar: NavbarResponsiveness.getNavbar(screenSize.width),
+        endDrawer: NavbarResponsiveness.getEndDrawer(screenSize.width),
         body: Stack(
           children: [
             // CONTENT
@@ -58,7 +60,7 @@ class _BlogPageLargeScreenState extends State<BlogPageLargeScreen> {
             const DropdownMenuOffers(),
             const DropdownMenuAboutUs(),
             //SEARCH BAR
-            const SearchNavBar(
+            SearchNavBar(
               placeholder:
                   "Cherchez une page, un service, un article, une offre d'emploi...",
             )

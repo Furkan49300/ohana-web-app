@@ -112,7 +112,7 @@ class _AboutUsLargeScreenState extends State<AboutUsLargeScreen> {
                     },
                   ),
                 //SEARCH BAR
-                const SearchNavBar(
+                SearchNavBar(
                   placeholder:
                       "Cherchez une page, un service, un article, une offre d'emploi...",
                 )

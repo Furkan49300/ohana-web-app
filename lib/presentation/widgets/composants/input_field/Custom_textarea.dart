@@ -3,8 +3,12 @@ import 'package:flutter/material.dart';
 class CustomTextarea extends StatelessWidget {
   final String placeholder;
   final double widthBalance;
+  final TextEditingController textEditingController;
   const CustomTextarea(
-      {super.key, this.placeholder = "", this.widthBalance = 1 / 2});
+      {super.key,
+      this.placeholder = "",
+      this.widthBalance = 1 / 2,
+      required this.textEditingController});
 
   @override
   Widget build(BuildContext context) {

@@ -48,7 +48,7 @@ class ServicesPageLargeScreen extends StatelessWidget {
                 const DropdownMenuOffers(),
                 const DropdownMenuAboutUs(),
                 //SEARCH BAR
-                const SearchNavBar(
+                SearchNavBar(
                   placeholder:
                       "Cherchez une page, un service, un article, une offre d'emploi...",
                 )

@@ -13,9 +13,12 @@ class NavigationBarContentsLargeScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-      children: [const Logo(), _navBarItems(context)],
+    return Container(
+      color: Colors.white,
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [const Logo(), _navBarItems(context)],
+      ),
     );
   }
 

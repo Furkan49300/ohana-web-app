@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
@@ -15,7 +17,6 @@ import 'package:ohana_webapp_flutter/presentation/navbar/search_bar.dart';
 import 'package:ohana_webapp_flutter/presentation/widgets/composants/button_format/button.dart';
 import 'package:ohana_webapp_flutter/presentation/widgets/composants/input_field/Custom_textarea.dart';
 import 'package:ohana_webapp_flutter/presentation/widgets/composants/input_field/custom_input_field.dart';
-import 'package:ohana_webapp_flutter/presentation/widgets/composants/text_format/bold_text_customiser.dart';
 import 'package:ohana_webapp_flutter/presentation/widgets/patterns/custom_banner.dart';
 import 'package:ohana_webapp_flutter/presentation/widgets/patterns/text_check_case.dart';
 
@@ -44,7 +45,7 @@ class ContactPage extends StatelessWidget {
             const DropdownMenuOffers(),
             const DropdownMenuAboutUs(),
             //SEARCH BAR
-            const SearchNavBar(
+            SearchNavBar(
               placeholder:
                   "Cherchez une page, un service, un article, une offre d'emploi...",
             )
@@ -58,18 +59,18 @@ class ContactPage extends StatelessWidget {
         child: Container(
           width: screenSize.width,
           color: Colors.white,
-          child: const Column(
+          child: Column(
             mainAxisAlignment: MainAxisAlignment.start,
             children: [
-              CustomBanner(
+              const CustomBanner(
                 message: "Contact",
                 imagePath:
                     'assets/homepage_image/programming-background-collage.jpg',
               ),
-              SizedBox(height: 50),
+              const SizedBox(height: 50),
               ContactForm(),
-              SizedBox(height: 70),
-              Footer(),
+              const SizedBox(height: 70),
+              const Footer(),
             ],
           ),
         ),
@@ -79,7 +80,17 @@ class ContactPage extends StatelessWidget {
 }
 
 class ContactForm extends StatelessWidget {
-  const ContactForm({super.key});
+  ContactForm({super.key});
+
+  bool emailAlert = false;
+  String emailAlertMessage = "Veuillez entrer une adresse valide!";
+  TextEditingController firstNameFieldController = TextEditingController();
+  TextEditingController lastNameFieldController = TextEditingController();
+  TextEditingController emailFieldController = TextEditingController();
+  TextEditingController subjectFieldController = TextEditingController();
+  TextEditingController messageFieldController = TextEditingController();
+  GlobalKey<TextCheckCaseState> checkBoxGlobalKey =
+      GlobalKey<TextCheckCaseState>();
 
   _getTitle(title) {
     return Text(title,
@@ -95,44 +106,71 @@ class ContactForm extends StatelessWidget {
       children: [
         const SizedBox(height: 5),
         _getTitle("Nom"),
-        const CustomInputField(
+        CustomInputField(
           placeholder: 'Nom',
           widthBalance: 1 / 2,
+          textEditingController: firstNameFieldController,
         ),
         SizedBox(height: spaceBetween),
         _getTitle('Prénom'),
         const SizedBox(height: 5),
-        const CustomInputField(
+        CustomInputField(
           placeholder: 'Prénom',
           widthBalance: 1 / 2,
+          textEditingController: lastNameFieldController,
         ),
         SizedBox(height: spaceBetween),
         _getTitle('Email'),
         const SizedBox(height: 5),
-        const CustomInputField(
+        CustomInputField(
           placeholder: 'exemple@email.com',
           widthBalance: 1 / 2,
+          textEditingController: emailFieldController,
         ),
+        emailAlert
+            ? Text(emailAlertMessage,
+                style: const TextStyle(color: Colors.red, fontSize: 15))
+            : const SizedBox(),
         SizedBox(height: spaceBetween),
         _getTitle('Sujet'),
         const SizedBox(height: 5),
-        const CustomInputField(
+        CustomInputField(
           placeholder: 'Ecrire le sujet du message',
           widthBalance: 1 / 2,
+          textEditingController: subjectFieldController,
         ),
         SizedBox(height: spaceBetween),
         const SizedBox(height: 5),
-        const CustomTextarea(
+        CustomTextarea(
           placeholder: "Message ...",
+          textEditingController: messageFieldController,
         ),
         const SizedBox(height: 10),
-        Button('Envoyer', type: ButtonType.standard, onTap: () {}),
+        Button('Envoyer', type: ButtonType.standard, onTap: () {
+          _sendData(checkBoxGlobalKey);
+        }),
         const SizedBox(height: 15),
-        const TextCheckCase(
+        TextCheckCase(
+          key: checkBoxGlobalKey,
           text:
               'Les informations recueillies à partir de ce formulaire sont traitées par Digitemis pour donner suite à votre demande de contact. Pour connaître et/ou exercer vos droits, référez-vous à la politique de OHana sur la protection des données, cliquez ici.',
         )
       ],
     );
+  }
+
+  _sendData(GlobalKey<TextCheckCaseState> checkBoxGlobalKey) {
+    String firstName = firstNameFieldController.text;
+    String lastName = lastNameFieldController.text;
+    String email = emailFieldController.text;
+    String subject = subjectFieldController.text;
+    String message = messageFieldController.text;
+    TextCheckCaseState? checkBox = checkBoxGlobalKey.currentState;
+    if (checkBox != null && checkBox.isChecked) {
+      final RegExp emailRegex = RegExp(r'^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$');
+      if (emailRegex.hasMatch(email)) {
+        firstName = const HtmlEscape().convert(firstName);
+      }
+    }
   }
 }

@@ -33,28 +33,28 @@ class FooterLargeScreen extends StatelessWidget {
             child: getFooterTopItem(
                 icon: Icons.place,
                 title: "ADRESSE",
-                content: "15 Rue des Peupliers,\n49000 Angers, France"),
+                content: "16 rue du maine 49100 Angers"),
           ),
           getDivider(),
           Expanded(
             child: getFooterTopItem(
                 icon: Icons.phone,
                 title: "TELEPHONE",
-                content: "+337 07 77 77 77"),
+                content: "09 80 80 39 55"),
           ),
           getDivider(),
           Expanded(
             child: getFooterTopItem(
                 icon: Icons.email,
                 title: "EMAIL",
-                content: "ohana@entreprise.com"),
+                content: "contact@ohanaentreprise.com"),
           ),
           getDivider(),
           Expanded(
             child: getFooterTopItem(
                 icon: Icons.access_time,
                 title: "HORAIRES",
-                content: "Du Lundi au Vendredi,\n9h - 17h"),
+                content: "Du Lundi au Vendredi,\n9h - 18h"),
           ),
         ],
       ),

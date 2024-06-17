@@ -44,7 +44,7 @@ class EstimatePageLargeScreen extends StatelessWidget {
             const DropdownMenuOffers(),
             const DropdownMenuAboutUs(),
             //SEARCH BAR
-            const SearchNavBar(
+            SearchNavBar(
               placeholder:
                   "Cherchez une page, un service, un article, une offre d'emploi...",
             )
@@ -101,6 +101,7 @@ class DevisForm extends StatelessWidget {
         CustomInputField(
           placeholder: 'Nom',
           widthBalance: widthBalance,
+          textEditingController: TextEditingController(),
         ),
         SizedBox(height: spaceBetween),
         _getTitle('Prénom'),
@@ -108,6 +109,7 @@ class DevisForm extends StatelessWidget {
         CustomInputField(
           placeholder: 'Prénom',
           widthBalance: widthBalance,
+          textEditingController: TextEditingController(),
         ),
         SizedBox(height: spaceBetween),
         _getTitle('Email'),
@@ -115,13 +117,14 @@ class DevisForm extends StatelessWidget {
         CustomInputField(
           placeholder: 'exemple@email.com',
           widthBalance: widthBalance,
+          textEditingController: TextEditingController(),
         ),
         SizedBox(height: spaceBetween),
         const ServicesDropdown(),
         SizedBox(height: spaceBetween),
         Button('Envoyer', type: ButtonType.standard, onTap: () {}),
         const SizedBox(height: 15),
-        const TextCheckCase(
+        TextCheckCase(
           text:
               'Les informations recueillies à partir de ce formulaire sont traitées par OHana pour donner suite à votre demande de contact. Pour connaître et/ou exercer vos droits, référez-vous à la politique de OHana sur la protection des données, cliquez ici.',
         )
