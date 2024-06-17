@@ -4,6 +4,7 @@ import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:ohana_webapp_flutter/logic/entities/blog_post.dart';
 import 'package:ohana_webapp_flutter/presentation/bloc/blog_post/blocs/all_blog_posts_bloc.dart';
+import 'package:ohana_webapp_flutter/presentation/bloc/blog_post/blocs/paginted_blog_posts_bloc.dart';
 import 'package:ohana_webapp_flutter/presentation/bloc/blog_post/blocs/recent_blog_posts_bloc.dart';
 import 'package:ohana_webapp_flutter/presentation/bloc/blog_post/blog_post_event.dart';
 import 'package:ohana_webapp_flutter/presentation/bloc/blog_post/blog_post_state.dart';
@@ -35,7 +36,7 @@ class _BlogPageLargeScreenState extends State<BlogPageLargeScreen> {
   @override
   void initState() {
     context.read<RecentBlogPostsBloc>().add(FetchMostRecentBlogPosts(4));
-    context.read<AllBlogPostsBloc>().add(FetchAllBlogPosts());
+    context.read<PagintedBlogPostsBloc>().add(FetchFirstBlogPostsPage());
     super.initState();
   }
 
@@ -82,7 +83,7 @@ class _BlogPageLargeScreenState extends State<BlogPageLargeScreen> {
               const SizedBox(height: 70),
               _getBlogInfosTitleEmbeded(),
               const SizedBox(height: 50),
-              _getListNumber(),
+              _getPaginatorButtons(),
               const SizedBox(height: 50),
               const Footer(),
             ],
@@ -137,7 +138,7 @@ class _BlogPageLargeScreenState extends State<BlogPageLargeScreen> {
   }
 
   Widget _getBlogCards() {
-    return BlocBuilder<AllBlogPostsBloc, BlogPostState>(
+    return BlocBuilder<PagintedBlogPostsBloc, BlogPostState>(
       builder: (context, state) {
         if (state is BlogPostLoaded) {
           return BlogCardPattern(
@@ -158,12 +159,8 @@ class _BlogPageLargeScreenState extends State<BlogPageLargeScreen> {
   }
 
 //NUMBER LIST
-  _getListNumber() {
-    return CustomSmartPaginator(
-      startIndicator: 1,
-      endIndicator: 4,
-      onTap: () {},
-    );
+  _getPaginatorButtons() {
+    return const CustomSmartPaginator(startIndicator: 1, endIndicator: 4);
   }
 }
 

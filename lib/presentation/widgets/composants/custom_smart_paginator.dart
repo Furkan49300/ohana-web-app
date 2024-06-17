@@ -3,13 +3,9 @@ import 'package:ohana_webapp_flutter/presentation/widgets/composants/button_form
 
 class CustomSmartPaginator extends StatelessWidget {
   const CustomSmartPaginator(
-      {super.key,
-      required this.startIndicator,
-      required this.endIndicator,
-      required this.onTap});
+      {super.key, required this.startIndicator, required this.endIndicator});
   final int startIndicator;
   final int endIndicator;
-  final Function onTap;
 
   @override
   Widget build(BuildContext context) {
@@ -17,13 +13,7 @@ class CustomSmartPaginator extends StatelessWidget {
       spacing: 5,
       children: [
         Button(
-          '<<',
-          type: ButtonType.number,
-          onTap: () {},
-        ),
-        const SizedBox(width: 10),
-        Button(
-          '...',
+          '<',
           type: ButtonType.number,
           onTap: () {},
         ),
@@ -33,18 +23,11 @@ class CustomSmartPaginator extends StatelessWidget {
               child: Button(
                 i.toString(),
                 type: ButtonType.number,
-                onTap: () {
-                  onTap();
-                },
+                onTap: () {},
               )),
-        Button(
-          '...',
-          type: ButtonType.number,
-          onTap: () {},
-        ),
         const SizedBox(width: 10),
         Button(
-          '>>',
+          '>',
           type: ButtonType.number,
           onTap: () {},
         ),

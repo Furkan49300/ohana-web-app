@@ -406,4 +406,11 @@ class BlogPostHardCodedRepository implements BlogPostRepository {
     }
     return jsonToBlogPost(specificBlog);
   }
+
+  // GET FIRST PAGE
+  @override
+  Future<List<BlogPost>> getFirstBlogPostsPage() {
+    // TODO: implement getFirstBlogPostsPage
+    throw UnimplementedError();
+  }
 }

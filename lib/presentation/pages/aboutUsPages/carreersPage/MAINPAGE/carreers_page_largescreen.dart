@@ -213,10 +213,6 @@ class _CarreersPageLargeScreenState extends State<CarreersPageLargeScreen> {
 
 //NUMBER LIST
   _getListNumber() {
-    return CustomSmartPaginator(
-      startIndicator: 1,
-      endIndicator: 4,
-      onTap: () {},
-    );
+    return const CustomSmartPaginator(startIndicator: 1, endIndicator: 4);
   }
 }
