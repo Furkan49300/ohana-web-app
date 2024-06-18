@@ -77,6 +77,10 @@ enum ButtonType {
       primaryColor: purpleNeutral,
       hoverColor: Color(0xffE384FF),
       textColor: Colors.white),
+  disabled(
+      primaryColor: Color.fromARGB(255, 228, 192, 240),
+      hoverColor: Color.fromARGB(255, 228, 192, 240),
+      textColor: Color.fromARGB(255, 240, 240, 240)),
   gray(
     primaryColor: Color(0xffD9D9D9),
     hoverColor: Color(0xffD9D9D9),

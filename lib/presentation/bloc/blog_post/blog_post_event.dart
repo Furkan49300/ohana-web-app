@@ -6,14 +6,20 @@ class FetchAllBlogPosts extends BlogPostEvent {}
 // PAGINATED BLOG POSTS
 class FetchFirstBlogPostsPage extends BlogPostEvent {}
 
-class FetchPreviousBlogPostsPage extends BlogPostEvent {}
+class FetchPreviousBlogPostsPage extends BlogPostEvent {
+  final String firstDocumentId;
+  FetchPreviousBlogPostsPage(this.firstDocumentId);
+}
 
 class FetchNextBlogPostsPage extends BlogPostEvent {
   final String lastDocumentId;
   FetchNextBlogPostsPage(this.lastDocumentId);
 }
 
-class FetchNthBlogPostsPage extends BlogPostEvent {}
+class FetchNthBlogPostsPage extends BlogPostEvent {
+  int numberPage;
+  FetchNthBlogPostsPage({required this.numberPage});
+}
 
 // SINGLE BLOG POST
 

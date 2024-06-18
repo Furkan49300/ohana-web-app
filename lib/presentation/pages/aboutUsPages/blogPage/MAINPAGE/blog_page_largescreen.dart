@@ -2,25 +2,21 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:intl/intl.dart';
 import 'package:ohana_webapp_flutter/logic/entities/blog_post.dart';
-import 'package:ohana_webapp_flutter/presentation/bloc/blog_post/blocs/all_blog_posts_bloc.dart';
 import 'package:ohana_webapp_flutter/presentation/bloc/blog_post/blocs/paginated_blog_posts_bloc.dart';
 import 'package:ohana_webapp_flutter/presentation/bloc/blog_post/blocs/recent_blog_posts_bloc.dart';
 import 'package:ohana_webapp_flutter/presentation/bloc/blog_post/blog_post_event.dart';
 import 'package:ohana_webapp_flutter/presentation/bloc/blog_post/blog_post_state.dart';
 import 'package:ohana_webapp_flutter/presentation/bloc/navbar_dropdown/dropdown_menu_bloc.dart';
 import 'package:ohana_webapp_flutter/presentation/bloc/navbar_dropdown/dropdown_menu_event.dart';
-import 'package:ohana_webapp_flutter/presentation/constants/dimensions.dart';
 import 'package:ohana_webapp_flutter/presentation/footer/footer_screen_fit.dart';
 import 'package:ohana_webapp_flutter/presentation/navbar/largescreen/megaDropdown/dropdown_menu_about_us.dart';
 import 'package:ohana_webapp_flutter/presentation/navbar/largescreen/megaDropdown/dropdown_menu_expertises.dart';
 import 'package:ohana_webapp_flutter/presentation/navbar/largescreen/megaDropdown/dropdown_menu_offers.dart';
-import 'package:ohana_webapp_flutter/presentation/navbar/largescreen/navigation_bar_contents_largescreen.dart';
 import 'package:ohana_webapp_flutter/presentation/navbar/navbar_responsiveness.dart';
 import 'package:ohana_webapp_flutter/presentation/navbar/search_bar.dart';
-import 'package:ohana_webapp_flutter/presentation/navbar/smallscreen/custom_drawer.dart';
-import 'package:ohana_webapp_flutter/presentation/navbar/smallscreen/navigation_bar_contents_smallscreen.dart';
-import 'package:ohana_webapp_flutter/presentation/widgets/composants/custom_smart_paginator.dart';
+import 'package:ohana_webapp_flutter/presentation/pages/aboutUsPages/blogPage/widget/custom_smart_paginator.dart';
 import 'package:ohana_webapp_flutter/presentation/widgets/composants/text_format/custom_underlined_title.dart';
 import 'package:ohana_webapp_flutter/presentation/widgets/patterns/blog_card_pattern.dart';
 import 'package:ohana_webapp_flutter/presentation/widgets/patterns/custom_carousel.dart';
@@ -178,91 +174,108 @@ class RecentBlogCarouselSection extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    double screenWidth = MediaQuery.of(context).size.width;
     return SizedBox(
-        // padding: EdgeInsets.symmetric(),
         width: width,
         child: Stack(
           children: [
-            ColorFiltered(
-              colorFilter: ColorFilter.mode(
-                Colors.black.withOpacity(0.5),
-                BlendMode.srcATop,
-              ),
-              child: Image.asset(
-                blogPost.imagePath,
-                height: height,
-                width: width,
-                fit: BoxFit.cover,
-              ),
-            ),
+            _getBackImage(),
             Padding(
               padding: const EdgeInsets.all(90),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  //tite
-                  SizedBox(
-                    width: 700, //control text width
-                    child: Text(
-                      blogPost.title,
-                      style: const TextStyle(
-                          fontSize: 50,
-                          fontWeight: FontWeight.bold,
-                          color: Colors.white),
-                    ),
-                  ),
-                  const SizedBox(
-                    height: 20,
-                  ),
-                  //date of article
-                  Text(
-                    blogPost.creationDate.toString(),
-                    style: const TextStyle(
-                        fontSize: 20,
-                        fontWeight: FontWeight.bold,
-                        color: Colors.white),
-                  ),
+                  _getTitle(),
+                  const SizedBox(height: 20),
+                  _getDate(),
                   const SizedBox(height: 20),
                   // 'See more' Buton
-
-                  SizedBox(
-                    width: 600,
-                    height: 80,
-                    child: Text(
-                      blogPost.description,
-                      maxLines: 3,
-                      overflow: TextOverflow.ellipsis,
-                      style: const TextStyle(
-                          fontSize: 15,
-                          fontWeight: FontWeight.bold,
-                          color: Colors.white),
-                    ),
-                  ),
+                  _getDescription(),
                   // 'See more' Buton
                   const SizedBox(height: 10),
-                  TextButton(
-                    onPressed: () {},
-                    style: TextButton.styleFrom(
-                      foregroundColor:
-                          Colors.white, // Couleur du texte du bouton
-                      backgroundColor: const Color.fromARGB(
-                          255, 221, 89, 245), // Couleur de fond du bouton
-                    ),
-                    child: const Padding(
-                      padding: EdgeInsets.all(8.0),
-                      child: Text(
-                        'Voir Plus',
-                        style: TextStyle(
-                          fontSize: 20,
-                          fontWeight: FontWeight.bold,
-                        ),
-                      ),
-                    ),
-                  )
+                  _getButton(),
                 ],
               ),
             ),
           ],
         ));
+  }
+
+//IMAGE
+
+  _getBackImage() {
+    return ColorFiltered(
+      colorFilter: ColorFilter.mode(
+        Colors.black.withOpacity(0.5),
+        BlendMode.srcATop,
+      ),
+      child: Image.asset(
+        blogPost.imagePath,
+        height: height,
+        width: width,
+        fit: BoxFit.cover,
+      ),
+    );
+  }
+
+//TITLE
+
+  _getTitle() {
+    return SizedBox(
+      child: Text(
+        blogPost.title,
+        style: const TextStyle(
+            fontSize: 50, fontWeight: FontWeight.bold, color: Colors.white),
+      ),
+    );
+  }
+
+//DATE
+
+  _getDate() {
+    DateFormat dateFormat = DateFormat('dd/MM/yyyy');
+    String dateFormatted = dateFormat.format(blogPost.creationDate);
+    return Text(
+      dateFormatted,
+      style: const TextStyle(
+          fontSize: 20, fontWeight: FontWeight.bold, color: Colors.white),
+    );
+  }
+
+//DESCRIPTION
+
+  _getDescription() {
+    return SizedBox(
+      child: Text(
+        blogPost.description,
+        maxLines: 3,
+        overflow: TextOverflow.ellipsis,
+        style: const TextStyle(
+            fontSize: 15, fontWeight: FontWeight.bold, color: Colors.white),
+      ),
+    );
+  }
+
+// VIEW MORE BUTTON
+
+  _getButton() {
+    return TextButton(
+      onPressed: () {},
+      style: TextButton.styleFrom(
+        foregroundColor: Colors.white, // Couleur du texte du bouton
+        backgroundColor: const Color.fromARGB(
+            255, 221, 89, 245), // Couleur de fond du bouton
+      ),
+      child: const Padding(
+        padding: EdgeInsets.all(8.0),
+        child: Text(
+          'Voir Plus',
+          style: TextStyle(
+            fontSize: 20,
+            fontWeight: FontWeight.bold,
+          ),
+        ),
+      ),
+    );
   }
 }

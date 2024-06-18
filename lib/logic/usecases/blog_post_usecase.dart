@@ -29,6 +29,13 @@ class BlogPostUsecase {
     return blogPostRepository.getNextBlogPostsPage(lastDocumentId);
   }
 
+  Future<List<BlogPost>> getPreviousBlogPostsPage(String firstDocumentId) {
+    return blogPostRepository.getPreviousBlogPostsPage(firstDocumentId);
+  }
+
+  Future<List<BlogPost>> getNthBlogPostsPage(int nth) {
+    return blogPostRepository.getNthBlogPostsPage(nth);
+  }
   // Future<List<BlogPost>> searchBlogPostsByName(int number) {
   //   return blogPostRepository.getMostRecentBlogPosts(number: number);
   // }

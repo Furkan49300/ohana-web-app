@@ -1,8 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import "package:google_fonts/google_fonts.dart";
-import 'package:ohana_webapp_flutter/presentation/bloc/blog_post/blocs/all_blog_posts_bloc.dart';
-import 'package:ohana_webapp_flutter/presentation/bloc/blog_post/blog_post_event.dart';
 
 import 'package:ohana_webapp_flutter/presentation/bloc/navbar_dropdown/dropdown_menu_bloc.dart';
 import 'package:ohana_webapp_flutter/presentation/bloc/navbar_dropdown/dropdown_menu_state.dart';
@@ -48,29 +45,29 @@ class DropdownMenuAboutUs extends StatelessWidget {
                 ),
                 const VerticalDivider(),
                 // 1st section
-                Container(
-                  width: sectionWidth,
-                  padding:
-                      EdgeInsets.only(left: paddingValue, right: paddingValue),
-                  child: const Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      NavbarMenuTitle(
-                        title: "OHana Entreprise",
-                        routeName: "",
-                      ),
-                      SizedBox(height: 10),
-                      NavbarLink(text: "NOTRE HISTOIRE", routeName: ""),
-                      SizedBox(height: 5),
-                      NavbarLink(text: "PROJETS REALISES", routeName: ""),
-                      SizedBox(height: 5),
-                      NavbarLink(text: "NOTRE EQUIPE", routeName: ""),
-                      SizedBox(height: 5),
-                      NavbarLink(text: "OU SOMMES-NOUS ?", routeName: ""),
-                    ],
-                  ),
-                ),
-                const VerticalDivider(),
+                // Container(
+                //   width: sectionWidth,
+                //   padding:
+                //       EdgeInsets.only(left: paddingValue, right: paddingValue),
+                //   child: const Column(
+                //     crossAxisAlignment: CrossAxisAlignment.start,
+                //     children: [
+                //       NavbarMenuTitle(
+                //         title: "OHana Entreprise",
+                //         routeName: "",
+                //       ),
+                //       SizedBox(height: 10),
+                //       NavbarLink(text: "NOTRE HISTOIRE", routeName: ""),
+                //       SizedBox(height: 5),
+                //       NavbarLink(text: "PROJETS REALISES", routeName: ""),
+                //       SizedBox(height: 5),
+                //       NavbarLink(text: "NOTRE EQUIPE", routeName: ""),
+                //       SizedBox(height: 5),
+                //       NavbarLink(text: "OU SOMMES-NOUS ?", routeName: ""),
+                //     ],
+                //   ),
+                // ),
+                // const VerticalDivider(),
                 // 2nd section
                 Container(
                   width: sectionWidth,

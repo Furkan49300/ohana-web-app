@@ -6,4 +6,7 @@ abstract class BlogPostRepository {
   Future<BlogPost> getSingleBlogPost({required String id});
   Future<List<BlogPost>> getFirstBlogPostsPage();
   Future<List<BlogPost>> getNextBlogPostsPage(String lastDocumentId);
+  Future<List<BlogPost>> getPreviousBlogPostsPage(String firstDocumentId);
+  Future<List<BlogPost>> getNthBlogPostsPage(int nPage);
+  Future<int> getNumberOfBlogPostsPage();
 }

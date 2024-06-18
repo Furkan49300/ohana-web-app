@@ -1,6 +1,5 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:ohana_webapp_flutter/data/repositories/firebase/blog_post_firebase_repository.dart';
-import 'package:ohana_webapp_flutter/data/repositories/mock/blog_post_hardcoded_repository.dart';
 import 'package:ohana_webapp_flutter/logic/entities/blog_post.dart';
 import 'package:ohana_webapp_flutter/logic/usecases/blog_post_usecase.dart';
 import 'package:ohana_webapp_flutter/presentation/bloc/blog_post/blog_post_event.dart';
@@ -10,6 +9,8 @@ class PaginatedBlogPostsBloc extends Bloc<BlogPostEvent, BlogPostState> {
   PaginatedBlogPostsBloc() : super(BlogPostInitial()) {
     on<FetchFirstBlogPostsPage>(_onFetchFirstBlogPostsPage);
     on<FetchNextBlogPostsPage>(_onFetchNextBlogPostsPage);
+    on<FetchPreviousBlogPostsPage>(_onFetchPreviousBlogPostsPage);
+    on<FetchNthBlogPostsPage>(_onNthBlogPostsPage);
   }
 
   void _onFetchFirstBlogPostsPage(
@@ -40,6 +41,41 @@ class PaginatedBlogPostsBloc extends Bloc<BlogPostEvent, BlogPostState> {
               blogPostRepository: BlogPostFirebaseRepository())
           .getNextBlogPostsPage(event.lastDocumentId);
 
+      // Retourner les articles du blog
+      emit(BlogPostLoaded(blogPosts));
+    } catch (e) {
+      // Gérer les erreurs
+      emit(BlogPostError(e.toString())); // Affiche un message d'erreur
+    }
+  }
+
+  void _onFetchPreviousBlogPostsPage(
+      FetchPreviousBlogPostsPage event, Emitter<BlogPostState> emit) async {
+    emit(BlogPostInitial()); // Affiche le CircularProgressIndicator
+
+    try {
+      // Récupérer la page
+      final List<BlogPost> blogPosts = await BlogPostUsecase(
+              blogPostRepository: BlogPostFirebaseRepository())
+          .getPreviousBlogPostsPage(event.firstDocumentId);
+
+      // Retourner les articles du blog
+      emit(BlogPostLoaded(blogPosts));
+    } catch (e) {
+      // Gérer les erreurs
+      emit(BlogPostError(e.toString())); // Affiche un message d'erreur
+    }
+  }
+
+  void _onNthBlogPostsPage(
+      FetchNthBlogPostsPage event, Emitter<BlogPostState> emit) async {
+    emit(BlogPostInitial()); // Affiche le CircularProgressIndicator
+
+    try {
+      // Récupérer la page
+      final List<BlogPost> blogPosts = await BlogPostUsecase(
+              blogPostRepository: BlogPostFirebaseRepository())
+          .getNthBlogPostsPage(event.numberPage);
       // Retourner les articles du blog
       emit(BlogPostLoaded(blogPosts));
     } catch (e) {

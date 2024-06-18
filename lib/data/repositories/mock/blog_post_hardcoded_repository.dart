@@ -5,7 +5,6 @@ import 'dart:async';
 import 'dart:math';
 
 import 'package:ohana_webapp_flutter/logic/entities/blog_post.dart';
-import 'package:ohana_webapp_flutter/logic/entities/job_offer.dart';
 import 'package:ohana_webapp_flutter/logic/repositories/blog_post_repository.dart';
 
 class BlogPostHardCodedRepository implements BlogPostRepository {
@@ -417,6 +416,24 @@ class BlogPostHardCodedRepository implements BlogPostRepository {
   @override
   Future<List<BlogPost>> getNextBlogPostsPage(String lastDocumentId) {
     // TODO: implement getNextBlogPostsPage
+    throw UnimplementedError();
+  }
+
+  @override
+  Future<List<BlogPost>> getPreviousBlogPostsPage(String firstDocumentId) {
+    // TODO: implement getPreviousBlogPostsPage
+    throw UnimplementedError();
+  }
+
+  @override
+  Future<List<BlogPost>> getNthBlogPostsPage(nPage) {
+    // TODO: implement getNthBlogPostsPage
+    throw UnimplementedError();
+  }
+
+  @override
+  Future<int> getNumberOfBlogPostsPage() {
+    // TODO: implement getNumberOfBlogPosts
     throw UnimplementedError();
   }
 }

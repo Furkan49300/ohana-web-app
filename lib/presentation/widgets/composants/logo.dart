@@ -12,17 +12,20 @@ class Logo extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return GestureDetector(
-      onTap: () {
-        Navigator.of(context).pushNamed(root);
-        context.read<DropdownMenuBloc>().add(HideMenuEvent());
-      },
-      child: Padding(
-        padding: EdgeInsets.only(left: paddingLeft, top: 5, bottom: 5),
-        child: Image.asset(
-          'assets/logo.png',
-          width: heightLogo,
-          fit: BoxFit.cover,
+    return MouseRegion(
+      cursor: SystemMouseCursors.click,
+      child: GestureDetector(
+        onTap: () {
+          Navigator.of(context).pushNamed(root);
+          context.read<DropdownMenuBloc>().add(HideMenuEvent());
+        },
+        child: Padding(
+          padding: EdgeInsets.only(left: paddingLeft, top: 5, bottom: 5),
+          child: Image.asset(
+            'assets/logo.png',
+            width: heightLogo,
+            fit: BoxFit.cover,
+          ),
         ),
       ),
     );
