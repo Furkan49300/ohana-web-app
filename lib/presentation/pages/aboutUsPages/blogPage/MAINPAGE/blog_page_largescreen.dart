@@ -18,7 +18,7 @@ import 'package:ohana_webapp_flutter/presentation/navbar/largescreen/megaDropdow
 import 'package:ohana_webapp_flutter/presentation/navbar/largescreen/megaDropdown/dropdown_menu_offers.dart';
 import 'package:ohana_webapp_flutter/presentation/navbar/navbar_responsiveness.dart';
 import 'package:ohana_webapp_flutter/presentation/navbar/search_bar.dart';
-import 'package:ohana_webapp_flutter/presentation/widgets/composants/custom_smart_paginator.dart';
+import 'package:ohana_webapp_flutter/presentation/pages/aboutUsPages/blogPage/widget/custom_blog_post_paginator.dart';
 import 'package:ohana_webapp_flutter/presentation/widgets/composants/text_format/custom_underlined_title.dart';
 import 'package:ohana_webapp_flutter/presentation/widgets/patterns/blog_card_pattern.dart';
 import 'package:ohana_webapp_flutter/presentation/widgets/patterns/custom_carousel.dart';
@@ -158,7 +158,8 @@ class _BlogPageLargeScreenState extends State<BlogPageLargeScreen> {
 
 //NUMBER LIST
   _getPaginatorButtons() {
-    return const CustomSmartPaginator(startIndicator: 1, endIndicator: 4);
+    return const CustomBlogPostSmartPaginator(
+        startIndicator: 1, endIndicator: 4);
   }
 }
 

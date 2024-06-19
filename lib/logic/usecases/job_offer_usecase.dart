@@ -16,4 +16,20 @@ class JobOfferUsecase {
   Future<JobOffer> getSingleJobOffer(String id) {
     return jobOffersRepository.getSingleJobOffer(id);
   }
+
+  Future<List<JobOffer>> getFirstJobOffersPage() {
+    return jobOffersRepository.getFirstJobOffersPage();
+  }
+
+  Future<List<JobOffer>> getNextJobOffersPage(String lastDocumentId) {
+    return jobOffersRepository.getNextJobOffersPage(lastDocumentId);
+  }
+
+  Future<List<JobOffer>> getNthJobOffersPage(int nPage) {
+    return jobOffersRepository.getNthJobOffersPage(nPage);
+  }
+
+  Future<List<JobOffer>> getPreviousJobOffersPage(String firstDocumentId) {
+    return jobOffersRepository.getPreviousJobOffersPage(firstDocumentId);
+  }
 }

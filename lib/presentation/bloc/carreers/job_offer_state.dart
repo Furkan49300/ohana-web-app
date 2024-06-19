@@ -8,8 +8,15 @@ abstract class JobOfferState extends Equatable {
 class JobOfferInitialState extends JobOfferState {}
 
 class JobOfferLoaded extends JobOfferState {
-  final List<JobOffer> jobOffers;
-  JobOfferLoaded(this.jobOffers);
+  final List<JobOffer> jobOffersList;
+  JobOfferLoaded(this.jobOffersList);
+}
+
+//SINGLE JOB OFFER
+
+class SingleJobOfferLoaded extends JobOfferState {
+  final JobOffer jobOffers;
+  SingleJobOfferLoaded(this.jobOffers);
 }
 
 class JobOfferError extends JobOfferState {

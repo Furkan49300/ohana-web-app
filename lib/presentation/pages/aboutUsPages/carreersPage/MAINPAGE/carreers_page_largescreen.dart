@@ -4,9 +4,10 @@ import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:ohana_webapp_flutter/logic/entities/job_offer.dart';
-import 'package:ohana_webapp_flutter/presentation/bloc/carreers/job_offer_bloc.dart';
 import 'package:ohana_webapp_flutter/presentation/bloc/carreers/job_offer_event.dart';
 import 'package:ohana_webapp_flutter/presentation/bloc/carreers/job_offer_state.dart';
+import 'package:ohana_webapp_flutter/presentation/bloc/carreers/paginated_job_offer_bloc.dart';
+import 'package:ohana_webapp_flutter/presentation/bloc/carreers/single_job_offer_bloc.dart';
 
 import 'package:ohana_webapp_flutter/presentation/bloc/navbar_dropdown/dropdown_menu_bloc.dart';
 import 'package:ohana_webapp_flutter/presentation/bloc/navbar_dropdown/dropdown_menu_event.dart';
@@ -18,9 +19,9 @@ import 'package:ohana_webapp_flutter/presentation/navbar/largescreen/megaDropdow
 import 'package:ohana_webapp_flutter/presentation/navbar/largescreen/megaDropdown/dropdown_menu_offers.dart';
 import 'package:ohana_webapp_flutter/presentation/navbar/largescreen/navigation_bar_contents_largescreen.dart';
 import 'package:ohana_webapp_flutter/presentation/navbar/search_bar.dart';
+import 'package:ohana_webapp_flutter/presentation/pages/aboutUsPages/carreersPage/widget/custom_job_offer_paginator.dart';
 import 'package:ohana_webapp_flutter/presentation/pages/aboutUsPages/carreersPage/widget/job_offer_card.dart';
 import 'package:ohana_webapp_flutter/presentation/widgets/composants/button_format/button.dart';
-import 'package:ohana_webapp_flutter/presentation/widgets/composants/custom_smart_paginator.dart';
 import 'package:ohana_webapp_flutter/presentation/widgets/composants/input_field/custom_input_field.dart';
 import 'package:ohana_webapp_flutter/presentation/widgets/patterns/custom_banner.dart';
 
@@ -37,7 +38,7 @@ class _CarreersPageLargeScreenState extends State<CarreersPageLargeScreen> {
   void initState() {
     // TODO: implement initState
     super.initState();
-    context.read<JobOfferBloc>().add(FetchAllJobOfferEvent());
+    context.read<PaginatedJobOfferBloc>().add(FetchFirstJobOfferPage());
   }
 
   @override
@@ -174,14 +175,14 @@ class _CarreersPageLargeScreenState extends State<CarreersPageLargeScreen> {
 
 // OFFRES/CONTRACT
   _getCarrersItems(context) {
-    return BlocBuilder<JobOfferBloc, JobOfferState>(
+    return BlocBuilder<PaginatedJobOfferBloc, JobOfferState>(
       builder: (context, state) {
         if (state is JobOfferLoaded) {
           return Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               for (JobOffer item in state
-                  .jobOffers) //LIST_OF_OFFERS is inside widget_utils.dart doc
+                  .jobOffersList) //LIST_OF_OFFERS is inside widget_utils.dart doc
                 CustomJobOfferCard(
                   id: '',
                   title: item.title,
@@ -195,6 +196,9 @@ class _CarreersPageLargeScreenState extends State<CarreersPageLargeScreen> {
                   date: item.pulishDate,
                   alert: item.alert,
                   onTap: () {
+                    context
+                        .read<SingleJobOfferBloc>()
+                        .add(FetchSingleJobOfferPage(item.id));
                     Navigator.of(context).pushNamed(singleCarreer);
                   },
                 )
@@ -213,6 +217,7 @@ class _CarreersPageLargeScreenState extends State<CarreersPageLargeScreen> {
 
 //NUMBER LIST
   _getListNumber() {
-    return const CustomSmartPaginator(startIndicator: 1, endIndicator: 4);
+    return const CustomJobOfferSmartPaginator(
+        startIndicator: 1, endIndicator: 4);
   }
 }

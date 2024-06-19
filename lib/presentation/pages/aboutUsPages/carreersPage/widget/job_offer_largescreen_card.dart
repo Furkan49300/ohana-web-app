@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:intl/intl.dart';
+import 'package:ohana_webapp_flutter/presentation/constants/default_values.dart';
 import 'package:ohana_webapp_flutter/presentation/constants/dimensions.dart';
 import 'package:ohana_webapp_flutter/presentation/widgets/composants/button_format/button.dart';
 
@@ -47,7 +48,9 @@ class JobOfferLargeScreenCard extends StatelessWidget {
                 topLeft: Radius.circular(partialCircularItem),
                 bottomLeft: Radius.circular(partialCircularItem)),
             child: Image.asset(
-              imagePath,
+              imagePath != '' && imagePath != null
+                  ? imagePath
+                  : jobDefaultImage,
               height: 220,
               width: 170,
               fit: BoxFit.cover,
@@ -58,13 +61,11 @@ class JobOfferLargeScreenCard extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              SizedBox(
-                child: Text(
-                  title,
-                  style: const TextStyle(
-                      fontSize: 35, fontWeight: FontWeight.bold),
-                  softWrap: true,
-                ),
+              Text(
+                title,
+                style:
+                    const TextStyle(fontSize: 35, fontWeight: FontWeight.bold),
+                softWrap: true,
               ),
               Wrap(
                 alignment: WrapAlignment.center,
@@ -75,7 +76,7 @@ class JobOfferLargeScreenCard extends StatelessWidget {
                       padding: const EdgeInsets.only(top: 20, left: 0),
                       child: Wrap(spacing: 10, children: [
                         for (String item in keyWords)
-                          if (item != '')
+                          if (item != '' && item != null)
                             Button(
                               item,
                               type: ButtonType.gray,

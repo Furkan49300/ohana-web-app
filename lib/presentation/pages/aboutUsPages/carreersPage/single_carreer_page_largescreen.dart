@@ -2,9 +2,14 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:intl/intl.dart';
+import 'package:ohana_webapp_flutter/logic/entities/job_offer.dart';
+import 'package:ohana_webapp_flutter/presentation/bloc/carreers/job_offer_state.dart';
+import 'package:ohana_webapp_flutter/presentation/bloc/carreers/single_job_offer_bloc.dart';
 
 import 'package:ohana_webapp_flutter/presentation/bloc/navbar_dropdown/dropdown_menu_bloc.dart';
 import 'package:ohana_webapp_flutter/presentation/bloc/navbar_dropdown/dropdown_menu_event.dart';
+import 'package:ohana_webapp_flutter/presentation/constants/default_values.dart';
 import 'package:ohana_webapp_flutter/presentation/constants/dimensions.dart';
 import 'package:ohana_webapp_flutter/presentation/footer/footer_screen_fit.dart';
 import 'package:ohana_webapp_flutter/presentation/navbar/largescreen/megaDropdown/dropdown_menu_about_us.dart';
@@ -53,33 +58,46 @@ class SingleCarreerPageLargeScreen extends StatelessWidget {
   _content(Size screenSize, BuildContext context) {
     return SingleChildScrollView(
       child: Center(
-        child: Column(
-          children: [
-            const SizedBox(height: 50),
-            Image.asset(
-              "assets/offers_images/React-Developer-Tools.png",
-              width: screenSize.width * 0.55,
-              height: 300,
-            ),
-            const SizedBox(height: 20),
-            _getHeader(),
-            const SizedBox(height: 40),
-            _getBodyText(screenSize),
-            const SizedBox(height: 50),
-            const SizedBox(height: 40),
-            const CustomUnderlineTitle(
-              title: "Propositions similaires",
-            ),
-            const SizedBox(height: 40),
-            _getOtherSimilarJob(),
-            const Footer(),
-          ],
+        child: BlocBuilder<SingleJobOfferBloc, JobOfferState>(
+          builder: (context, state) {
+            if (state is SingleJobOfferLoaded) {
+              return Column(
+                children: [
+                  const SizedBox(height: 50),
+                  Image.asset(
+                    state.jobOffers.imagePath != '' &&
+                            state.jobOffers.imagePath != null
+                        ? state.jobOffers.imagePath
+                        : jobDefaultImage,
+                    width: screenSize.width * 0.55,
+                    height: 300,
+                  ),
+                  const SizedBox(height: 20),
+                  _getHeader(state.jobOffers),
+                  const SizedBox(height: 40),
+                  _getBodyText(screenSize, state.jobOffers),
+                  const SizedBox(height: 50),
+                  const SizedBox(height: 40),
+                  const CustomUnderlineTitle(
+                    title: "Propositions similaires",
+                  ),
+                  const SizedBox(height: 40),
+                  _getOtherSimilarJob(),
+                  const Footer(),
+                ],
+              );
+            } else {
+              return const SizedBox(
+                  height: 100, child: Text('Etat non pris en compte'));
+            }
+          },
         ),
       ),
     );
   }
 
-  _getHeader() {
+  _getHeader(JobOffer jobOffer) {
+    DateFormat dateFormat = DateFormat("dd/MM/yyyy");
     return Column(
       children: [
         Wrap(
@@ -87,8 +105,9 @@ class SingleCarreerPageLargeScreen extends StatelessWidget {
             crossAxisAlignment: WrapCrossAlignment.center,
             spacing: 50,
             children: [
-              const Text('Développeur React',
-                  style: TextStyle(fontSize: 50, fontWeight: FontWeight.bold)),
+              Text(jobOffer.title,
+                  style: const TextStyle(
+                      fontSize: 50, fontWeight: FontWeight.bold)),
               ClipRRect(
                 borderRadius: BorderRadius.circular(partialCircularItem),
                 child: Button(
@@ -102,22 +121,32 @@ class SingleCarreerPageLargeScreen extends StatelessWidget {
               )
             ]),
         const SizedBox(height: 10),
-        const SizedBox(
+        SizedBox(
           height: 40,
           child: Row(mainAxisSize: MainAxisSize.min, children: [
             Text(
-              'Stage',
-              style: TextStyle(fontSize: 19),
+              jobOffer.place,
+              style: const TextStyle(fontSize: 19),
             ),
-            VerticalDivider(),
+            const VerticalDivider(),
             Text(
-              '2 mois',
-              style: TextStyle(fontSize: 19),
+              dateFormat.format(jobOffer.pulishDate),
+              style: const TextStyle(fontSize: 19),
             ),
-            VerticalDivider(),
+            const VerticalDivider(),
             Text(
-              '905€-1600€',
-              style: TextStyle(fontSize: 19),
+              jobOffer.contract,
+              style: const TextStyle(fontSize: 19),
+            ),
+            const VerticalDivider(),
+            Text(
+              jobOffer.duration,
+              style: const TextStyle(fontSize: 19),
+            ),
+            const VerticalDivider(),
+            Text(
+              jobOffer.salary ?? "",
+              style: const TextStyle(fontSize: 19),
             ),
           ]),
         )
@@ -125,7 +154,7 @@ class SingleCarreerPageLargeScreen extends StatelessWidget {
     );
   }
 
-  _getBodyText(Size screenSize) {
+  _getBodyText(Size screenSize, JobOffer jobOffer) {
     return Column(
       // crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -135,32 +164,32 @@ class SingleCarreerPageLargeScreen extends StatelessWidget {
         const SizedBox(height: 40),
         SizedBox(
           width: screenSize.width * 0.55,
-          child: const Text(
-            "Nous sommes à la recherche d'un Développeur Mobile et Expert en Cybersécurité passionné et talentueux pour rejoindre notre équipe dynamique. Vous jouerez un rôle clé dans la conception, le développement et la sécurisation de nos applications mobiles innovantes. Votre expertise contribuera à garantir que nos produits sont non seulement performants mais également sécurisés contre les menaces potentielles.",
-            style: TextStyle(fontSize: 19),
+          child: Text(
+            jobOffer.description,
+            style: const TextStyle(fontSize: 19),
           ),
         ),
         const SizedBox(height: 50),
 
         //PART OF MISSION
 
-        const CustomUnderlineTitle(
-          title: 'Missions',
-        ),
-        const SizedBox(height: 40),
-        SizedBox(
-            width: screenSize.width * 0.55,
-            child: const CustomListText(
-              fontSize: 19,
-              textList: [
-                "Développement Mobile : Concevoir et développer des applications mobiles de haute qualité pour les plateformes iOS et Android, en utilisant les meilleures pratiques de développement.",
-                "Cybersécurité : Implémenter des mesures de sécurité robustes pour protéger les données des utilisateurs et assurer la conformité avec les normes de sécurité.",
-                "Maintenance : Effectuer la maintenance et les mises à jour régulières des applications existantes pour améliorer la performance et la sécurité.",
-                "Collaboration : Travailler en étroite collaboration avec les équipes de développement, de conception et de sécurité pour assurer l'intégration transparente des fonctionnalités de sécurité.",
-                "Revues de Code : Participer aux revues de code pour identifier et corriger les vulnérabilités de sécurité potentielles."
-              ],
-            )),
-        const SizedBox(height: 50),
+        // const CustomUnderlineTitle(
+        //   title: 'Missions',
+        // ),
+        // const SizedBox(height: 40),
+        // SizedBox(
+        //     width: screenSize.width * 0.55,
+        //     child: const CustomListText(
+        //       fontSize: 19,
+        //       textList: [
+        //         "Développement Mobile : Concevoir et développer des applications mobiles de haute qualité pour les plateformes iOS et Android, en utilisant les meilleures pratiques de développement.",
+        //         "Cybersécurité : Implémenter des mesures de sécurité robustes pour protéger les données des utilisateurs et assurer la conformité avec les normes de sécurité.",
+        //         "Maintenance : Effectuer la maintenance et les mises à jour régulières des applications existantes pour améliorer la performance et la sécurité.",
+        //         "Collaboration : Travailler en étroite collaboration avec les équipes de développement, de conception et de sécurité pour assurer l'intégration transparente des fonctionnalités de sécurité.",
+        //         "Revues de Code : Participer aux revues de code pour identifier et corriger les vulnérabilités de sécurité potentielles."
+        //       ],
+        //     )),
+        // const SizedBox(height: 50),
 
         //PART OF PROFIL
 
@@ -170,15 +199,9 @@ class SingleCarreerPageLargeScreen extends StatelessWidget {
         const SizedBox(height: 40),
         SizedBox(
             width: screenSize.width * 0.55,
-            child: const CustomListText(
+            child: CustomListText(
               fontSize: 19,
-              textList: [
-                "Formation : Diplôme en informatique, en ingénierie logicielle ou dans un domaine connexe.",
-                "Expérience : Expérience prouvée en développement d'applications mobiles (iOS et Android) et en cybersécurité.",
-                "Compétences Techniques : Maîtrise des langages de programmation Swift, Kotlin, Java et des outils de développement mobile. Connaissance approfondie des concepts et des meilleures pratiques de cybersécurité.",
-                "Qualités Personnelles : Capacité à travailler en équipe, excellentes compétences en communication, esprit analytique et orienté vers la résolution de problèmes.",
-                "Certifications : Les certifications en cybersécurité (comme CISSP, CEH) sont un plus."
-              ],
+              textList: jobOffer.profil.map((item) => item.toString()).toList(),
             )),
 
         //PART OF ADVANTAGES
@@ -189,15 +212,10 @@ class SingleCarreerPageLargeScreen extends StatelessWidget {
         const SizedBox(height: 40),
         SizedBox(
             width: screenSize.width * 0.55,
-            child: const CustomListText(
+            child: CustomListText(
               fontSize: 19,
-              textList: [
-                "Rémunération Compétitive : Salaire attractif et compétitif basé sur l'expérience et les compétences.",
-                "Environnement de Travail : Ambiance de travail collaborative et innovante avec des possibilités de télétravail.",
-                "Formation et Développement : Accès à des programmes de formation continue et des opportunités de développement professionnel.",
-                "Avantages Sociaux : Assurance santé, plan de retraite, congés payés, et autres avantages sociaux.",
-                "Équipements Modernes : Accès à des équipements et des outils de travail de dernière génération."
-              ],
+              textList:
+                  jobOffer.advantages.map((item) => item.toString()).toList(),
             )),
         const SizedBox(height: 30),
         //Encouragement

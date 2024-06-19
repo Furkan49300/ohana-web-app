@@ -5,7 +5,8 @@ import "package:ohana_webapp_flutter/presentation/bloc/blog_post/blocs/all_blog_
 import "package:ohana_webapp_flutter/presentation/bloc/blog_post/blocs/paginated_blog_posts_bloc.dart";
 import "package:ohana_webapp_flutter/presentation/bloc/blog_post/blocs/recent_blog_posts_bloc.dart";
 import "package:ohana_webapp_flutter/presentation/bloc/blog_post/blocs/single_blog_post_bloc.dart";
-import "package:ohana_webapp_flutter/presentation/bloc/carreers/job_offer_bloc.dart";
+import "package:ohana_webapp_flutter/presentation/bloc/carreers/paginated_job_offer_bloc.dart";
+import "package:ohana_webapp_flutter/presentation/bloc/carreers/single_job_offer_bloc.dart";
 import "package:ohana_webapp_flutter/presentation/pages/aboutUsPages/about_us_largescreen.dart";
 import "package:ohana_webapp_flutter/presentation/pages/aboutUsPages/blogPage/MAINPAGE/blog_page_largescreen.dart";
 import "package:ohana_webapp_flutter/presentation/pages/aboutUsPages/blogPage/single_blogpost_page_largescreen.dart";
@@ -28,7 +29,8 @@ class AppRouter {
       PaginatedBlogPostsBloc();
   final RecentBlogPostsBloc _recentBlogPostsBloc = RecentBlogPostsBloc();
   final SingleBlogPostBloc _singleBlogPostsBloc = SingleBlogPostBloc();
-  final JobOfferBloc _singleCarreerBloc = JobOfferBloc();
+  final PaginatedJobOfferBloc _jobOfferBloc = PaginatedJobOfferBloc();
+  final SingleJobOfferBloc _singleJobOfferBloc = SingleJobOfferBloc();
 
   Route onGenerateRoute(RouteSettings routeSettings) {
     switch (routeSettings.name) {
@@ -64,8 +66,11 @@ class AppRouter {
 
       case carreers:
         return MaterialPageRoute(
-            builder: (e) => BlocProvider.value(
-                  value: _singleCarreerBloc,
+            builder: (e) => MultiBlocProvider(
+                  providers: [
+                    BlocProvider.value(value: _jobOfferBloc),
+                    BlocProvider.value(value: _singleJobOfferBloc),
+                  ],
                   child: const CarreersPageLargeScreen(),
                 ));
 
@@ -73,7 +78,10 @@ class AppRouter {
 
       case singleCarreer:
         return MaterialPageRoute(
-            builder: (e) => const SingleCarreerPageLargeScreen());
+            builder: (e) => BlocProvider.value(
+                  value: _singleJobOfferBloc,
+                  child: const SingleCarreerPageLargeScreen(),
+                ));
 
 //BLOG
 
@@ -127,5 +135,7 @@ class AppRouter {
     _allBlogPostsBloc.close();
     _recentBlogPostsBloc.close();
     _singleBlogPostsBloc.close();
+    _singleJobOfferBloc.close();
+    _jobOfferBloc.close();
   }
 }

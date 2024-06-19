@@ -96,4 +96,34 @@ class JobOfferHardCodedRepository implements JobOffersRepository {
     // TODO: implement getFirstJobOfferPage
     throw UnimplementedError();
   }
+
+  @override
+  Future<List<JobOffer>> getFirstJobOffersPage() {
+    // TODO: implement getFirstJobOffersPage
+    throw UnimplementedError();
+  }
+
+  @override
+  Future<List<JobOffer>> getNextJobOffersPage(String lastDocumentId) {
+    // TODO: implement getNextJobOffersPage
+    throw UnimplementedError();
+  }
+
+  @override
+  Future<List<JobOffer>> getNthJobOffersPage(int nPage) {
+    // TODO: implement getNthJobOffersPage
+    throw UnimplementedError();
+  }
+
+  @override
+  Future<int> getNumberJobOffersPage() {
+    // TODO: implement getNumberJobOffersPage
+    throw UnimplementedError();
+  }
+
+  @override
+  Future<List<JobOffer>> getPreviousJobOffersPage(String firstDocumentId) {
+    // TODO: implement getPreviousJobOffersPage
+    throw UnimplementedError();
+  }
 }

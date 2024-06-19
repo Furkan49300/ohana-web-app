@@ -6,17 +6,19 @@ import 'package:ohana_webapp_flutter/presentation/bloc/blog_post/blog_post_state
 
 import 'package:ohana_webapp_flutter/presentation/widgets/composants/button_format/button.dart';
 
-class CustomSmartPaginator extends StatefulWidget {
-  const CustomSmartPaginator(
+class CustomBlogPostSmartPaginator extends StatefulWidget {
+  const CustomBlogPostSmartPaginator(
       {super.key, required this.startIndicator, required this.endIndicator});
   final int startIndicator;
   final int endIndicator;
 
   @override
-  State<CustomSmartPaginator> createState() => _CustomSmartPaginatorState();
+  State<CustomBlogPostSmartPaginator> createState() =>
+      _CustomBlogPostSmartPaginatorState();
 }
 
-class _CustomSmartPaginatorState extends State<CustomSmartPaginator> {
+class _CustomBlogPostSmartPaginatorState
+    extends State<CustomBlogPostSmartPaginator> {
   int currentPageIndex = 0;
   bool previousPageDisabled = true;
   bool nextPageDisabled = false;

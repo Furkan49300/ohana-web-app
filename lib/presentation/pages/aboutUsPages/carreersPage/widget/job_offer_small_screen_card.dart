@@ -1,4 +1,5 @@
 import 'package:flutter/cupertino.dart';
+import 'package:ohana_webapp_flutter/presentation/constants/default_values.dart';
 import 'package:ohana_webapp_flutter/presentation/widgets/composants/button_format/button.dart';
 
 class JobOfferSmallScreenCard extends StatelessWidget {
@@ -28,7 +29,9 @@ class JobOfferSmallScreenCard extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Image.asset(
-              imagePath,
+              imagePath != '' && imagePath != null
+                  ? imagePath
+                  : jobDefaultImage,
               height: 250,
               width: boxWidth,
               fit: BoxFit.cover,
@@ -43,12 +46,13 @@ class JobOfferSmallScreenCard extends StatelessWidget {
               spacing: 10,
               children: [
                 for (String item in keywords)
-                  Container(
-                    color: color,
-                    padding: padding,
-                    margin: margin,
-                    child: Text(item),
-                  ),
+                  if (item != '' && item != null)
+                    Container(
+                      color: color,
+                      padding: padding,
+                      margin: margin,
+                      child: Text(item),
+                    ),
               ],
             ),
             const SizedBox(height: 10),
