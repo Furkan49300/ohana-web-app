@@ -84,4 +84,16 @@ class JobOfferHardCodedRepository implements JobOffersRepository {
         listOfOffers.map((item) => jsonToJobOffer(item)).toList();
     return jobList;
   }
+
+  @override
+  Future<JobOffer> getSingleJobOffer(String id) {
+    // TODO: implement getSingleJobOffer
+    throw UnimplementedError();
+  }
+
+  @override
+  Future<List<JobOffer>> getFirstJobOfferPage() {
+    // TODO: implement getFirstJobOfferPage
+    throw UnimplementedError();
+  }
 }

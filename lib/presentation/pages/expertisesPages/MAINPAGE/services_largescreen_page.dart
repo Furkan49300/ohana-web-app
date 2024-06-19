@@ -12,8 +12,10 @@ import 'package:ohana_webapp_flutter/presentation/navbar/largescreen/megaDropdow
 import 'package:ohana_webapp_flutter/presentation/navbar/largescreen/megaDropdown/dropdown_menu_expertises.dart';
 import 'package:ohana_webapp_flutter/presentation/navbar/largescreen/megaDropdown/dropdown_menu_offers.dart';
 import 'package:ohana_webapp_flutter/presentation/navbar/largescreen/navigation_bar_contents_largescreen.dart';
+import 'package:ohana_webapp_flutter/presentation/navbar/navbar_responsiveness.dart';
 import 'package:ohana_webapp_flutter/presentation/navbar/search_bar.dart';
 import 'package:ohana_webapp_flutter/presentation/pages/expertisesPages/widgets/services_banner.dart';
+import 'package:ohana_webapp_flutter/presentation/widgets/composants/text_format/bold_text_customiser.dart';
 import 'package:ohana_webapp_flutter/presentation/widgets/patterns/custom_carousel.dart';
 import 'package:ohana_webapp_flutter/presentation/widgets/patterns/strong_points_section.dart';
 
@@ -25,10 +27,8 @@ class ServicesPageLargeScreen extends StatelessWidget {
     Size screenSize = MediaQuery.of(context).size;
     return Scaffold(
       backgroundColor: Colors.white,
-      appBar: PreferredSize(
-        preferredSize: Size(screenSize.width, navBarHeight),
-        child: const NavigationBarContentsLargeScreen(),
-      ),
+      appBar: NavbarResponsiveness.getNavbar(screenSize.width),
+      endDrawer: NavbarResponsiveness.getEndDrawer(screenSize.width),
       body: Expanded(
         child: SizedBox(
             width: screenSize.width,
@@ -47,6 +47,7 @@ class ServicesPageLargeScreen extends StatelessWidget {
                 const DropdownMenuExpertises(),
                 const DropdownMenuOffers(),
                 const DropdownMenuAboutUs(),
+
                 //SEARCH BAR
                 SearchNavBar(
                   placeholder:
@@ -62,27 +63,31 @@ class ServicesPageLargeScreen extends StatelessWidget {
     return Column(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
-        ServicesBanner(
-          screenSizeWidth: screenSize.width,
-          title: 'Nos services',
-          imagePath:
-              'assets/services_images/services_acceuil_official_free_image.webp',
-          text:
-              'Nous proposons differents types de services de développement et de cybersécurité, Nous n\'hésitons pas à mettre notre coeur à l\'ouvrage car le développement est avant tout une activité qui nous passionne et nous voulons faire profiter de cette passion à tout nos clients et potentiel client',
-          boldTextList: const ['développement', 'cybersécurité'],
-          titleColor: Colors.black,
+        Image.asset(
+          'assets/services_images/services_acceuil_official_free_image.webp',
+          width: screenSize.width,
+          height: 500,
+          fit: BoxFit.cover,
         ),
+        const SizedBox(height: 50),
+        const Text(
+          'Nos Services',
+          style: TextStyle(fontSize: 35, fontWeight: FontWeight.bold),
+        ),
+        const SizedBox(height: 40),
         const SizedBox(
-          height: 60,
+          width: 900,
+          child: Text(
+            'Nous proposons differents types de services de développement et de cybersécurité, Nous n\'hésitons pas à mettre notre coeur à l\'ouvrage car le développement est avant tout une activité qui nous passionne et nous voulons faire profiter de cette passion à tout nos clients et potentiel client',
+            textAlign: TextAlign.center,
+            style: TextStyle(fontSize: 19),
+          ),
         ),
+        const SizedBox(height: 60),
         const ServicesCards(),
-        const SizedBox(
-          height: 40,
-        ),
+        const SizedBox(height: 40),
         const StrongPointsSection(),
-        const SizedBox(
-          height: 70,
-        ),
+        const SizedBox(height: 70),
         const Footer()
       ],
     );
@@ -178,19 +183,27 @@ class ServicesCards extends StatelessWidget {
       padding: const EdgeInsets.only(top: 10),
       child: Column(
         children: [
-          const SizedBox(
-            height: spaceBetweenBigTitleAndTextBody,
+          const SizedBox(height: spaceBetweenBigTitleAndTextBody),
+          const Text(
+            'Services de développement',
+            style: TextStyle(fontSize: 35, fontWeight: FontWeight.bold),
           ),
+          const SizedBox(height: 35),
           CustomCarousel(
-            title: 'Services de développement',
             widgets: devServices,
+            viewportFraction: 0.5,
+            carouselHeight: 320,
           ),
-          const SizedBox(
-            height: 30,
+          const SizedBox(height: 50),
+          const Text(
+            'Services de cybersécurité',
+            style: TextStyle(fontSize: 35, fontWeight: FontWeight.bold),
           ),
+          const SizedBox(height: 35),
           CustomCarousel(
-            title: 'Services de cybersécurité',
             widgets: cybersecurity,
+            viewportFraction: 0.5,
+            carouselHeight: 320,
           ),
         ],
       ),
@@ -211,8 +224,7 @@ class ServicesCards extends StatelessWidget {
       },
       child: MouseRegion(
         cursor: SystemMouseCursors.grab,
-        child: Container(
-          padding: const EdgeInsets.only(left: 70, bottom: 20),
+        child: SizedBox(
           height: heightBloc,
           width: widthBloc,
           child: Stack(

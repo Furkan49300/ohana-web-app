@@ -4,14 +4,13 @@ class CustomListText extends StatelessWidget {
   final List<String> textList;
   final Color? textColor;
   final double? fontSize;
-  final double? width;
 
-  const CustomListText(
-      {super.key,
-      required this.textList,
-      this.textColor,
-      this.fontSize,
-      this.width});
+  const CustomListText({
+    super.key,
+    required this.textList,
+    this.textColor,
+    this.fontSize,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -24,7 +23,6 @@ class CustomListText extends StatelessWidget {
                   text: item,
                   textColor: textColor,
                   fontSize: fontSize,
-                  width: width,
                 ))
             .toList());
   }
@@ -35,13 +33,11 @@ class BulletPoint extends StatelessWidget {
   final Color? textColor;
   final IconData? icon;
   final double? fontSize;
-  final double? width;
   const BulletPoint(
       {super.key,
       required this.text,
       this.textColor,
       this.fontSize,
-      this.width,
       this.icon});
 
   @override
@@ -54,8 +50,7 @@ class BulletPoint extends StatelessWidget {
           Icon(icon ?? Icons.brightness_1,
               size: 10.0, color: textColor), // Cette icône sert de puce
           const SizedBox(width: 20),
-          SizedBox(
-              width: width,
+          Expanded(
               child: Text(text,
                   style: TextStyle(
                     fontSize: fontSize,

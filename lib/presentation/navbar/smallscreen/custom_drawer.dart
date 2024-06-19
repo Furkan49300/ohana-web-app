@@ -1,9 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:ohana_webapp_flutter/presentation/constants/colors.dart';
 
-import 'package:ohana_webapp_flutter/presentation/constants/router_constants.dart';
-import 'package:ohana_webapp_flutter/presentation/navbar/navbar_menu_title.dart';
 import 'package:ohana_webapp_flutter/presentation/navbar/smallscreen/drawerSection/about_us_drawer_section.dart';
 import 'package:ohana_webapp_flutter/presentation/navbar/smallscreen/drawerSection/expertises_drawer_section.dart';
 import 'package:ohana_webapp_flutter/presentation/navbar/smallscreen/drawerSection/offers_drawer_section.dart';

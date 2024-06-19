@@ -58,6 +58,7 @@ class PartnersCarousel extends StatelessWidget {
       },
     ];
     return CustomCarousel(
+      carouselHeight: 312,
       title: title,
       widgets: partnersLogoImage
           .map((company) => GestureDetector(

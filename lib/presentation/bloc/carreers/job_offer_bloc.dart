@@ -15,7 +15,7 @@ class JobOfferBloc extends Bloc<CarreersEvent, JobOfferState> {
             .getAllJobOffers();
 
         // Retourner les offres
-        emit(AllJobOffersStates(allJobOffers));
+        emit(JobOfferLoaded(allJobOffers));
       } catch (error) {
         // Gérer les erreurs
         emit(JobOfferError(error.toString())); // Affiche un message d'erreur

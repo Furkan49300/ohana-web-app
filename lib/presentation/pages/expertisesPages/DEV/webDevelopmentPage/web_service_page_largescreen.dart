@@ -14,11 +14,8 @@ import 'package:ohana_webapp_flutter/presentation/navbar/largescreen/megaDropdow
 import 'package:ohana_webapp_flutter/presentation/navbar/largescreen/megaDropdown/dropdown_menu_offers.dart';
 import 'package:ohana_webapp_flutter/presentation/navbar/largescreen/navigation_bar_contents_largescreen.dart';
 import 'package:ohana_webapp_flutter/presentation/navbar/search_bar.dart';
-import 'package:ohana_webapp_flutter/presentation/pages/expertisesPages/widgets/services_banner.dart';
 import 'package:ohana_webapp_flutter/presentation/widgets/composants/infos_pannel.dart';
-import 'package:ohana_webapp_flutter/presentation/widgets/composants/text_format/custom_text_list.dart';
 import 'package:ohana_webapp_flutter/presentation/widgets/patterns/custom_carousel.dart';
-import 'package:ohana_webapp_flutter/presentation/widgets/composants/text_format/bold_text_customiser.dart';
 import 'package:ohana_webapp_flutter/presentation/widgets/patterns/custom_text_block.dart';
 
 class WebServicePageLargeScreen extends StatelessWidget {
@@ -28,6 +25,12 @@ class WebServicePageLargeScreen extends StatelessWidget {
     "Conception_de_Sites_Web_Personnalisés": GlobalKey(),
     "Développement_site_responsive": GlobalKey(),
     "Maintenance_et_Support": GlobalKey(),
+    "landing_page": GlobalKey(),
+    'e_commerce': GlobalKey(),
+    'marketing_digital_pub': GlobalKey(),
+    'hub': GlobalKey(),
+    'showcase_site': GlobalKey(),
+    'ref': GlobalKey()
   };
 
   @override
@@ -72,14 +75,7 @@ class WebServicePageLargeScreen extends StatelessWidget {
     return Column(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
-        ServicesBanner(
-          screenSizeWidth: screenSize.width,
-          title: 'DEVELOPPEMENT WEB',
-          imagePath:
-              'assets/services_images/dev_services/web/programming-background-with-person-working-with-codes-computer.jpg',
-          text:
-              'Notre équipe de développeurs web qualifiés conçoit et développe des sites web sur mesure pour répondre aux besoins spécifiques de nos clients. Nous accordons une attention particulière à la convivialité et à la performance',
-        ),
+        ..._getBanner(screenSize),
         const SizedBox(height: 50),
         _getDevServicesList(),
         const SizedBox(
@@ -105,6 +101,33 @@ class WebServicePageLargeScreen extends StatelessWidget {
     );
   }
 
+//BANNER
+
+  List<Widget> _getBanner(screenSize) {
+    return [
+      Image.asset(
+        'assets/services_images/dev_services/web/programming-background-with-person-working-with-codes-computer.jpg',
+        width: screenSize.width,
+        height: 500,
+        fit: BoxFit.cover,
+      ),
+      const SizedBox(height: 70),
+      const Text(
+        'DEVELOPPEMENT WEB',
+        style: TextStyle(fontSize: 35, fontWeight: FontWeight.bold),
+      ),
+      const SizedBox(height: 40),
+      const SizedBox(
+        width: 900,
+        child: Text(
+          'Notre équipe de développeurs web qualifiés conçoit et développe des sites web sur mesure pour répondre aux besoins spécifiques de nos clients. Nous accordons une attention particulière à la convivialité et à la performance',
+          textAlign: TextAlign.center,
+          style: TextStyle(fontSize: 19),
+        ),
+      ),
+    ];
+  }
+
 //TEXT BODY
   _getTextCustomCard({bool reverseMode = false, required Size screenSize}) {
     TextDirection rtlDirection = TextDirection.rtl;
@@ -112,30 +135,39 @@ class WebServicePageLargeScreen extends StatelessWidget {
       mainAxisSize: MainAxisSize.min,
       crossAxisAlignment: CrossAxisAlignment.center,
       children: [
-        const SizedBox(height: 30),
+        const SizedBox(height: 50),
+
+//CONCEPTION SITE SUR MESURE
+
         CustomTextBlock(
           key: keysMap["Conception_de_Sites_Web_Personnalisés"],
           image:
               'assets/services_images/dev_services/web/representations-ui-ux-ordinateur-portable_23-2150201871.jpg',
           title: 'Conception de Sites Web Personnalisés',
           text:
-              ' Nous créons des sites web sur mesure qui reflètent parfaitement l\'identité de votre marque. Nos designs sont modernes, intuitifs et adaptés à vos besoins spécifiques.',
+              "Un site web sur mesure est construit spécifiquement pour répondre aux besoins uniques d'une entreprise ou d'une organisation. Contrairement aux plateformes CMS (Content Management System) comme WordPress, un site sur mesure est développé à partir de zéro en utilisant des technologies et des fonctionnalités spécifiques, offrant ainsi une flexibilité et une personnalisation maximales pour répondre aux exigences particulières du client.",
         ),
-        const SizedBox(height: 30),
+        const SizedBox(height: 50),
+
+// E-COMMERCE SERVICE
+
         CustomTextBlock(
-          key: keysMap["Développement_site_responsive"],
-          title: 'Développement site responsive',
+          key: keysMap["e_commerce"],
+          title: 'Développement site E-commerce',
           image:
               'assets/services_images/dev_services/web/homepage-seen-computer-screen.jpg',
           textDirection: rtlDirection,
           text:
-              'E-commerce \n Nous développons des boutiques en ligne sécurisées et performantes, intégrées avec les solutions de paiement les plus populaires et des fonctionnalités avancées pour gérer vos ventes et inventaires.',
+              "Le développement d'un site e-commerce implique la création d'une plateforme en ligne permettant aux entreprises de vendre leurs produits ou services directement aux consommateurs via Internet. Un site e-commerce doit inclure des fonctionnalités telles que la gestion de catalogues de produits, des paniers d'achat, des passerelles de paiement sécurisées, la gestion des commandes, etc.",
           textBulletList: const [
             'CMS (Systèmes de Gestion de Contenu): Nous mettons en place des CMS comme WordPress, Joomla ou Drupal pour vous permettre de gérer facilement votre contenu et de mettre à jour votre site sans connaissances techniques avancées.',
             'Optimisation SEO: Nos sites sont conçus pour être facilement trouvés sur les moteurs de recherche grâce à des techniques avancées de référencement naturel (SEO).'
           ],
         ),
-        const SizedBox(height: 40),
+        const SizedBox(height: 50),
+
+// MAINTENANCE
+
         CustomTextBlock(
           key: keysMap["Maintenance_et_Support"],
           title: 'Maintenance et Support',
@@ -143,8 +175,78 @@ class WebServicePageLargeScreen extends StatelessWidget {
               'Nous offrons des services de maintenance continue pour garantir que votre site reste à jour, sécurisé et performant. Notre équipe de support est disponible pour répondre à toutes vos questions et besoins.',
           image:
               'assets/services_images/dev_services/web/miniature-workmen-repairing-laptop-keyboard.jpg',
-          boldList: const ['E-commerce'],
+          boldList: const [''],
         ),
+        const SizedBox(height: 50),
+
+//LANDING PAGE
+
+        CustomTextBlock(
+          key: keysMap["landing_page"],
+          textDirection: rtlDirection,
+          title: 'Landing Page',
+          text:
+              "Une landing page (ou page d'atterrissage) est une page web conçue spécifiquement pour convertir les visiteurs en leads ou en clients potentiels. Elle est généralement utilisée dans le cadre de campagnes marketing ou publicitaires et se concentre sur un objectif spécifique, comme l'inscription à une newsletter, le téléchargement d'un ebook ou l'achat d'un produit.",
+          image:
+              'assets/services_images/dev_services/web/landing-page-exemple-1.png',
+          boldList: const [''],
+        ),
+        const SizedBox(height: 50),
+
+//MARKETING/PUBLICITE DIGITAL
+
+        CustomTextBlock(
+          key: keysMap["marketing_digital_pub"],
+          title: 'Marketing et publicités digitales',
+          text:
+              "Le marketing et la publicité digitale font référence aux stratégies et aux tactiques utilisées pour promouvoir un produit, un service ou une marque sur Internet. Cela peut inclure des campagnes de publicité payante sur les réseaux sociaux, les moteurs de recherche (comme Google Ads), le marketing par e-mail, le marketing de contenu, le SEO (optimisation pour les moteurs de recherche) et d'autres formes de marketing en ligne pour attirer et convertir les clients potentiels.",
+          image:
+              'assets/services_images/dev_services/web/Qui-sont-principaux-acteurs-publicite-digitale--F.jpg',
+          boldList: const [''],
+        ),
+        const SizedBox(height: 50),
+
+//HEBERGEMENT
+
+        CustomTextBlock(
+          key: keysMap["hub"],
+          textDirection: rtlDirection,
+          title: 'Hébergement',
+          text:
+              "L'hébergement web est le service qui permet à un site web d'être accessible sur Internet. Cela implique de stocker les fichiers du site sur un serveur web, assurant ainsi que le site est disponible 24/7 pour les visiteurs. Les services d'hébergement peuvent varier en termes de performances, de sécurité, de support technique et de capacités spécifiques (comme le support pour des bases de données spécifiques ou des langages de programmation).",
+          image: 'assets/services_images/dev_services/web/hebergement-web.jpg',
+          boldList: const [''],
+        ),
+        const SizedBox(height: 50),
+
+//SITE VITRINE
+
+        CustomTextBlock(
+          key: keysMap["showcase_site"],
+          title: 'Site vitrine',
+          text:
+              "Un site vitrine est une plateforme web conçue principalement pour présenter une entreprise, ses produits, ses services et ses valeurs. Il sert souvent de première impression pour les visiteurs et vise à informer, attirer et convertir les visiteurs en clients potentiels. Généralement, un site vitrine est statique et ne comporte pas de fonctionnalités avancées de commerce en ligne.",
+          image:
+              'assets/services_images/dev_services/web/carte-visite-logo-site-vitrine-04-16-258.jpg',
+          boldList: const [''],
+        ),
+        const SizedBox(height: 50),
+
+//REFERENC...
+
+        CustomTextBlock(
+          key: keysMap["ref"],
+          textDirection: rtlDirection,
+          title: 'Référencement\n (SEO - Search Engine Optimization)',
+          text:
+              "Le référencement est l'ensemble des techniques et stratégies visant à améliorer la visibilité d'un site web dans les résultats des moteurs de recherche (comme Google, Bing, Yahoo, etc.). L'objectif principal du SEO est d'augmenter le trafic organique (non payant) vers un site web en favorisant son classement dans les résultats de recherche pour des mots-clés pertinents.",
+          image:
+              'assets/services_images/dev_services/web/referencement-web.jpg',
+          boldList: const [''],
+        ),
+        const SizedBox(height: 50),
+
+//--------------
       ],
     );
   }
@@ -162,9 +264,9 @@ class WebServicePageLargeScreen extends StatelessWidget {
         const SizedBox(
           height: 50,
         ),
-        Row(
-          mainAxisSize: MainAxisSize.min,
-          crossAxisAlignment: CrossAxisAlignment.start,
+        Wrap(
+          alignment: WrapAlignment.center,
+          crossAxisAlignment: WrapCrossAlignment.start,
           children: [
             const Padding(
               padding: EdgeInsets.all(20.0),
@@ -261,47 +363,63 @@ class WebServicePageLargeScreen extends StatelessWidget {
       _getCatalogItem(
           title: 'SITE VITRINE',
           imagePath: 'webshowcases.jpg',
-          globalKey: GlobalKey()),
+          globalKey: keysMap['showcase_site'],
+          duration: 2),
       _getCatalogItem(
           title: 'SITE E-COMMERCE',
           imagePath: 'e-commerce.jpg',
-          globalKey: GlobalKey()),
+          globalKey: keysMap['e_commerce'],
+          duration: 1),
       _getCatalogItem(
           title: 'LANDING PAGE',
           imagePath: 'landingPage.jpg',
-          globalKey: keysMap["Conception_de_Sites_Web_Personnalisés"]),
+          globalKey: keysMap["landing_page"],
+          duration: 1),
       _getCatalogItem(
           title: 'SITE SUR MESURE',
           imagePath: 'measurement.jpg',
-          globalKey: keysMap["Développement_site_responsive"]),
+          globalKey: keysMap["Conception_de_Sites_Web_Personnalisés"],
+          duration: 2),
       _getCatalogItem(
           title: 'HEBERGEMENT',
           imagePath: 'accomodation.jpg',
-          globalKey: GlobalKey()),
+          globalKey: keysMap["hub"],
+          duration: 2),
       _getCatalogItem(
           title: 'MAINTENANCE',
           imagePath: 'maintain.jpg',
-          globalKey: keysMap["Maintenance_et_Support"]),
+          globalKey: keysMap["Maintenance_et_Support"],
+          duration: 1),
       _getCatalogItem(
-          title: 'RÉFÉRENCEMENT', imagePath: 'ref.jpg', globalKey: GlobalKey()),
+          title: 'RÉFÉRENCEMENT',
+          imagePath: 'ref.jpg',
+          globalKey: keysMap['ref'],
+          duration: 2),
       _getCatalogItem(
           title: 'MAKETING/PUBLICITES DIGITALES',
           imagePath: 'webpub.jpg',
-          globalKey: GlobalKey()),
+          globalKey: keysMap["marketing_digital_pub"],
+          duration: 2),
     ];
 
     return CustomCarousel(
-        title: 'Nos Services De Développement', widgets: devServices);
+        carouselHeight: 312,
+        title: 'Nos Services De Développement',
+        widgets: devServices);
   }
 
   _getCatalogItem(
-      {required String title, required String imagePath, globalKey}) {
+      {required String title,
+      required String imagePath,
+      globalKey,
+      int duration = 0}) {
     double width = 700;
     double height = 250;
+
     return GestureDetector(
       onTap: () {
         Scrollable.ensureVisible(globalKey.currentContext,
-            duration: const Duration(seconds: 2), curve: Curves.easeInOut);
+            duration: Duration(seconds: duration), curve: Curves.easeInOut);
       },
       child: Center(
           child: SizedBox(

@@ -1,13 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:ohana_webapp_flutter/presentation/constants/dimensions.dart';
 import 'package:ohana_webapp_flutter/presentation/widgets/composants/text_format/custom_text_list.dart';
-import 'package:ohana_webapp_flutter/presentation/widgets/composants/text_format/custom_underlined_title.dart';
 
 class StrongPointsSection extends StatelessWidget {
-  const StrongPointsSection(
-      {super.key, this.height = 400, this.width = 400, this.textWidget});
-  final double height;
-  final double width;
+  const StrongPointsSection({
+    super.key,
+    this.textWidget,
+  });
+
   final Widget? textWidget;
 
   @override
@@ -16,48 +15,47 @@ class StrongPointsSection extends StatelessWidget {
       'Choississez un accompagnement personnalisé',
       'Une combinaison entre expertise et rigueur',
       'Un service de qualité',
-      'Un accueil chaleureux'
+      'Un accueil chaleureux',
     ];
-    Size screenSize = MediaQuery.of(context).size;
-    double widthBalance = 0.3;
-    double height = 412;
-    return Column(
-        crossAxisAlignment: CrossAxisAlignment.start, //begin at Start
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          const CustomUnderlineTitle(
-            title: 'Les + de OHana Entreprise',
-          ),
-          const SizedBox(
-            height: spaceBetweenBigTitleAndTextBody,
-          ),
-          Row(
+
+    return LayoutBuilder(
+      builder: (context, constraints) {
+        double imageHeight =
+            constraints.maxWidth > 600 ? 400 : constraints.maxWidth / 2;
+        double textFontSize = constraints.maxWidth > 600 ? 20 : 16;
+        return Padding(
+          padding: const EdgeInsets.all(5),
+          child: Row(
             crossAxisAlignment: CrossAxisAlignment.start,
             mainAxisAlignment: MainAxisAlignment.center,
-            mainAxisSize: MainAxisSize.min,
             children: [
-              Image.asset(
-                'buisness.jpg',
-                height: height,
-                width: screenSize.width * widthBalance,
-                fit: BoxFit.cover,
+              Flexible(
+                flex: 1,
+                child: Image.asset(
+                  'assets/buisness.jpg', // Adjust path according to your project
+                  height: imageHeight,
+                  fit: BoxFit.cover,
+                ),
               ),
-              textWidget ??
-                  Container(
-                    height: height,
-                    color: Colors.purple,
-                    child: Align(
-                      alignment: Alignment.center,
-                      child: CustomListText(
-                        width: screenSize.width * widthBalance - 0.1,
-                        textList: defaultTextContent,
-                        textColor: Colors.white,
-                        fontSize: 20,
-                      ),
-                    ),
-                  )
+              Flexible(
+                flex: 1,
+                child: Container(
+                  color: Colors.purple,
+                  height: imageHeight,
+                  child: Align(
+                    alignment: Alignment.center,
+                    child: textWidget ??
+                        CustomListText(
+                            textList: defaultTextContent,
+                            textColor: Colors.white,
+                            fontSize: textFontSize),
+                  ),
+                ),
+              ),
             ],
           ),
-        ]);
+        );
+      },
+    );
   }
 }

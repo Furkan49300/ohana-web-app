@@ -3,9 +3,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:intl/intl.dart';
+
 import 'package:ohana_webapp_flutter/logic/entities/blog_post.dart';
 import 'package:ohana_webapp_flutter/presentation/bloc/blog_post/blocs/paginated_blog_posts_bloc.dart';
 import 'package:ohana_webapp_flutter/presentation/bloc/blog_post/blocs/recent_blog_posts_bloc.dart';
+import 'package:ohana_webapp_flutter/presentation/bloc/blog_post/blocs/single_blog_post_bloc.dart';
 import 'package:ohana_webapp_flutter/presentation/bloc/blog_post/blog_post_event.dart';
 import 'package:ohana_webapp_flutter/presentation/bloc/blog_post/blog_post_state.dart';
 import 'package:ohana_webapp_flutter/presentation/bloc/navbar_dropdown/dropdown_menu_bloc.dart';
@@ -16,7 +18,7 @@ import 'package:ohana_webapp_flutter/presentation/navbar/largescreen/megaDropdow
 import 'package:ohana_webapp_flutter/presentation/navbar/largescreen/megaDropdown/dropdown_menu_offers.dart';
 import 'package:ohana_webapp_flutter/presentation/navbar/navbar_responsiveness.dart';
 import 'package:ohana_webapp_flutter/presentation/navbar/search_bar.dart';
-import 'package:ohana_webapp_flutter/presentation/pages/aboutUsPages/blogPage/widget/custom_smart_paginator.dart';
+import 'package:ohana_webapp_flutter/presentation/widgets/composants/custom_smart_paginator.dart';
 import 'package:ohana_webapp_flutter/presentation/widgets/composants/text_format/custom_underlined_title.dart';
 import 'package:ohana_webapp_flutter/presentation/widgets/patterns/blog_card_pattern.dart';
 import 'package:ohana_webapp_flutter/presentation/widgets/patterns/custom_carousel.dart';
@@ -161,6 +163,8 @@ class _BlogPageLargeScreenState extends State<BlogPageLargeScreen> {
 }
 
 class RecentBlogCarouselSection extends StatelessWidget {
+  //ATTRIBUTE
+
   const RecentBlogCarouselSection({
     super.key,
     required this.height,
@@ -171,6 +175,8 @@ class RecentBlogCarouselSection extends StatelessWidget {
   final double height;
   final double width;
   final BlogPost blogPost;
+
+//CONTENT
 
   @override
   Widget build(BuildContext context) {
@@ -193,7 +199,7 @@ class RecentBlogCarouselSection extends StatelessWidget {
                   _getDescription(),
                   // 'See more' Buton
                   const SizedBox(height: 10),
-                  _getButton(),
+                  _getButton(context),
                 ],
               ),
             ),
@@ -258,14 +264,19 @@ class RecentBlogCarouselSection extends StatelessWidget {
 
 // VIEW MORE BUTTON
 
-  _getButton() {
+  _getButton(BuildContext context) {
     return TextButton(
-      onPressed: () {},
+      onPressed: () {
+        //open one recent blog post
+        context
+            .read<SingleBlogPostBloc>()
+            .add(FetchSingleBlogPost(blogPost.id));
+      },
       style: TextButton.styleFrom(
-        foregroundColor: Colors.white, // Couleur du texte du bouton
-        backgroundColor: const Color.fromARGB(
-            255, 221, 89, 245), // Couleur de fond du bouton
-      ),
+          foregroundColor: Colors.white, // Couleur du texte du bouton
+          backgroundColor: const Color.fromARGB(
+              255, 221, 89, 245) // Couleur de fond du bouton
+          ),
       child: const Padding(
         padding: EdgeInsets.all(8.0),
         child: Text(

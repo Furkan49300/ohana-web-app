@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import "package:google_fonts/google_fonts.dart";
+import 'package:ohana_webapp_flutter/presentation/constants/router_constants.dart';
 import 'package:ohana_webapp_flutter/presentation/navbar/smallscreen/drawerSection/custom_list_tile.dart';
 
 class ExpertisesDrawerSection extends StatelessWidget {
@@ -12,7 +13,7 @@ class ExpertisesDrawerSection extends StatelessWidget {
         children: [
           IconButton(
               onPressed: () {
-                Navigator.of(context).pushNamed("");
+                Navigator.of(context).pushNamed(expertise);
               },
               icon: const Icon(Icons.arrow_forward)),
           Text(
@@ -28,7 +29,7 @@ class ExpertisesDrawerSection extends StatelessWidget {
                 width: 150, child: Text('Services de développement')),
             IconButton(
                 onPressed: () {
-                  Navigator.of(context).pushNamed("");
+                  Navigator.of(context).pushNamed(devServices);
                 },
                 icon: const Icon(Icons.arrow_forward, size: 15)),
           ]),

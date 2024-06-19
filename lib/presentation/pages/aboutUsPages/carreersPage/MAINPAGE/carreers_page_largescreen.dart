@@ -20,8 +20,8 @@ import 'package:ohana_webapp_flutter/presentation/navbar/largescreen/navigation_
 import 'package:ohana_webapp_flutter/presentation/navbar/search_bar.dart';
 import 'package:ohana_webapp_flutter/presentation/pages/aboutUsPages/carreersPage/widget/job_offer_card.dart';
 import 'package:ohana_webapp_flutter/presentation/widgets/composants/button_format/button.dart';
+import 'package:ohana_webapp_flutter/presentation/widgets/composants/custom_smart_paginator.dart';
 import 'package:ohana_webapp_flutter/presentation/widgets/composants/input_field/custom_input_field.dart';
-import 'package:ohana_webapp_flutter/presentation/pages/aboutUsPages/blogPage/widget/custom_smart_paginator.dart';
 import 'package:ohana_webapp_flutter/presentation/widgets/patterns/custom_banner.dart';
 
 class CarreersPageLargeScreen extends StatefulWidget {
@@ -176,7 +176,7 @@ class _CarreersPageLargeScreenState extends State<CarreersPageLargeScreen> {
   _getCarrersItems(context) {
     return BlocBuilder<JobOfferBloc, JobOfferState>(
       builder: (context, state) {
-        if (state is AllJobOffersStates) {
+        if (state is JobOfferLoaded) {
           return Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
@@ -189,7 +189,7 @@ class _CarreersPageLargeScreenState extends State<CarreersPageLargeScreen> {
                     item.place,
                     item.contract,
                     item.duration,
-                    item.salary
+                    item.salary ?? ''
                   ],
                   imagePath: item.imagePath,
                   date: item.pulishDate,

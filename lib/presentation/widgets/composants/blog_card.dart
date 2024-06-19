@@ -67,15 +67,14 @@ class BlogCard extends StatelessWidget {
             Align(
               alignment: Alignment.center,
               child: Padding(
-                padding: const EdgeInsets.only(
-                    left: 20, right: 20, top: 10, bottom: 10),
-                child: BoldTextCustomizer(
-                  maxLines: 8,
-                  text: textAndBoldListMap['text'],
-                  boldTextList: const [''],
-                  isOverflowEllipsis: true,
-                ),
-              ),
+                  padding: const EdgeInsets.only(
+                      left: 20, right: 20, top: 10, bottom: 10),
+                  child: Text(
+                    textAndBoldListMap['text'],
+                    style: const TextStyle(fontSize: 19),
+                    softWrap: true,
+                    overflow: TextOverflow.visible,
+                  )),
             )
           ],
         ),

@@ -5,12 +5,12 @@ abstract class JobOfferState extends Equatable {
   List<Object> get props => [];
 }
 
-class AllJobOffersStates extends JobOfferState {
-  final List<JobOffer> jobOffers;
-  AllJobOffersStates(this.jobOffers);
-}
-
 class JobOfferInitialState extends JobOfferState {}
+
+class JobOfferLoaded extends JobOfferState {
+  final List<JobOffer> jobOffers;
+  JobOfferLoaded(this.jobOffers);
+}
 
 class JobOfferError extends JobOfferState {
   final String errorMessage;

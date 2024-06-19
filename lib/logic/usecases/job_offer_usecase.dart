@@ -12,4 +12,8 @@ class JobOfferUsecase {
   Future<List<JobOffer>> getAllJobOffers() {
     return jobOffersRepository.getAllJobOffers();
   }
+
+  Future<JobOffer> getSingleJobOffer(String id) {
+    return jobOffersRepository.getSingleJobOffer(id);
+  }
 }

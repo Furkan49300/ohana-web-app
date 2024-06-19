@@ -1,4 +1,5 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:ohana_webapp_flutter/data/repositories/firebase/blog_post_firebase_repository.dart';
 import 'package:ohana_webapp_flutter/data/repositories/mock/blog_post_hardcoded_repository.dart';
 import 'package:ohana_webapp_flutter/logic/entities/blog_post.dart';
 import 'package:ohana_webapp_flutter/logic/usecases/blog_post_usecase.dart';
@@ -17,7 +18,7 @@ class RecentBlogPostsBloc extends Bloc<BlogPostEvent, BlogPostState> {
     try {
       // Récupérer les articles du blog
       final List<BlogPost> blogPosts = await BlogPostUsecase(
-              blogPostRepository: BlogPostHardCodedRepository())
+              blogPostRepository: BlogPostFirebaseRepository())
           .getMostRecentBlogPosts(event.number);
 
       // Retourner les articles du blog

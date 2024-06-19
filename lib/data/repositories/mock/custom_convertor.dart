@@ -31,7 +31,7 @@ JobOffer jsonToJobOffer(Map json) {
       id: json['id'],
       title: json['title'],
       description: json['description'],
-      content: "",
+      // advantages: "",
       profil: json['profil'],
       imagePath: json['image'],
       place: json['place'],

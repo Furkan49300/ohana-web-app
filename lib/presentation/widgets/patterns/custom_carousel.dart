@@ -8,7 +8,7 @@ class CustomCarousel extends StatelessWidget {
       {super.key,
       required this.widgets,
       this.animationDuration = 4,
-      this.carouselHeight = 316,
+      this.carouselHeight,
       this.viewportFraction = 0.3,
       this.title = '',
       this.autoPlay = true});
@@ -24,9 +24,8 @@ class CustomCarousel extends StatelessWidget {
     return LayoutBuilder(builder: (context, constraints) {
       if (constraints.maxWidth <= 912) {
         return _getCustomCarouselSlider(
-            viewport: 1,
-            titleWidth: constraints.maxWidth - 400,
-            carouselHeight: 400);
+          viewport: 1,
+        );
       } else {
         return _getCustomCarouselSlider(
           viewport: viewportFraction,
@@ -37,9 +36,7 @@ class CustomCarousel extends StatelessWidget {
   }
 
   _getCustomCarouselSlider(
-      {required double viewport,
-      double? titleWidth,
-      required double? carouselHeight}) {
+      {required double viewport, double? titleWidth, double? carouselHeight}) {
     return Column(
       children: [
         if (title != '')

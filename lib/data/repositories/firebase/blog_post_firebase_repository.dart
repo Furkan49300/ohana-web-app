@@ -57,6 +57,8 @@ class BlogPostFirebaseRepository implements BlogPostRepository {
     return _blogPostMapping(querySnapshot);
   }
 
+//PAGINATOR GESTURE
+
 // First BLOG PAGE
 
   @override

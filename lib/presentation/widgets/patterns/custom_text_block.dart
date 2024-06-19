@@ -33,9 +33,8 @@ class CustomTextBlock extends StatelessWidget {
           bottom: 50,
           left: spaceBetweenBigTitleAndTextBody,
         ),
-        child: Wrap(
-          crossAxisAlignment: crossAxisAlignment,
-          alignment: WrapAlignment.center,
+        child: Row(
+          mainAxisSize: MainAxisSize.min,
           textDirection: textDirection,
           children: [
             Image.asset(
@@ -66,10 +65,13 @@ class CustomTextBlock extends StatelessWidget {
                       BoldTextCustomizer(
                           width: textWidth, text: text, boldTextList: boldList),
                     if (textBulletList != const [''])
-                      CustomListText(
-                          width: textWidth,
+                      SizedBox(
+                        width: 700,
+                        child: CustomListText(
                           fontSize: 20,
-                          textList: textBulletList)
+                          textList: textBulletList,
+                        ),
+                      )
                   ],
                 ),
               ),

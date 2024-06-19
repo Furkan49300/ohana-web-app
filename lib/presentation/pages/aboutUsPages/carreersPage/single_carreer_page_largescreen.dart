@@ -149,17 +149,17 @@ class SingleCarreerPageLargeScreen extends StatelessWidget {
         ),
         const SizedBox(height: 40),
         SizedBox(
-            child: CustomListText(
-          width: screenSize.width * 0.55,
-          fontSize: 19,
-          textList: const [
-            "Développement Mobile : Concevoir et développer des applications mobiles de haute qualité pour les plateformes iOS et Android, en utilisant les meilleures pratiques de développement.",
-            "Cybersécurité : Implémenter des mesures de sécurité robustes pour protéger les données des utilisateurs et assurer la conformité avec les normes de sécurité.",
-            "Maintenance : Effectuer la maintenance et les mises à jour régulières des applications existantes pour améliorer la performance et la sécurité.",
-            "Collaboration : Travailler en étroite collaboration avec les équipes de développement, de conception et de sécurité pour assurer l'intégration transparente des fonctionnalités de sécurité.",
-            "Revues de Code : Participer aux revues de code pour identifier et corriger les vulnérabilités de sécurité potentielles."
-          ],
-        )),
+            width: screenSize.width * 0.55,
+            child: const CustomListText(
+              fontSize: 19,
+              textList: [
+                "Développement Mobile : Concevoir et développer des applications mobiles de haute qualité pour les plateformes iOS et Android, en utilisant les meilleures pratiques de développement.",
+                "Cybersécurité : Implémenter des mesures de sécurité robustes pour protéger les données des utilisateurs et assurer la conformité avec les normes de sécurité.",
+                "Maintenance : Effectuer la maintenance et les mises à jour régulières des applications existantes pour améliorer la performance et la sécurité.",
+                "Collaboration : Travailler en étroite collaboration avec les équipes de développement, de conception et de sécurité pour assurer l'intégration transparente des fonctionnalités de sécurité.",
+                "Revues de Code : Participer aux revues de code pour identifier et corriger les vulnérabilités de sécurité potentielles."
+              ],
+            )),
         const SizedBox(height: 50),
 
         //PART OF PROFIL
@@ -169,17 +169,17 @@ class SingleCarreerPageLargeScreen extends StatelessWidget {
         ),
         const SizedBox(height: 40),
         SizedBox(
-            child: CustomListText(
-          width: screenSize.width * 0.55,
-          fontSize: 19,
-          textList: const [
-            "Formation : Diplôme en informatique, en ingénierie logicielle ou dans un domaine connexe.",
-            "Expérience : Expérience prouvée en développement d'applications mobiles (iOS et Android) et en cybersécurité.",
-            "Compétences Techniques : Maîtrise des langages de programmation Swift, Kotlin, Java et des outils de développement mobile. Connaissance approfondie des concepts et des meilleures pratiques de cybersécurité.",
-            "Qualités Personnelles : Capacité à travailler en équipe, excellentes compétences en communication, esprit analytique et orienté vers la résolution de problèmes.",
-            "Certifications : Les certifications en cybersécurité (comme CISSP, CEH) sont un plus."
-          ],
-        )),
+            width: screenSize.width * 0.55,
+            child: const CustomListText(
+              fontSize: 19,
+              textList: [
+                "Formation : Diplôme en informatique, en ingénierie logicielle ou dans un domaine connexe.",
+                "Expérience : Expérience prouvée en développement d'applications mobiles (iOS et Android) et en cybersécurité.",
+                "Compétences Techniques : Maîtrise des langages de programmation Swift, Kotlin, Java et des outils de développement mobile. Connaissance approfondie des concepts et des meilleures pratiques de cybersécurité.",
+                "Qualités Personnelles : Capacité à travailler en équipe, excellentes compétences en communication, esprit analytique et orienté vers la résolution de problèmes.",
+                "Certifications : Les certifications en cybersécurité (comme CISSP, CEH) sont un plus."
+              ],
+            )),
 
         //PART OF ADVANTAGES
 
@@ -188,17 +188,17 @@ class SingleCarreerPageLargeScreen extends StatelessWidget {
         ),
         const SizedBox(height: 40),
         SizedBox(
-            child: CustomListText(
-          width: screenSize.width * 0.55,
-          fontSize: 19,
-          textList: const [
-            "Rémunération Compétitive : Salaire attractif et compétitif basé sur l'expérience et les compétences.",
-            "Environnement de Travail : Ambiance de travail collaborative et innovante avec des possibilités de télétravail.",
-            "Formation et Développement : Accès à des programmes de formation continue et des opportunités de développement professionnel.",
-            "Avantages Sociaux : Assurance santé, plan de retraite, congés payés, et autres avantages sociaux.",
-            "Équipements Modernes : Accès à des équipements et des outils de travail de dernière génération."
-          ],
-        )),
+            width: screenSize.width * 0.55,
+            child: const CustomListText(
+              fontSize: 19,
+              textList: [
+                "Rémunération Compétitive : Salaire attractif et compétitif basé sur l'expérience et les compétences.",
+                "Environnement de Travail : Ambiance de travail collaborative et innovante avec des possibilités de télétravail.",
+                "Formation et Développement : Accès à des programmes de formation continue et des opportunités de développement professionnel.",
+                "Avantages Sociaux : Assurance santé, plan de retraite, congés payés, et autres avantages sociaux.",
+                "Équipements Modernes : Accès à des équipements et des outils de travail de dernière génération."
+              ],
+            )),
         const SizedBox(height: 30),
         //Encouragement
         SizedBox(

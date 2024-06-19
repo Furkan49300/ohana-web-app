@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import "package:google_fonts/google_fonts.dart";
+import 'package:ohana_webapp_flutter/presentation/constants/router_constants.dart';
 
 import 'package:ohana_webapp_flutter/presentation/navbar/smallscreen/drawerSection/custom_list_tile.dart';
 
@@ -13,7 +14,7 @@ class OffersDrawerSection extends StatelessWidget {
         children: [
           IconButton(
               onPressed: () {
-                Navigator.of(context).pushNamed("");
+                Navigator.of(context).pushNamed(offers);
               },
               icon: const Icon(Icons.arrow_forward)),
           Text(
