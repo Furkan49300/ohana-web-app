@@ -1,5 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:intl/intl.dart';
+
 import 'package:ohana_webapp_flutter/logic/entities/job_offer.dart';
 import 'package:ohana_webapp_flutter/logic/repositories/job_offer_repository.dart';
 
@@ -15,7 +15,7 @@ class JobOfferFirebaseRepository implements JobOffersRepository {
   Future<JobOffer> getSingleJobOffer(String id) async {
     // Recuperer le dernier document via son Id
     DocumentSnapshot querySnapshot =
-        await FirebaseFirestore.instance.collection('blogposts').doc(id).get();
+        await FirebaseFirestore.instance.collection('joboffers').doc(id).get();
     return _jobOfferMapping(querySnapshot);
   }
 

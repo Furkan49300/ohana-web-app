@@ -5,12 +5,13 @@ import "package:ohana_webapp_flutter/presentation/bloc/blog_post/blocs/all_blog_
 import "package:ohana_webapp_flutter/presentation/bloc/blog_post/blocs/paginated_blog_posts_bloc.dart";
 import "package:ohana_webapp_flutter/presentation/bloc/blog_post/blocs/recent_blog_posts_bloc.dart";
 import "package:ohana_webapp_flutter/presentation/bloc/blog_post/blocs/single_blog_post_bloc.dart";
-import "package:ohana_webapp_flutter/presentation/bloc/carreers/paginated_job_offer_bloc.dart";
-import "package:ohana_webapp_flutter/presentation/bloc/carreers/single_job_offer_bloc.dart";
+import "package:ohana_webapp_flutter/presentation/bloc/carreers/blocs/paginated_job_offer_bloc.dart";
+import "package:ohana_webapp_flutter/presentation/bloc/carreers/blocs/single_job_offer_bloc.dart";
 import "package:ohana_webapp_flutter/presentation/pages/aboutUsPages/about_us_largescreen.dart";
 import "package:ohana_webapp_flutter/presentation/pages/aboutUsPages/blogPage/MAINPAGE/blog_page_largescreen.dart";
 import "package:ohana_webapp_flutter/presentation/pages/aboutUsPages/blogPage/single_blogpost_page_largescreen.dart";
 import "package:ohana_webapp_flutter/presentation/pages/aboutUsPages/carreersPage/MAINPAGE/carreers_page_largescreen.dart";
+import "package:ohana_webapp_flutter/presentation/pages/aboutUsPages/carreersPage/postulation/postulation.dart";
 import "package:ohana_webapp_flutter/presentation/pages/aboutUsPages/carreersPage/single_carreer_page_largescreen.dart";
 import "package:ohana_webapp_flutter/presentation/pages/aboutUsPages/estimatePage/estimate_page_largescreen.dart";
 import "package:ohana_webapp_flutter/presentation/pages/aboutUsPages/contactPage/contact_page_largescreen.dart";
@@ -81,6 +82,14 @@ class AppRouter {
             builder: (e) => BlocProvider.value(
                   value: _singleJobOfferBloc,
                   child: const SingleCarreerPageLargeScreen(),
+                ));
+
+//POSTULATION
+      case apply:
+        return MaterialPageRoute(
+            builder: (e) => BlocProvider.value(
+                  value: _singleJobOfferBloc,
+                  child: const PostulationPage(),
                 ));
 
 //BLOG

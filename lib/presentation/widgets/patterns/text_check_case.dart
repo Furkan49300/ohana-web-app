@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 
 class TextCheckCase extends StatefulWidget {
-  TextCheckCase({super.key, this.widthBalance = 1 / 2.1, required this.text});
+  TextCheckCase(
+      {super.key, this.widthBalance = 1 / 2.1, required this.text, this.color});
   final double widthBalance;
+  final Color? color;
   final String text;
   bool isChecked = false;
 
@@ -35,7 +37,7 @@ class TextCheckCaseState extends State<TextCheckCase> {
           width: mediaScreenWidth * widget.widthBalance,
           child: Text(
             widget.text,
-            style: const TextStyle(fontSize: 15),
+            style: TextStyle(fontSize: 15, color: widget.color),
           ),
         )
       ],

@@ -1,4 +1,5 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
+
 import 'package:ohana_webapp_flutter/data/repositories/firebase/job_offer_firebase_repository.dart';
 import 'package:ohana_webapp_flutter/logic/entities/job_offer.dart';
 import 'package:ohana_webapp_flutter/logic/usecases/job_offer_usecase.dart';

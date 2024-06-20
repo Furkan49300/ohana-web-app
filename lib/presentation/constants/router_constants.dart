@@ -10,6 +10,7 @@ const String carreers = '/carreers';
 const String estimate = 'estimate/';
 const String singleBlog = 'single-blog/';
 const String singleCarreer = '/carreer';
+const String apply = '/postulation';
 
 const String devServices = "services/dev-services";
 const String web = "services/dev-services/web";

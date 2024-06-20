@@ -6,8 +6,8 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:ohana_webapp_flutter/logic/entities/job_offer.dart';
 import 'package:ohana_webapp_flutter/presentation/bloc/carreers/job_offer_event.dart';
 import 'package:ohana_webapp_flutter/presentation/bloc/carreers/job_offer_state.dart';
-import 'package:ohana_webapp_flutter/presentation/bloc/carreers/paginated_job_offer_bloc.dart';
-import 'package:ohana_webapp_flutter/presentation/bloc/carreers/single_job_offer_bloc.dart';
+import 'package:ohana_webapp_flutter/presentation/bloc/carreers/blocs/paginated_job_offer_bloc.dart';
+import 'package:ohana_webapp_flutter/presentation/bloc/carreers/blocs/single_job_offer_bloc.dart';
 
 import 'package:ohana_webapp_flutter/presentation/bloc/navbar_dropdown/dropdown_menu_bloc.dart';
 import 'package:ohana_webapp_flutter/presentation/bloc/navbar_dropdown/dropdown_menu_event.dart';

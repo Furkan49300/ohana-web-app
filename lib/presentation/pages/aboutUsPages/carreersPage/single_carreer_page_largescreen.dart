@@ -5,12 +5,13 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:intl/intl.dart';
 import 'package:ohana_webapp_flutter/logic/entities/job_offer.dart';
 import 'package:ohana_webapp_flutter/presentation/bloc/carreers/job_offer_state.dart';
-import 'package:ohana_webapp_flutter/presentation/bloc/carreers/single_job_offer_bloc.dart';
+import 'package:ohana_webapp_flutter/presentation/bloc/carreers/blocs/single_job_offer_bloc.dart';
 
 import 'package:ohana_webapp_flutter/presentation/bloc/navbar_dropdown/dropdown_menu_bloc.dart';
 import 'package:ohana_webapp_flutter/presentation/bloc/navbar_dropdown/dropdown_menu_event.dart';
 import 'package:ohana_webapp_flutter/presentation/constants/default_values.dart';
 import 'package:ohana_webapp_flutter/presentation/constants/dimensions.dart';
+import 'package:ohana_webapp_flutter/presentation/constants/router_constants.dart';
 import 'package:ohana_webapp_flutter/presentation/footer/footer_screen_fit.dart';
 import 'package:ohana_webapp_flutter/presentation/navbar/largescreen/megaDropdown/dropdown_menu_about_us.dart';
 import 'package:ohana_webapp_flutter/presentation/navbar/largescreen/megaDropdown/dropdown_menu_expertises.dart';
@@ -61,34 +62,44 @@ class SingleCarreerPageLargeScreen extends StatelessWidget {
         child: BlocBuilder<SingleJobOfferBloc, JobOfferState>(
           builder: (context, state) {
             if (state is SingleJobOfferLoaded) {
-              return Column(
-                children: [
-                  const SizedBox(height: 50),
-                  Image.asset(
-                    state.jobOffers.imagePath != '' &&
-                            state.jobOffers.imagePath != null
-                        ? state.jobOffers.imagePath
-                        : jobDefaultImage,
-                    width: screenSize.width * 0.55,
-                    height: 300,
-                  ),
-                  const SizedBox(height: 20),
-                  _getHeader(state.jobOffers),
-                  const SizedBox(height: 40),
-                  _getBodyText(screenSize, state.jobOffers),
-                  const SizedBox(height: 50),
-                  const SizedBox(height: 40),
-                  const CustomUnderlineTitle(
-                    title: "Propositions similaires",
-                  ),
-                  const SizedBox(height: 40),
-                  _getOtherSimilarJob(),
-                  const Footer(),
-                ],
-              );
+              try {
+                return Column(
+                  children: [
+                    const SizedBox(height: 50),
+                    Image.asset(
+                      state.jobOffers.imagePath != '' &&
+                              state.jobOffers.imagePath != null
+                          ? state.jobOffers.imagePath
+                          : jobDefaultImage,
+                      width: screenSize.width * 0.55,
+                      height: 300,
+                    ),
+                    const SizedBox(height: 20),
+                    _getHeader(state.jobOffers, context),
+                    const SizedBox(height: 40),
+                    _getBodyText(screenSize, state.jobOffers),
+                    const SizedBox(height: 50),
+                    const SizedBox(height: 40),
+                    const CustomUnderlineTitle(
+                      title: "Propositions similaires",
+                    ),
+                    const SizedBox(height: 40),
+                    _getOtherSimilarJob(),
+                    const Footer(),
+                  ],
+                );
+              } catch (error) {
+                return _getErrorMessage(
+                    screenSize, 'Something went wrong (build error) : $error');
+              }
+            } else if (state is JobOfferInitialState) {
+              return _getErrorMessage(screenSize, 'is Loading...');
+            } else if (state is JobOfferError) {
+              return _getErrorMessage(screenSize,
+                  'Something went wrong (state error) :  ${state.errorMessage}');
             } else {
-              return const SizedBox(
-                  height: 100, child: Text('Etat non pris en compte'));
+              return _getErrorMessage(
+                  screenSize, 'Something went wrong (error)');
             }
           },
         ),
@@ -96,7 +107,7 @@ class SingleCarreerPageLargeScreen extends StatelessWidget {
     );
   }
 
-  _getHeader(JobOffer jobOffer) {
+  _getHeader(JobOffer jobOffer, BuildContext context) {
     DateFormat dateFormat = DateFormat("dd/MM/yyyy");
     return Column(
       children: [
@@ -116,7 +127,9 @@ class SingleCarreerPageLargeScreen extends StatelessWidget {
                   paddingLeftRight: 30.0,
                   paddingTopBottom: 5.0,
                   fontSizeVal: 24,
-                  onTap: () {},
+                  onTap: () {
+                    Navigator.of(context).pushNamed(apply);
+                  },
                 ),
               )
             ]),
@@ -339,5 +352,15 @@ class SingleCarreerPageLargeScreen extends StatelessWidget {
         ),
       ),
     );
+  }
+
+  SizedBox _getErrorMessage(Size screenSize, String text) {
+    return SizedBox(
+        height: screenSize.height * 0.7,
+        child: Center(
+          child: Text(text,
+              style:
+                  const TextStyle(fontSize: 24, fontWeight: FontWeight.bold)),
+        ));
   }
 }
