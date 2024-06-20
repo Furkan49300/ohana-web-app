@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:io';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -16,9 +17,23 @@ import 'package:ohana_webapp_flutter/presentation/widgets/composants/button_form
 import 'package:ohana_webapp_flutter/presentation/widgets/composants/input_field/custom_input_field.dart';
 import 'package:ohana_webapp_flutter/presentation/widgets/patterns/text_check_case.dart';
 
-class PostulationPage extends StatelessWidget {
+// MAIN BODY
+
+class PostulationPage extends StatefulWidget {
   const PostulationPage({super.key});
-  final int currentStep = 1;
+
+  @override
+  State<PostulationPage> createState() => _PostulationPageState();
+}
+
+class _PostulationPageState extends State<PostulationPage> {
+  int currentStep = 1;
+
+  void changeCurrentStepState(int currentstep) {
+    setState(() {
+      currentStep = currentstep;
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -84,16 +99,17 @@ class PostulationPage extends StatelessWidget {
                     fontWeight: FontWeight.bold,
                     color: Colors.white)),
             const SizedBox(height: 30),
-            _getProcessStep(1),
+            _getProcessStep(step: currentStep),
             const SizedBox(height: 30),
-            PostulationForm(),
+            PostulationForm(
+                step: currentStep, changeCurrentStep: changeCurrentStepState),
           ],
         ),
       ],
     );
   }
 
-  _getProcessStep(int step) {
+  _getProcessStep({required int step}) {
     return Row(
       mainAxisSize: MainAxisSize.min,
       children: [
@@ -154,62 +170,57 @@ class PostulationPage extends StatelessWidget {
   }
 }
 
-class PostulationForm extends StatelessWidget {
-  PostulationForm({super.key});
+//FORM AND DATA
 
+class PostulationForm extends StatefulWidget {
+  PostulationForm(
+      {super.key, required this.step, required this.changeCurrentStep});
+
+//CURRENT STEP
+
+  int step;
+
+//CALLBACK
+
+  final Function changeCurrentStep;
+
+//CHILD WIDGET STATE
+
+  @override
+  State<PostulationForm> createState() => _PostulationFormState();
+}
+
+class _PostulationFormState extends State<PostulationForm> {
   bool emailAlert = false;
+
+//INPUT CONTROLLER
   String emailAlertMessage = "Veuillez entrer une adresse valide!";
+
   TextEditingController firstNameFieldController = TextEditingController();
+
   TextEditingController lastNameFieldController = TextEditingController();
+
   TextEditingController emailFieldController = TextEditingController();
-  TextEditingController subjectFieldController = TextEditingController();
-  TextEditingController messageFieldController = TextEditingController();
+
   GlobalKey<TextCheckCaseState> checkBoxGlobalKey =
       GlobalKey<TextCheckCaseState>();
 
-  _getTitle(title) {
-    return Text(title,
-        style: const TextStyle(
-            fontSize: 15, fontWeight: FontWeight.bold, color: Colors.white));
-  }
+//USER AND FILE
+  File? cvFile;
+
+  File? coverLetterFile;
+
+//PRIMARY WIDGET
 
   @override
   Widget build(BuildContext context) {
-    double spaceBetween = 30;
     return Column(
       mainAxisAlignment: MainAxisAlignment.start,
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        _getTitle("Nom"),
-        CustomInputField(
-          placeholder: 'Nom',
-          widthBalance: 1 / 2,
-          textEditingController: firstNameFieldController,
-        ),
-        SizedBox(height: spaceBetween),
-        _getTitle('Prénom'),
-        const SizedBox(height: 5),
-        CustomInputField(
-          placeholder: 'Prénom',
-          widthBalance: 1 / 2,
-          textEditingController: lastNameFieldController,
-        ),
-        SizedBox(height: spaceBetween),
-        _getTitle('Email'),
-        const SizedBox(height: 5),
-        CustomInputField(
-          placeholder: 'exemple@email.com',
-          widthBalance: 1 / 2,
-          textEditingController: emailFieldController,
-        ),
-        emailAlert
-            ? Text(emailAlertMessage,
-                style: const TextStyle(color: Colors.red, fontSize: 15))
-            : const SizedBox(),
-        const SizedBox(height: 10),
-        Button('Envoyer', type: ButtonType.standard, onTap: () {
-          _sendData(checkBoxGlobalKey);
-        }),
+        if (widget.step == 1) ..._getFirstStepData(),
+        if (widget.step == 2) ..._getSecondStepData(),
+        if (widget.step == 3) ..._getThirdStepData(),
         const SizedBox(height: 15),
         TextCheckCase(
           key: checkBoxGlobalKey,
@@ -221,17 +232,87 @@ class PostulationForm extends StatelessWidget {
     );
   }
 
-  _sendData(GlobalKey<TextCheckCaseState> checkBoxGlobalKey) {
+//SECONDARY WIDGET
+
+  List<Widget> _getFirstStepData() {
+    double spaceBetween = 30;
+    return [
+      _getTitle("Nom"),
+      CustomInputField(
+        placeholder: 'Nom',
+        widthBalance: 1 / 2,
+        textEditingController: firstNameFieldController,
+      ),
+      SizedBox(height: spaceBetween),
+      _getTitle('Prénom'),
+      const SizedBox(height: 5),
+      CustomInputField(
+        placeholder: 'Prénom',
+        widthBalance: 1 / 2,
+        textEditingController: lastNameFieldController,
+      ),
+      SizedBox(height: spaceBetween),
+      _getTitle('Email'),
+      const SizedBox(height: 5),
+      CustomInputField(
+        placeholder: 'exemple@email.com',
+        widthBalance: 1 / 2,
+        textEditingController: emailFieldController,
+      ),
+      emailAlert
+          ? Text(emailAlertMessage,
+              style: const TextStyle(color: Colors.red, fontSize: 15))
+          : const SizedBox(),
+      const SizedBox(height: 15),
+      Button('Suivant', type: ButtonType.standard, onTap: () {
+        getFirstInit();
+      }),
+    ];
+  }
+
+  List<Widget> _getSecondStepData() {
+    return [];
+  }
+
+  List<Widget> _getThirdStepData() {
+    return [];
+  }
+
+//ASSOCIATED TO ALL SECONDARY WIDGET
+
+  Text _getTitle(title) {
+    return Text(title,
+        style: const TextStyle(
+            fontSize: 15, fontWeight: FontWeight.bold, color: Colors.white));
+  }
+
+//ASSOCIATED TO SPECIFIC SECONDARY WIDGET
+
+//FIRST STEP
+
+  getFirstInit() {
     String firstName = firstNameFieldController.text;
     String lastName = lastNameFieldController.text;
     String email = emailFieldController.text;
-    String subject = subjectFieldController.text;
     TextCheckCaseState? checkBox = checkBoxGlobalKey.currentState;
+
+    //control Data
+
     if (checkBox != null && checkBox.isChecked) {
       final RegExp emailRegex = RegExp(r'^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$');
       if (emailRegex.hasMatch(email)) {
         firstName = const HtmlEscape().convert(firstName);
+        lastName = const HtmlEscape().convert(lastName);
       }
     }
+
+    //follow step
+    widget.changeCurrentStep(2);
   }
+
+//SECOND STEP
+
+//FINAL FUNCTION
+
+  _sendData(GlobalKey<TextCheckCaseState> checkBoxGlobalKey) {}
 }
