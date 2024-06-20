@@ -1,13 +1,19 @@
 import 'dart:convert';
 import 'dart:io';
-
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_core/firebase_core.dart';
+import 'package:file_picker/file_picker.dart';
+import 'package:dotted_border/dotted_border.dart';
+import 'package:flutter_svg/flutter_svg.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 
+import 'package:ohana_webapp_flutter/logic/entities/candidate.dart';
 import 'package:ohana_webapp_flutter/presentation/bloc/navbar_dropdown/dropdown_menu_bloc.dart';
 import 'package:ohana_webapp_flutter/presentation/bloc/navbar_dropdown/dropdown_menu_event.dart';
 import 'package:ohana_webapp_flutter/presentation/constants/dimensions.dart';
+import 'package:ohana_webapp_flutter/presentation/constants/router_constants.dart';
 import 'package:ohana_webapp_flutter/presentation/navbar/largescreen/megaDropdown/dropdown_menu_about_us.dart';
 import 'package:ohana_webapp_flutter/presentation/navbar/largescreen/megaDropdown/dropdown_menu_expertises.dart';
 import 'package:ohana_webapp_flutter/presentation/navbar/largescreen/megaDropdown/dropdown_menu_offers.dart';
@@ -52,9 +58,7 @@ class _PostulationPageState extends State<PostulationPage> {
                   onTap: () {
                     context.read<DropdownMenuBloc>().add(HideMenuEvent());
                   },
-                  child: SingleChildScrollView(
-                    child: _content(screenSize, context),
-                  ),
+                  child: _content(screenSize, context),
                 ),
                 // NAVBAR MEGA-DROPDOWN MENUS
                 const DropdownMenuExpertises(),
@@ -72,7 +76,7 @@ class _PostulationPageState extends State<PostulationPage> {
     );
   }
 
-  _content(Size screenSize, BuildContext context) {
+  Widget _content(Size screenSize, BuildContext context) {
     return Stack(
       alignment: Alignment.center,
       children: [
@@ -89,21 +93,26 @@ class _PostulationPageState extends State<PostulationPage> {
             //fit the height of container
           ),
         ),
-        Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
-            const Text("Postuler !!",
-                style: TextStyle(
-                    fontSize: 50,
-                    fontWeight: FontWeight.bold,
-                    color: Colors.white)),
-            const SizedBox(height: 30),
-            _getProcessStep(step: currentStep),
-            const SizedBox(height: 30),
-            PostulationForm(
-                step: currentStep, changeCurrentStep: changeCurrentStepState),
-          ],
+        SingleChildScrollView(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              const Text("Postuler !!",
+                  style: TextStyle(
+                      fontSize: 50,
+                      fontWeight: FontWeight.bold,
+                      color: Colors.white)),
+              const SizedBox(height: 30),
+              _getProcessStep(step: currentStep),
+              const SizedBox(height: 30),
+              PostulationForm(
+                step: currentStep,
+                changeCurrentStep: changeCurrentStepState,
+              ),
+              if (currentStep == 3) const SizedBox(height: 100)
+            ],
+          ),
         ),
       ],
     );
@@ -173,12 +182,18 @@ class _PostulationPageState extends State<PostulationPage> {
 //FORM AND DATA
 
 class PostulationForm extends StatefulWidget {
-  PostulationForm(
-      {super.key, required this.step, required this.changeCurrentStep});
+  PostulationForm({
+    super.key,
+    required this.step,
+    required this.changeCurrentStep,
+    this.checkBoxState,
+  });
 
-//CURRENT STEP
+//CURRENT STEP/STATES
 
   int step;
+
+  TextCheckCaseState? checkBoxState;
 
 //CALLBACK
 
@@ -191,9 +206,12 @@ class PostulationForm extends StatefulWidget {
 }
 
 class _PostulationFormState extends State<PostulationForm> {
+//
   bool emailAlert = false;
+  double widthBalance = 0.5;
 
 //INPUT CONTROLLER
+
   String emailAlertMessage = "Veuillez entrer une adresse valide!";
 
   TextEditingController firstNameFieldController = TextEditingController();
@@ -202,32 +220,33 @@ class _PostulationFormState extends State<PostulationForm> {
 
   TextEditingController emailFieldController = TextEditingController();
 
+//USER AND FILE
+
+  Candidate user = Candidate();
+
+//GLOBAL KEYS
+
   GlobalKey<TextCheckCaseState> checkBoxGlobalKey =
       GlobalKey<TextCheckCaseState>();
-
-//USER AND FILE
-  File? cvFile;
-
-  File? coverLetterFile;
 
 //PRIMARY WIDGET
 
   @override
   Widget build(BuildContext context) {
+    double screenWidth = MediaQuery.of(context).size.width;
     return Column(
-      mainAxisAlignment: MainAxisAlignment.start,
-      crossAxisAlignment: CrossAxisAlignment.start,
+      mainAxisSize: MainAxisSize.min,
       children: [
         if (widget.step == 1) ..._getFirstStepData(),
         if (widget.step == 2) ..._getSecondStepData(),
-        if (widget.step == 3) ..._getThirdStepData(),
+        if (widget.step == 3) ..._getThirdStepData(screenWidth),
         const SizedBox(height: 15),
         TextCheckCase(
           key: checkBoxGlobalKey,
           color: Colors.white,
           text:
               'Les informations recueillies à partir de ce formulaire sont traitées par Digitemis pour donner suite à votre demande de contact. Pour connaître et/ou exercer vos droits, référez-vous à la politique de OHana sur la protection des données, cliquez ici.',
-        )
+        ),
       ],
     );
   }
@@ -237,32 +256,39 @@ class _PostulationFormState extends State<PostulationForm> {
   List<Widget> _getFirstStepData() {
     double spaceBetween = 30;
     return [
-      _getTitle("Nom"),
-      CustomInputField(
-        placeholder: 'Nom',
-        widthBalance: 1 / 2,
-        textEditingController: firstNameFieldController,
+      Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        crossAxisAlignment: CrossAxisAlignment.start,
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          _getTitle("Nom"),
+          CustomInputField(
+            placeholder: 'Nom',
+            widthBalance: 1 / 2,
+            textEditingController: firstNameFieldController,
+          ),
+          SizedBox(height: spaceBetween),
+          _getTitle('Prénom'),
+          const SizedBox(height: 5),
+          CustomInputField(
+            placeholder: 'Prénom',
+            widthBalance: 1 / 2,
+            textEditingController: lastNameFieldController,
+          ),
+          SizedBox(height: spaceBetween),
+          _getTitle('Email'),
+          const SizedBox(height: 5),
+          CustomInputField(
+            placeholder: 'exemple@email.com',
+            widthBalance: 1 / 2,
+            textEditingController: emailFieldController,
+          ),
+          emailAlert
+              ? Text(emailAlertMessage,
+                  style: const TextStyle(color: Colors.red, fontSize: 15))
+              : const SizedBox(),
+        ],
       ),
-      SizedBox(height: spaceBetween),
-      _getTitle('Prénom'),
-      const SizedBox(height: 5),
-      CustomInputField(
-        placeholder: 'Prénom',
-        widthBalance: 1 / 2,
-        textEditingController: lastNameFieldController,
-      ),
-      SizedBox(height: spaceBetween),
-      _getTitle('Email'),
-      const SizedBox(height: 5),
-      CustomInputField(
-        placeholder: 'exemple@email.com',
-        widthBalance: 1 / 2,
-        textEditingController: emailFieldController,
-      ),
-      emailAlert
-          ? Text(emailAlertMessage,
-              style: const TextStyle(color: Colors.red, fontSize: 15))
-          : const SizedBox(),
       const SizedBox(height: 15),
       Button('Suivant', type: ButtonType.standard, onTap: () {
         getFirstInit();
@@ -271,19 +297,131 @@ class _PostulationFormState extends State<PostulationForm> {
   }
 
   List<Widget> _getSecondStepData() {
-    return [];
+    return [
+      Row(
+        mainAxisAlignment: MainAxisAlignment.center,
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          _getSingleDownloadBlock(
+              placeholder: "monCvExample.pdf", onTap: pickFiles, type: 'cv'),
+          const SizedBox(width: 10),
+          _getSingleDownloadBlock(
+              placeholder: "maLettreExample.pdf",
+              onTap: pickFiles,
+              type: 'coverLetter'),
+        ],
+      ),
+      const SizedBox(height: 20),
+      Button('Suivant', type: ButtonType.standard, onTap: () {
+        getSecondInit();
+      }),
+    ];
   }
 
-  List<Widget> _getThirdStepData() {
-    return [];
+  List<Widget> _getThirdStepData(screenWidth) {
+    return [
+      Container(
+        width: 700,
+        color: Colors.white,
+        padding: const EdgeInsets.all(25),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            const Center(
+              child: Text(
+                'Verifier vos informations',
+                style: TextStyle(fontSize: 34, fontWeight: FontWeight.bold),
+                softWrap: true,
+                textAlign: TextAlign.center,
+              ),
+            ),
+
+            const SizedBox(height: 30),
+
+            //FIRST NAME FIELD
+
+            _getTitle('Votre nom : ', color: Colors.black),
+            const SizedBox(height: 20),
+            const Text('Dali ',
+                style: TextStyle(
+                  fontSize: 34,
+                  fontWeight: FontWeight.bold,
+                ),
+                textAlign: TextAlign.center,
+                softWrap: true),
+            const SizedBox(height: 30),
+
+            //LAST NAME FIELD
+
+            _getTitle('Votre Prénom : ', color: Colors.black),
+            const SizedBox(height: 20),
+            const Text('Zouayobo Ange Paterne ',
+                style: TextStyle(
+                  fontSize: 34,
+                  fontWeight: FontWeight.bold,
+                ),
+                softWrap: true),
+            const SizedBox(height: 30),
+
+            //EMAIL FIELD
+
+            _getTitle('Votre Email : ', color: Colors.black),
+            const SizedBox(height: 20),
+            const Text('angePaterne@gmail.com',
+                style: TextStyle(
+                  fontSize: 34,
+                  fontWeight: FontWeight.bold,
+                ),
+                softWrap: true),
+            const SizedBox(height: 30),
+
+            //FILE/DOC FIELD
+
+            _getTitle('Vos Documents : ', color: Colors.black),
+            const SizedBox(height: 30),
+            DottedBorder(
+                color: Colors.purple, //color of border
+                strokeWidth: 2, // thickness off border
+                dashPattern: const [6, 3], // width and space of dashes
+                borderType: BorderType.Rect, // border Type
+                radius: const Radius.circular(12),
+                child: Container(
+                  color: const Color(0xFFF4F7F9),
+                  padding: const EdgeInsets.all(10),
+                  width: screenWidth * widthBalance,
+                  child: const Text('monCVExample.pdf', softWrap: true),
+                )),
+            const SizedBox(height: 20),
+            DottedBorder(
+                color: Colors.purple, //color of border
+                strokeWidth: 2, // thickness off border
+                dashPattern: const [6, 3], // width and space of dashes
+                borderType: BorderType.Rect, // border Type
+                radius: const Radius.circular(12),
+                child: Container(
+                  color: const Color(0xFFF4F7F9),
+                  padding: const EdgeInsets.all(10),
+                  width: screenWidth * widthBalance,
+                  child: const Text('maLettreExample.pdf', softWrap: true),
+                )),
+          ],
+        ),
+      ),
+      const SizedBox(height: 30),
+      Button('Confirmer', type: ButtonType.standard, onTap: () {
+        _sendData(false);
+      }),
+    ];
   }
 
 //ASSOCIATED TO ALL SECONDARY WIDGET
 
-  Text _getTitle(title) {
+  Text _getTitle(title, {Color color = Colors.white}) {
     return Text(title,
-        style: const TextStyle(
-            fontSize: 15, fontWeight: FontWeight.bold, color: Colors.white));
+        style:
+            TextStyle(fontSize: 15, fontWeight: FontWeight.bold, color: color));
   }
 
 //ASSOCIATED TO SPECIFIC SECONDARY WIDGET
@@ -291,28 +429,148 @@ class _PostulationFormState extends State<PostulationForm> {
 //FIRST STEP
 
   getFirstInit() {
-    String firstName = firstNameFieldController.text;
-    String lastName = lastNameFieldController.text;
-    String email = emailFieldController.text;
-    TextCheckCaseState? checkBox = checkBoxGlobalKey.currentState;
+    String firstName = firstNameFieldController.text.trim();
+    String lastName = lastNameFieldController.text.trim();
+    String email = emailFieldController.text.trim();
 
     //control Data
 
-    if (checkBox != null && checkBox.isChecked) {
-      final RegExp emailRegex = RegExp(r'^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$');
-      if (emailRegex.hasMatch(email)) {
-        firstName = const HtmlEscape().convert(firstName);
-        lastName = const HtmlEscape().convert(lastName);
-      }
+    final RegExp emailRegex = RegExp(r'^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$');
+    if (emailRegex.hasMatch(email)) {
+      user.firstName = firstName;
+      user.lastName = lastName;
+      user.email = email;
+      widget.changeCurrentStep(2);
+    } else {
+      setState(() {
+        emailAlert = true;
+      });
     }
-
-    //follow step
-    widget.changeCurrentStep(2);
   }
 
 //SECOND STEP
 
-//FINAL FUNCTION
+  SizedBox _getSingleDownloadBlock(
+      {required String placeholder, required onTap, required String type}) {
+    return SizedBox(
+      child: GestureDetector(
+        onTap: () {
+          onTap(type, placeholder);
+        },
+        child: MouseRegion(
+          cursor: SystemMouseCursors.click,
+          child: DottedBorder(
+            color: Colors.purple, //color of border
+            strokeWidth: 2, // thickness off border
+            dashPattern: const [6, 3], // width and space of dashes
+            borderType: BorderType.RRect, // border Type
+            radius: const Radius.circular(12),
+            child: Container(
+              padding: const EdgeInsets.all(30),
+              width: 220,
+              height: 200,
+              alignment: Alignment.center,
+              color: const Color(0xFFF4F7F9),
+              child: Text(
+                placeholder,
+                style: const TextStyle(fontSize: 19, color: Colors.black),
+                softWrap: true,
+                overflow: TextOverflow.ellipsis,
+                maxLines: 3,
+              ),
+            ),
+          ),
+        ),
+      ),
+    );
+  }
 
-  _sendData(GlobalKey<TextCheckCaseState> checkBoxGlobalKey) {}
+  getSecondInit() {
+    widget.changeCurrentStep(3);
+  }
+
+  Future<void> pickFiles(fileType, placeholder) async {
+    FilePickerResult? result = await FilePicker.platform
+        .pickFiles(type: FileType.custom, allowedExtensions: ['pdf']);
+    if (result != null) {
+      setState(() {
+        placeholder = result.files.single.name;
+        if (fileType == 'cv') {
+          user.CV = File(result.files.single.path!);
+        } else if (fileType == 'coverLetter') {
+          user.coverLetterFile = File(result.files.single.path!);
+        }
+      });
+    }
+  }
+
+//THIRD/FINAL STEP
+
+  _sendData(bool ischecked) {
+    TextCheckCaseState? checkBox = checkBoxGlobalKey.currentState;
+    if (checkBox!.isChecked) {
+      uploadFiles();
+      // Navigator.of(context).pushNamed(carreers);
+    }
+  }
+
+  bool userValidate() {
+    return user.lastName != '' &&
+        user.lastName != null &&
+        user.firstName != '' &&
+        user.firstName != null &&
+        user.email != null &&
+        user.email != '';
+  }
+
+  Future<void> uploadFiles() async {
+    try {
+      // INITIALIZED
+      FirebaseStorage storage = FirebaseStorage.instance;
+      FirebaseFirestore firestore = FirebaseFirestore.instance;
+      String coverLetterUrl = '';
+      //SEND DOCS
+      if (user.CV != null) {
+        //SEND CV FILE
+
+        String candidateFolder =
+            'candidates/${DateTime.now().millisecondsSinceEpoch}_${user.firstName}';
+
+        String cvFileName =
+            '$candidateFolder/cv_${DateTime.now().millisecondsSinceEpoch}.pdf';
+
+        TaskSnapshot cvSnapshot =
+            await storage.ref(cvFileName).putFile(user.CV!);
+        String cvUrl = await cvSnapshot.ref.getDownloadURL();
+
+        //SEND LETTER  FILE
+
+        if (user.CV != null) {
+          String coverLetterFileName =
+              '$candidateFolder/cover_letter_${DateTime.now().millisecondsSinceEpoch}.pdf';
+          TaskSnapshot coverLetterSnapshot =
+              await storage.ref(coverLetterFileName).putFile(user.CV!);
+          String coverLetterUrl =
+              await coverLetterSnapshot.ref.getDownloadURL();
+        }
+
+        //SEND DOCUMENT
+
+        await firestore.collection('candidates').add({
+          'firstName': user.firstName,
+          'lastName': user.lastName,
+          'cv': cvUrl,
+          'cover_letter': coverLetterUrl,
+          'date': FieldValue.serverTimestamp(),
+        });
+
+        ScaffoldMessenger.of(context)
+            .showSnackBar(const SnackBar(content: Text('Envoi réussi')));
+      }
+    } catch (error) {
+      String errorMessage = error.toString();
+      ScaffoldMessenger.of(context)
+          .showSnackBar(SnackBar(content: Text('une erreur :$errorMessage ')));
+    }
+  }
 }
