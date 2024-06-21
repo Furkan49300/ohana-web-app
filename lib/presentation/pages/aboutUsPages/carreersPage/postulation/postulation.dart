@@ -3,17 +3,14 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_core/firebase_core.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:dotted_border/dotted_border.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 
-import 'package:ohana_webapp_flutter/logic/entities/candidate.dart';
 import 'package:ohana_webapp_flutter/presentation/bloc/navbar_dropdown/dropdown_menu_bloc.dart';
 import 'package:ohana_webapp_flutter/presentation/bloc/navbar_dropdown/dropdown_menu_event.dart';
 import 'package:ohana_webapp_flutter/presentation/constants/dimensions.dart';
-import 'package:ohana_webapp_flutter/presentation/constants/router_constants.dart';
 import 'package:ohana_webapp_flutter/presentation/navbar/largescreen/megaDropdown/dropdown_menu_about_us.dart';
 import 'package:ohana_webapp_flutter/presentation/navbar/largescreen/megaDropdown/dropdown_menu_expertises.dart';
 import 'package:ohana_webapp_flutter/presentation/navbar/largescreen/megaDropdown/dropdown_menu_offers.dart';
@@ -209,6 +206,7 @@ class _PostulationFormState extends State<PostulationForm> {
 //
   bool emailAlert = false;
   double widthBalance = 0.5;
+  String messageError = '';
 
 //INPUT CONTROLLER
 
@@ -222,7 +220,15 @@ class _PostulationFormState extends State<PostulationForm> {
 
 //USER AND FILE
 
-  Candidate user = Candidate();
+  String lastName = '';
+  String firstName = '';
+  String email = '';
+  String? cvFilePath;
+  String? coverLetterFilePath;
+  String? _cvFileName;
+  String? _coverLetterFileName;
+  bool _isUploading = false;
+  String? _uploadStatus;
 
 //GLOBAL KEYS
 
@@ -241,6 +247,11 @@ class _PostulationFormState extends State<PostulationForm> {
         if (widget.step == 2) ..._getSecondStepData(),
         if (widget.step == 3) ..._getThirdStepData(screenWidth),
         const SizedBox(height: 15),
+        Text(
+          messageError,
+          style: TextStyle(
+              fontSize: 50, color: Colors.red, fontWeight: FontWeight.bold),
+        ),
         TextCheckCase(
           key: checkBoxGlobalKey,
           color: Colors.white,
@@ -302,13 +313,10 @@ class _PostulationFormState extends State<PostulationForm> {
         mainAxisAlignment: MainAxisAlignment.center,
         mainAxisSize: MainAxisSize.min,
         children: [
-          _getSingleDownloadBlock(
-              placeholder: "monCvExample.pdf", onTap: pickFiles, type: 'cv'),
+          _getSingleDownloadBlock(placeholder: "monCvExample.pdf", type: 'cv'),
           const SizedBox(width: 10),
           _getSingleDownloadBlock(
-              placeholder: "maLettreExample.pdf",
-              onTap: pickFiles,
-              type: 'coverLetter'),
+              placeholder: "maLettreExample.pdf", type: 'coverLetter'),
         ],
       ),
       const SizedBox(height: 20),
@@ -429,17 +437,17 @@ class _PostulationFormState extends State<PostulationForm> {
 //FIRST STEP
 
   getFirstInit() {
-    String firstName = firstNameFieldController.text.trim();
-    String lastName = lastNameFieldController.text.trim();
-    String email = emailFieldController.text.trim();
+    String firstNameTextController = firstNameFieldController.text.trim();
+    String lastNameTextController = lastNameFieldController.text.trim();
+    String emailTextController = emailFieldController.text.trim();
 
     //control Data
 
     final RegExp emailRegex = RegExp(r'^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$');
-    if (emailRegex.hasMatch(email)) {
-      user.firstName = firstName;
-      user.lastName = lastName;
-      user.email = email;
+    if (emailRegex.hasMatch(emailTextController)) {
+      firstName = firstNameTextController;
+      lastName = lastNameTextController;
+      email = emailTextController;
       widget.changeCurrentStep(2);
     } else {
       setState(() {
@@ -450,20 +458,43 @@ class _PostulationFormState extends State<PostulationForm> {
 
 //SECOND STEP
 
-  SizedBox _getSingleDownloadBlock(
-      {required String placeholder, required onTap, required String type}) {
+  SizedBox _getSingleDownloadBlock({
+    required String placeholder,
+    required String type,
+  }) {
     return SizedBox(
       child: GestureDetector(
-        onTap: () {
-          onTap(type, placeholder);
+        onTap: () async {
+          try {
+            FilePickerResult? result = await FilePicker.platform.pickFiles(
+                type: FileType.custom,
+                allowedExtensions: ['pdf'],
+                allowMultiple: false);
+
+            if (result != null) {
+              setState(() {
+                if (type == 'cv') {
+                  _cvFileName = result.files.first.name;
+                  cvFilePath = result.files.single.path!;
+                  messageError = 'passed';
+                } else if (type == 'coverLetter') {
+                  _coverLetterFileName = result.files.first.name;
+                  coverLetterFilePath = result.files.first.path!;
+                  messageError = 'passed';
+                }
+              });
+            }
+          } catch (error) {
+            print(error);
+          }
         },
         child: MouseRegion(
           cursor: SystemMouseCursors.click,
           child: DottedBorder(
-            color: Colors.purple, //color of border
-            strokeWidth: 2, // thickness off border
-            dashPattern: const [6, 3], // width and space of dashes
-            borderType: BorderType.RRect, // border Type
+            color: Colors.purple,
+            strokeWidth: 2,
+            dashPattern: const [6, 3],
+            borderType: BorderType.Rect,
             radius: const Radius.circular(12),
             child: Container(
               padding: const EdgeInsets.all(30),
@@ -472,7 +503,9 @@ class _PostulationFormState extends State<PostulationForm> {
               alignment: Alignment.center,
               color: const Color(0xFFF4F7F9),
               child: Text(
-                placeholder,
+                type == 'cv'
+                    ? _cvFileName ?? placeholder
+                    : _coverLetterFileName ?? placeholder,
                 style: const TextStyle(fontSize: 19, color: Colors.black),
                 softWrap: true,
                 overflow: TextOverflow.ellipsis,
@@ -489,21 +522,6 @@ class _PostulationFormState extends State<PostulationForm> {
     widget.changeCurrentStep(3);
   }
 
-  Future<void> pickFiles(fileType, placeholder) async {
-    FilePickerResult? result = await FilePicker.platform
-        .pickFiles(type: FileType.custom, allowedExtensions: ['pdf']);
-    if (result != null) {
-      setState(() {
-        placeholder = result.files.single.name;
-        if (fileType == 'cv') {
-          user.CV = File(result.files.single.path!);
-        } else if (fileType == 'coverLetter') {
-          user.coverLetterFile = File(result.files.single.path!);
-        }
-      });
-    }
-  }
-
 //THIRD/FINAL STEP
 
   _sendData(bool ischecked) {
@@ -514,63 +532,81 @@ class _PostulationFormState extends State<PostulationForm> {
     }
   }
 
-  bool userValidate() {
-    return user.lastName != '' &&
-        user.lastName != null &&
-        user.firstName != '' &&
-        user.firstName != null &&
-        user.email != null &&
-        user.email != '';
-  }
-
   Future<void> uploadFiles() async {
     try {
-      // INITIALIZED
-      FirebaseStorage storage = FirebaseStorage.instance;
-      FirebaseFirestore firestore = FirebaseFirestore.instance;
-      String coverLetterUrl = '';
       //SEND DOCS
-      if (user.CV != null) {
-        //SEND CV FILE
-
-        String candidateFolder =
-            'candidates/${DateTime.now().millisecondsSinceEpoch}_${user.firstName}';
-
-        String cvFileName =
-            '$candidateFolder/cv_${DateTime.now().millisecondsSinceEpoch}.pdf';
-
-        TaskSnapshot cvSnapshot =
-            await storage.ref(cvFileName).putFile(user.CV!);
-        String cvUrl = await cvSnapshot.ref.getDownloadURL();
-
-        //SEND LETTER  FILE
-
-        if (user.CV != null) {
-          String coverLetterFileName =
-              '$candidateFolder/cover_letter_${DateTime.now().millisecondsSinceEpoch}.pdf';
-          TaskSnapshot coverLetterSnapshot =
-              await storage.ref(coverLetterFileName).putFile(user.CV!);
-          String coverLetterUrl =
-              await coverLetterSnapshot.ref.getDownloadURL();
+      String cvUrl = '';
+      String coverLetterUrl = '';
+      if (cvFilePath != null) {
+        _uploadFile(cvFilePath, url: cvUrl);
+        if (coverLetterFilePath != null) {
+          _uploadFile(cvFilePath, url: coverLetterUrl);
+        } else {
+          setState(() {
+            messageError = "coverLetterFile null";
+          });
         }
 
         //SEND DOCUMENT
-
-        await firestore.collection('candidates').add({
-          'firstName': user.firstName,
-          'lastName': user.lastName,
-          'cv': cvUrl,
-          'cover_letter': coverLetterUrl,
-          'date': FieldValue.serverTimestamp(),
-        });
+        uploadDocument(cvUrl: cvUrl, coverLetterUrl: coverLetterUrl);
 
         ScaffoldMessenger.of(context)
             .showSnackBar(const SnackBar(content: Text('Envoi réussi')));
       }
-    } catch (error) {
-      String errorMessage = error.toString();
-      ScaffoldMessenger.of(context)
-          .showSnackBar(SnackBar(content: Text('une erreur :$errorMessage ')));
+      //CV is non available
+      else {
+        setState(() {
+          messageError = 'CV null';
+        });
+      }
+    } //an unexpected error
+    catch (error) {
+      setState(() {
+        messageError = error.toString();
+      });
     }
+  }
+
+  Future<void> _uploadFile(String? _filePath, {required String url}) async {
+    String candidateFolder = "candidates";
+    if (_filePath != null) {
+      try {
+        //SEND FILE
+
+        File file = File(_filePath); //create file to send with filePath
+
+        String filePathInStorage =
+            '$candidateFolder/cv_${DateTime.now().millisecondsSinceEpoch}.pdf'; // create ref
+
+        TaskSnapshot uploadFile = await FirebaseStorage.instance
+            .ref('candidates/$filePathInStorage')
+            .putFile(file);
+
+        //get url
+
+        url = await uploadFile.ref.getDownloadURL();
+
+        //UPDATE STATES
+
+        setState(() {
+          _isUploading = true;
+          _uploadStatus = 'Upload successful';
+        });
+      } catch (e) {
+        setState(() {
+          _uploadStatus = 'Upload failed: $e';
+        });
+      }
+    }
+  }
+
+  Future uploadDocument({required String cvUrl, String? coverLetterUrl}) async {
+    await FirebaseFirestore.instance.collection('candidates').add({
+      'firstName': firstName,
+      'lastName': lastName,
+      'cv': cvUrl,
+      'cover_letter': coverLetterUrl ?? '',
+      'date': FieldValue.serverTimestamp(),
+    });
   }
 }
