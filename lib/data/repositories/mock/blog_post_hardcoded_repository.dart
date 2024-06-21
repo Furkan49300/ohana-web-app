@@ -436,4 +436,10 @@ class BlogPostHardCodedRepository implements BlogPostRepository {
     // TODO: implement getNumberOfBlogPosts
     throw UnimplementedError();
   }
+
+  @override
+  Future<List<BlogPost>> getSearchBlogPost(String searchQuery) {
+    // TODO: implement getSearchBlogPost
+    throw UnimplementedError();
+  }
 }

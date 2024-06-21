@@ -28,6 +28,13 @@ class FetchSingleBlogPost extends BlogPostEvent {
   FetchSingleBlogPost(this.id);
 }
 
+//BLOC POST SEARCH
+
+class SearchBlogPosts extends BlogPostEvent {
+  final String searchQuery;
+  SearchBlogPosts(this.searchQuery);
+}
+
 //MOST RECENT BLOG POSTS
 
 class FetchMostRecentBlogPosts extends BlogPostEvent {

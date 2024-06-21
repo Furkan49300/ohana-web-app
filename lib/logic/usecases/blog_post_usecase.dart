@@ -21,6 +21,12 @@ class BlogPostUsecase {
     return blogPostRepository.getSingleBlogPost(id: id);
   }
 
+  Future<List<BlogPost>> getSearchBlogPost(String searchQuery) {
+    return blogPostRepository.getSearchBlogPost(searchQuery);
+  }
+
+//PAGINATING LOGIC
+
   Future<List<BlogPost>> getFirstBlogPostsPage() {
     return blogPostRepository.getFirstBlogPostsPage();
   }
@@ -36,7 +42,4 @@ class BlogPostUsecase {
   Future<List<BlogPost>> getNthBlogPostsPage(int nth) {
     return blogPostRepository.getNthBlogPostsPage(nth);
   }
-  // Future<List<BlogPost>> searchBlogPostsByName(int number) {
-  //   return blogPostRepository.getMostRecentBlogPosts(number: number);
-  // }
 }

@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:ohana_webapp_flutter/logic/entities/blog_post.dart';
 import 'package:ohana_webapp_flutter/logic/entities/blog_post_content.dart';
 import 'package:ohana_webapp_flutter/logic/repositories/blog_post_repository.dart';
+import 'package:ohana_webapp_flutter/presentation/constants/router_constants.dart';
 
 class BlogPostFirebaseRepository implements BlogPostRepository {
   final int pageSize = 6;
@@ -55,6 +56,28 @@ class BlogPostFirebaseRepository implements BlogPostRepository {
 
     // Parcourt les documents dans la collection
     return _blogPostMapping(querySnapshot);
+  }
+
+//SEARCH BLOG POSTS
+
+  @override
+  Future<List<BlogPost>> getSearchBlogPost(String searchQuery) async {
+    // QuerySnapshot querySnapshot = await FirebaseFirestore.instance
+    //     .collection('blogposts')
+    //     .orderBy('title') // ensure that the field is ordered
+    //     .startAt([searchQuery]) //satrt at the precising string
+    //     .endAt([searchQuery + '\uf8ff']) // end at the string precising
+    //     .get();
+    QuerySnapshot querySnapshot = await FirebaseFirestore.instance
+        .collection('blogposts')
+        .orderBy('title')
+        .where('title', isEqualTo: searchQuery)
+        .get();
+    if (querySnapshot.docs.isEmpty) {
+      return querySnapshot.docs.map((doc) => _blogPostMapping(doc)).toList();
+    } else {
+      return [];
+    }
   }
 
 //PAGINATOR GESTURE

@@ -2,20 +2,20 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:ohana_webapp_flutter/presentation/bloc/blog_post/blocs/blog_global_manager_bloc.dart';
+import 'package:ohana_webapp_flutter/presentation/bloc/blog_post/blog_post_state.dart';
 
 import 'package:ohana_webapp_flutter/presentation/bloc/navbar_dropdown/dropdown_menu_bloc.dart';
 import 'package:ohana_webapp_flutter/presentation/bloc/navbar_dropdown/dropdown_menu_event.dart';
 import 'package:ohana_webapp_flutter/presentation/constants/colors.dart';
-import 'package:ohana_webapp_flutter/presentation/constants/dimensions.dart';
 import 'package:ohana_webapp_flutter/presentation/footer/footer_screen_fit.dart';
 import 'package:ohana_webapp_flutter/presentation/navbar/largescreen/megaDropdown/dropdown_menu_about_us.dart';
 import 'package:ohana_webapp_flutter/presentation/navbar/largescreen/megaDropdown/dropdown_menu_expertises.dart';
 import 'package:ohana_webapp_flutter/presentation/navbar/largescreen/megaDropdown/dropdown_menu_offers.dart';
-import 'package:ohana_webapp_flutter/presentation/navbar/largescreen/navigation_bar_contents_largescreen.dart';
+import 'package:ohana_webapp_flutter/presentation/navbar/navbar_responsiveness.dart';
 import 'package:ohana_webapp_flutter/presentation/navbar/search_bar.dart';
 import 'package:ohana_webapp_flutter/presentation/widgets/composants/blog_card.dart';
 import 'package:ohana_webapp_flutter/presentation/widgets/composants/text_format/custom_underlined_title.dart';
-import 'package:ohana_webapp_flutter/presentation/widgets/patterns/blog_card_pattern.dart';
 
 class SearchPageLargeScreen extends StatelessWidget {
   const SearchPageLargeScreen({super.key});
@@ -25,9 +25,8 @@ class SearchPageLargeScreen extends StatelessWidget {
     Size screenSize = MediaQuery.of(context).size;
     return Scaffold(
       backgroundColor: Colors.white,
-      appBar: PreferredSize(
-          preferredSize: Size(screenSize.width, navBarHeight),
-          child: const NavigationBarContentsLargeScreen()),
+      appBar: NavbarResponsiveness.getNavbar(screenSize.width),
+      endDrawer: NavbarResponsiveness.getEndDrawer(screenSize.width),
       body: Stack(
         children: [
           // CONTENT
@@ -141,19 +140,61 @@ class SearchPageLargeScreen extends StatelessWidget {
                 ),
                 const SizedBox(height: 50),
                 Center(
-                  child: Wrap(
-                    spacing: 40,
-                    children: blogListMap
-                        .map((item) => Padding(
-                              padding: const EdgeInsets.only(bottom: 20),
-                              child: BlogCard(
-                                  pathOfTopImage: item['imagePath'],
-                                  textAndBoldListMap: {"text": item['text']},
-                                  title: item['title'],
-                                  date: item['date'],
-                                  width: 600),
-                            ))
-                        .toList(),
+                  child: BlocBuilder<BlogPostGlobalManagerBloc, BlogPostState>(
+                    builder: (context, state) {
+                      try {
+                        if (state is BlogPostLoaded) {
+                          if (state.blogPosts != []) {
+                            return Wrap(
+                              spacing: 40,
+                              children: state.blogPosts
+                                  .map((item) => Column(
+                                        children: [
+                                          Container(
+                                            height: 30,
+                                            width: 30,
+                                            color: Colors.red,
+                                          ),
+                                          Padding(
+                                            padding: const EdgeInsets.only(
+                                                bottom: 20),
+                                            child: BlogCard(
+                                              width: 600,
+                                              pathOfTopImage: item.imagePath,
+                                              title: item.title,
+                                              date:
+                                                  item.creationDate.toString(),
+                                              textAndBoldListMap: {
+                                                "text": item.description
+                                              },
+                                            ),
+                                          ),
+                                        ],
+                                      ))
+                                  .toList(),
+                            );
+                          } else {
+                            return SizedBox(
+                              height: screenSize.height * 0.7,
+                              child: const Text('Aucun Résultat Trouvé',
+                                  style: TextStyle(
+                                      fontSize: 24,
+                                      fontWeight: FontWeight.bold)),
+                            );
+                          }
+                        } else if (state is BlogPostInitial) {
+                          return const Text('..is Loading',
+                              style: TextStyle(
+                                  fontSize: 24, fontWeight: FontWeight.bold));
+                        } else if (state is BlogPostError) {
+                          throw 'Une erreur est survénu dans la récuperation des blogs : ${state.errorMessage}';
+                        } else {
+                          return throw 'Problème d\'etat';
+                        }
+                      } catch (error) {
+                        return throw 'Problème ${error.toString()}';
+                      }
+                    },
                   ),
                 ),
                 const Footer(),

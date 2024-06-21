@@ -8,9 +8,13 @@ import 'package:file_picker/file_picker.dart';
 import 'package:dotted_border/dotted_border.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:firebase_storage/firebase_storage.dart';
+import 'package:ohana_webapp_flutter/logic/entities/user.dart';
+import 'package:ohana_webapp_flutter/logic/entities/user_file.dart';
+import 'package:ohana_webapp_flutter/logic/usecases/user_action_usescases.dart';
 
 import 'package:ohana_webapp_flutter/presentation/bloc/navbar_dropdown/dropdown_menu_bloc.dart';
 import 'package:ohana_webapp_flutter/presentation/bloc/navbar_dropdown/dropdown_menu_event.dart';
+import 'package:ohana_webapp_flutter/presentation/constants/default_values.dart';
 import 'package:ohana_webapp_flutter/presentation/constants/dimensions.dart';
 import 'package:ohana_webapp_flutter/presentation/navbar/largescreen/megaDropdown/dropdown_menu_about_us.dart';
 import 'package:ohana_webapp_flutter/presentation/navbar/largescreen/megaDropdown/dropdown_menu_expertises.dart';
@@ -224,15 +228,17 @@ class _PostulationFormState extends State<PostulationForm> {
   String lastName = '';
   String firstName = '';
   String email = '';
-  Uint8List? cvFileBytes;
-  Uint8List? coverLetterFileBytes;
+  UserFile? cvFile;
+  UserFile? coverLetterFile;
   String? _cvFileName;
   String? _coverLetterFileName;
+  IconData _cvDownloadIconFile = Icons.download;
+  IconData _coverLetterdownloadIconFile = Icons.download;
 
 // VALIDATE FILES
 
-  String? _uploadStatus;
   bool cvPushed = false;
+  String? _uploadStatus;
   bool _isUploading = false;
 
 //GLOBAL KEYS
@@ -451,7 +457,6 @@ class _PostulationFormState extends State<PostulationForm> {
 
     //control Data
 
-    final RegExp emailRegex = RegExp(r'^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$');
     if (emailRegex.hasMatch(emailTextController)) {
       firstName = firstNameTextController;
       lastName = lastNameTextController;
@@ -465,6 +470,16 @@ class _PostulationFormState extends State<PostulationForm> {
   }
 
 //SECOND STEP
+
+  getSecondInit() {
+    if (cvPushed) {
+      widget.changeCurrentStep(3);
+    } else {
+      ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(content: Text('Votre cv est obligatoire')));
+    }
+  }
+
   SizedBox _getSingleDownloadBlock({
     required String placeholder,
     required String type,
@@ -473,20 +488,31 @@ class _PostulationFormState extends State<PostulationForm> {
       child: GestureDetector(
         onTap: () async {
           try {
-            FilePickerResult? result = await FilePicker.platform.pickFiles(
+            FilePickerResult? result;
+            result = await FilePicker.platform.pickFiles(
               type: FileType.custom,
               allowedExtensions: ['pdf'],
             );
+            String filePath =
+                'candidates/user_${DateTime.now().millisecondsSinceEpoch}.pdf';
 
             if (result != null) {
               setState(() {
-                if (type == 'cv' && result.files.isNotEmpty) {
+                if (type == 'cv' && result!.files.isNotEmpty) {
                   _cvFileName = result.files.first.name;
-                  cvFileBytes = result.files.single.bytes!;
                   cvPushed = true;
-                } else if (type == 'coverLetter') {
+                  _cvDownloadIconFile = Icons.download_done;
+                  cvFile = UserFile(
+                      filesBytes: result.files.single.bytes!,
+                      path: filePath,
+                      use: FileUseType.cv);
+                } else if (type == 'coverLetter' && result!.files.isNotEmpty) {
                   _coverLetterFileName = result.files.first.name;
-                  coverLetterFileBytes = result.files.single.bytes!;
+                  _coverLetterdownloadIconFile = Icons.download_done;
+                  coverLetterFile = UserFile(
+                      filesBytes: result.files.single.bytes!,
+                      path: filePath,
+                      use: FileUseType.coverLetter);
                 }
               });
             } else {
@@ -515,14 +541,28 @@ class _PostulationFormState extends State<PostulationForm> {
               height: 200,
               alignment: Alignment.center,
               color: const Color(0xFFF4F7F9),
-              child: Text(
-                type == 'cv'
-                    ? _cvFileName ?? placeholder
-                    : _coverLetterFileName ?? placeholder,
-                style: const TextStyle(fontSize: 19, color: Colors.black),
-                softWrap: true,
-                overflow: TextOverflow.ellipsis,
-                maxLines: 3,
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  Icon(
+                    type == 'cv'
+                        ? _cvDownloadIconFile
+                        : _coverLetterdownloadIconFile,
+                    size: 30,
+                  ),
+                  Expanded(
+                    child: Text(
+                      type == 'cv'
+                          ? _cvFileName ?? placeholder
+                          : _coverLetterFileName ?? placeholder,
+                      style: const TextStyle(fontSize: 19, color: Colors.black),
+                      softWrap: true,
+                      overflow: TextOverflow.ellipsis,
+                      maxLines: 3,
+                    ),
+                  ),
+                ],
               ),
             ),
           ),
@@ -531,101 +571,23 @@ class _PostulationFormState extends State<PostulationForm> {
     );
   }
 
-  getSecondInit() {
-    if (cvPushed) {
-      widget.changeCurrentStep(3);
-    } else {
-      ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(content: Text('Votre cv est obligatoire')));
-    }
-  }
-
 //THIRD/FINAL STEP
 
   _sendData(bool ischecked) {
     TextCheckCaseState? checkBox = checkBoxGlobalKey.currentState;
     if (checkBox!.isChecked) {
-      uploadFiles();
-      // Navigator.of(context).pushNamed(carreers);
+      User user = User(
+        firstName: firstName,
+        lastName: lastName,
+        email: email,
+      );
+      UserActionsUsescases()
+          .pushFilesToFirebase(user: user, files: [cvFile, coverLetterFile]);
+      ScaffoldMessenger.of(context)
+          .showSnackBar(const SnackBar(content: Text('Envoi réussi')));
     } else {
       ScaffoldMessenger.of(context).showSnackBar(
           const SnackBar(content: Text('Cochez la  case de vailidation')));
     }
-  }
-
-  Future<void> uploadFiles() async {
-    try {
-      //SEND DOCS
-      String cvUrl = '';
-      String coverLetterUrl = '';
-      if (cvFileBytes != null) {
-        _uploadFile(cvFileBytes, url: cvUrl);
-        if (coverLetterFileBytes != null) {
-          _uploadFile(coverLetterFileBytes, url: coverLetterUrl);
-        } else {
-          setState(() {});
-        }
-
-        //SEND DOCUMENT
-        uploadDocument(cvUrl: cvUrl, coverLetterUrl: coverLetterUrl);
-
-        ScaffoldMessenger.of(context)
-            .showSnackBar(const SnackBar(content: Text('Envoi réussi')));
-      }
-      //CV is non available
-      else {
-        setState(() {
-          cvPushed = false;
-        });
-      }
-    } //an unexpected error
-    catch (error) {
-      setState(() {
-        print(error);
-      });
-    }
-  }
-
-  Future<void> _uploadFile(Uint8List? _fileBytes, {required String url}) async {
-    String candidateFolder = "candidates";
-    if (_fileBytes != null) {
-      try {
-        //SEND BYTES
-
-        String filePathInStorage =
-            '$candidateFolder/cv_${DateTime.now().millisecondsSinceEpoch}.pdf'; // create ref
-
-        Reference storageReference =
-            FirebaseStorage.instance.ref().child(filePathInStorage);
-
-        TaskSnapshot uploadFile = await storageReference.putData(_fileBytes);
-
-        //get url
-
-        url = await uploadFile.ref.getDownloadURL();
-
-        //UPDATE STATES
-
-        setState(() {
-          _isUploading = true;
-          _uploadStatus = 'Upload successful';
-        });
-      } catch (e) {
-        setState(() {
-          _uploadStatus = 'Upload failed: $e';
-        });
-      }
-    }
-  }
-
-  Future uploadDocument({required String cvUrl, String? coverLetterUrl}) async {
-    await FirebaseFirestore.instance.collection('candidates').add({
-      'firstName': firstName,
-      'lastName': lastName,
-      'email': email,
-      'cv': cvUrl,
-      'cover_letter': coverLetterUrl ?? '',
-      'date': FieldValue.serverTimestamp(),
-    });
   }
 }

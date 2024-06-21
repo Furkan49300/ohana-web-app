@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:ohana_webapp_flutter/presentation/bloc/blog_post/blocs/blog_global_manager_bloc.dart';
+import 'package:ohana_webapp_flutter/presentation/bloc/blog_post/blog_post_event.dart';
 
 import 'package:ohana_webapp_flutter/presentation/bloc/navbar_dropdown/dropdown_menu_bloc.dart';
 import 'package:ohana_webapp_flutter/presentation/bloc/navbar_dropdown/dropdown_menu_state.dart';
@@ -36,6 +38,9 @@ class SearchNavBar extends StatelessWidget {
                 width: 10,
               ),
               Button("RECHERCHER", type: ButtonType.standard, onTap: () {
+                context
+                    .read<BlogPostGlobalManagerBloc>()
+                    .add(SearchBlogPosts(textEditingController.text));
                 Navigator.of(context).pushNamed(search);
               })
             ]),
