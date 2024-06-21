@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'dart:io';
+import 'dart:typed_data';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -206,7 +207,7 @@ class _PostulationFormState extends State<PostulationForm> {
 //
   bool emailAlert = false;
   double widthBalance = 0.5;
-  String messageError = '';
+  String downloadMessageError = '';
 
 //INPUT CONTROLLER
 
@@ -223,12 +224,13 @@ class _PostulationFormState extends State<PostulationForm> {
   String lastName = '';
   String firstName = '';
   String email = '';
-  String? cvFilePath;
-  String? coverLetterFilePath;
+  Uint8List? cvFileBytes;
+  Uint8List? coverLetterFileBytes;
   String? _cvFileName;
   String? _coverLetterFileName;
   bool _isUploading = false;
   String? _uploadStatus;
+  String messageError = '';
 
 //GLOBAL KEYS
 
@@ -249,8 +251,8 @@ class _PostulationFormState extends State<PostulationForm> {
         const SizedBox(height: 15),
         Text(
           messageError,
-          style: TextStyle(
-              fontSize: 50, color: Colors.red, fontWeight: FontWeight.bold),
+          style: const TextStyle(
+              fontSize: 34, color: Colors.red, fontWeight: FontWeight.bold),
         ),
         TextCheckCase(
           key: checkBoxGlobalKey,
@@ -319,6 +321,13 @@ class _PostulationFormState extends State<PostulationForm> {
               placeholder: "maLettreExample.pdf", type: 'coverLetter'),
         ],
       ),
+      const SizedBox(height: 20),
+      if (downloadMessageError != '')
+        Text(
+          downloadMessageError,
+          style: const TextStyle(
+              fontSize: 34, color: Colors.red, fontWeight: FontWeight.bold),
+        ),
       const SizedBox(height: 20),
       Button('Suivant', type: ButtonType.standard, onTap: () {
         getSecondInit();
@@ -457,7 +466,6 @@ class _PostulationFormState extends State<PostulationForm> {
   }
 
 //SECOND STEP
-
   SizedBox _getSingleDownloadBlock({
     required String placeholder,
     required String type,
@@ -467,25 +475,30 @@ class _PostulationFormState extends State<PostulationForm> {
         onTap: () async {
           try {
             FilePickerResult? result = await FilePicker.platform.pickFiles(
-                type: FileType.custom,
-                allowedExtensions: ['pdf'],
-                allowMultiple: false);
+              type: FileType.custom,
+              allowedExtensions: ['pdf'],
+            );
 
-            if (result != null) {
+            if (result != null && result.files.isNotEmpty) {
               setState(() {
                 if (type == 'cv') {
                   _cvFileName = result.files.first.name;
-                  cvFilePath = result.files.single.path!;
-                  messageError = 'passed';
+                  cvFileBytes = result.files.single.bytes!;
                 } else if (type == 'coverLetter') {
                   _coverLetterFileName = result.files.first.name;
-                  coverLetterFilePath = result.files.first.path!;
-                  messageError = 'passed';
+                  coverLetterFileBytes = result.files.single.bytes!;
                 }
+              });
+            } else {
+              setState(() {
+                downloadMessageError = 'Aucun fichier sélectionné';
               });
             }
           } catch (error) {
             print(error);
+            setState(() {
+              downloadMessageError = 'Erreur lors de la sélection du fichier';
+            });
           }
         },
         child: MouseRegion(
@@ -537,10 +550,10 @@ class _PostulationFormState extends State<PostulationForm> {
       //SEND DOCS
       String cvUrl = '';
       String coverLetterUrl = '';
-      if (cvFilePath != null) {
-        _uploadFile(cvFilePath, url: cvUrl);
-        if (coverLetterFilePath != null) {
-          _uploadFile(cvFilePath, url: coverLetterUrl);
+      if (cvFileBytes != null) {
+        _uploadFile(cvFileBytes, url: cvUrl);
+        if (coverLetterFileBytes != null) {
+          _uploadFile(coverLetterFileBytes, url: coverLetterUrl);
         } else {
           setState(() {
             messageError = "coverLetterFile null";
@@ -567,20 +580,19 @@ class _PostulationFormState extends State<PostulationForm> {
     }
   }
 
-  Future<void> _uploadFile(String? _filePath, {required String url}) async {
+  Future<void> _uploadFile(Uint8List? _fileBytes, {required String url}) async {
     String candidateFolder = "candidates";
-    if (_filePath != null) {
+    if (_fileBytes != null) {
       try {
-        //SEND FILE
-
-        File file = File(_filePath); //create file to send with filePath
+        //SEND BYTES
 
         String filePathInStorage =
             '$candidateFolder/cv_${DateTime.now().millisecondsSinceEpoch}.pdf'; // create ref
 
-        TaskSnapshot uploadFile = await FirebaseStorage.instance
-            .ref('candidates/$filePathInStorage')
-            .putFile(file);
+        Reference storageReference =
+            FirebaseStorage.instance.ref().child(filePathInStorage);
+
+        TaskSnapshot uploadFile = await storageReference.putData(_fileBytes);
 
         //get url
 
@@ -604,6 +616,7 @@ class _PostulationFormState extends State<PostulationForm> {
     await FirebaseFirestore.instance.collection('candidates').add({
       'firstName': firstName,
       'lastName': lastName,
+      'email': email,
       'cv': cvUrl,
       'cover_letter': coverLetterUrl ?? '',
       'date': FieldValue.serverTimestamp(),
