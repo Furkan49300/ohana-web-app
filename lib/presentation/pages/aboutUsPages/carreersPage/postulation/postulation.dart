@@ -228,9 +228,12 @@ class _PostulationFormState extends State<PostulationForm> {
   Uint8List? coverLetterFileBytes;
   String? _cvFileName;
   String? _coverLetterFileName;
-  bool _isUploading = false;
+
+// VALIDATE FILES
+
   String? _uploadStatus;
-  String messageError = '';
+  bool cvPushed = false;
+  bool _isUploading = false;
 
 //GLOBAL KEYS
 
@@ -245,15 +248,10 @@ class _PostulationFormState extends State<PostulationForm> {
     return Column(
       mainAxisSize: MainAxisSize.min,
       children: [
-        if (widget.step == 1) ..._getFirstStepData(),
-        if (widget.step == 2) ..._getSecondStepData(),
-        if (widget.step == 3) ..._getThirdStepData(screenWidth),
+        if (widget.step == 1) ..._getFirstStepDataView(),
+        if (widget.step == 2) ..._getSecondStepDataView(),
+        if (widget.step == 3) ..._getThirdStepDataView(screenWidth),
         const SizedBox(height: 15),
-        Text(
-          messageError,
-          style: const TextStyle(
-              fontSize: 34, color: Colors.red, fontWeight: FontWeight.bold),
-        ),
         TextCheckCase(
           key: checkBoxGlobalKey,
           color: Colors.white,
@@ -266,7 +264,7 @@ class _PostulationFormState extends State<PostulationForm> {
 
 //SECONDARY WIDGET
 
-  List<Widget> _getFirstStepData() {
+  List<Widget> _getFirstStepDataView() {
     double spaceBetween = 30;
     return [
       Column(
@@ -309,7 +307,7 @@ class _PostulationFormState extends State<PostulationForm> {
     ];
   }
 
-  List<Widget> _getSecondStepData() {
+  List<Widget> _getSecondStepDataView() {
     return [
       Row(
         mainAxisAlignment: MainAxisAlignment.center,
@@ -335,7 +333,7 @@ class _PostulationFormState extends State<PostulationForm> {
     ];
   }
 
-  List<Widget> _getThirdStepData(screenWidth) {
+  List<Widget> _getThirdStepDataView(screenWidth) {
     return [
       Container(
         width: 700,
@@ -361,8 +359,8 @@ class _PostulationFormState extends State<PostulationForm> {
 
             _getTitle('Votre nom : ', color: Colors.black),
             const SizedBox(height: 20),
-            const Text('Dali ',
-                style: TextStyle(
+            Text(firstName,
+                style: const TextStyle(
                   fontSize: 34,
                   fontWeight: FontWeight.bold,
                 ),
@@ -374,8 +372,8 @@ class _PostulationFormState extends State<PostulationForm> {
 
             _getTitle('Votre Prénom : ', color: Colors.black),
             const SizedBox(height: 20),
-            const Text('Zouayobo Ange Paterne ',
-                style: TextStyle(
+            Text(lastName,
+                style: const TextStyle(
                   fontSize: 34,
                   fontWeight: FontWeight.bold,
                 ),
@@ -386,8 +384,8 @@ class _PostulationFormState extends State<PostulationForm> {
 
             _getTitle('Votre Email : ', color: Colors.black),
             const SizedBox(height: 20),
-            const Text('angePaterne@gmail.com',
-                style: TextStyle(
+            Text(email,
+                style: const TextStyle(
                   fontSize: 34,
                   fontWeight: FontWeight.bold,
                 ),
@@ -408,7 +406,7 @@ class _PostulationFormState extends State<PostulationForm> {
                   color: const Color(0xFFF4F7F9),
                   padding: const EdgeInsets.all(10),
                   width: screenWidth * widthBalance,
-                  child: const Text('monCVExample.pdf', softWrap: true),
+                  child: Text(_cvFileName ?? "", softWrap: true),
                 )),
             const SizedBox(height: 20),
             DottedBorder(
@@ -421,7 +419,8 @@ class _PostulationFormState extends State<PostulationForm> {
                   color: const Color(0xFFF4F7F9),
                   padding: const EdgeInsets.all(10),
                   width: screenWidth * widthBalance,
-                  child: const Text('maLettreExample.pdf', softWrap: true),
+                  child: Text(_coverLetterFileName ?? "Selectionnez ?",
+                      softWrap: true),
                 )),
           ],
         ),
@@ -479,11 +478,12 @@ class _PostulationFormState extends State<PostulationForm> {
               allowedExtensions: ['pdf'],
             );
 
-            if (result != null && result.files.isNotEmpty) {
+            if (result != null) {
               setState(() {
-                if (type == 'cv') {
+                if (type == 'cv' && result.files.isNotEmpty) {
                   _cvFileName = result.files.first.name;
                   cvFileBytes = result.files.single.bytes!;
+                  cvPushed = true;
                 } else if (type == 'coverLetter') {
                   _coverLetterFileName = result.files.first.name;
                   coverLetterFileBytes = result.files.single.bytes!;
@@ -532,7 +532,12 @@ class _PostulationFormState extends State<PostulationForm> {
   }
 
   getSecondInit() {
-    widget.changeCurrentStep(3);
+    if (cvPushed) {
+      widget.changeCurrentStep(3);
+    } else {
+      ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(content: Text('Votre cv est obligatoire')));
+    }
   }
 
 //THIRD/FINAL STEP
@@ -542,6 +547,9 @@ class _PostulationFormState extends State<PostulationForm> {
     if (checkBox!.isChecked) {
       uploadFiles();
       // Navigator.of(context).pushNamed(carreers);
+    } else {
+      ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(content: Text('Cochez la  case de vailidation')));
     }
   }
 
@@ -555,9 +563,7 @@ class _PostulationFormState extends State<PostulationForm> {
         if (coverLetterFileBytes != null) {
           _uploadFile(coverLetterFileBytes, url: coverLetterUrl);
         } else {
-          setState(() {
-            messageError = "coverLetterFile null";
-          });
+          setState(() {});
         }
 
         //SEND DOCUMENT
@@ -569,13 +575,13 @@ class _PostulationFormState extends State<PostulationForm> {
       //CV is non available
       else {
         setState(() {
-          messageError = 'CV null';
+          cvPushed = false;
         });
       }
     } //an unexpected error
     catch (error) {
       setState(() {
-        messageError = error.toString();
+        print(error);
       });
     }
   }
