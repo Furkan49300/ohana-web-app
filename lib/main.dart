@@ -4,7 +4,6 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:firebase_core/firebase_core.dart';
 
 import 'package:ohana_webapp_flutter/data/repositories/firebase/firebase_options.dart';
-import 'package:ohana_webapp_flutter/presentation/bloc/blog_post/blocs/blog_global_manager_bloc.dart';
 import 'package:ohana_webapp_flutter/presentation/bloc/navbar_dropdown/dropdown_menu_bloc.dart';
 import 'package:ohana_webapp_flutter/presentation/routers/app_router.dart';
 
@@ -25,8 +24,6 @@ class MainApp extends StatefulWidget {
 
 class _MainAppState extends State<MainApp> {
   final AppRouter _appRouter = AppRouter();
-  final BlogPostGlobalManagerBloc _blogPostsGlobalManagerBloc =
-      BlogPostGlobalManagerBloc();
 
   @override
   Widget build(BuildContext context) {

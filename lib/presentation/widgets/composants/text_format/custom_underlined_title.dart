@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:ohana_webapp_flutter/presentation/pages/responsive.dart';
 
 class CustomUnderlineTitle extends StatelessWidget {
   const CustomUnderlineTitle(
@@ -25,8 +26,10 @@ class CustomUnderlineTitle extends StatelessWidget {
         width: textWidth,
         child: Text(
           title,
-          style: const TextStyle(
-              color: Colors.black, fontWeight: FontWeight.bold, fontSize: 35),
+          style: TextStyle(
+              color: Colors.black,
+              fontWeight: FontWeight.bold,
+              fontSize: Responsive.isSmallBreakpointReached(context) ? 35 : 28),
         ),
       ),
     );

@@ -33,7 +33,7 @@ class FooterLargeScreen extends StatelessWidget {
             child: getFooterTopItem(
                 icon: Icons.place,
                 title: "ADRESSE",
-                content: "16 rue du maine 49100 Angers"),
+                content: "16 Rue du Maine 49100 Angers"),
           ),
           getDivider(),
           Expanded(

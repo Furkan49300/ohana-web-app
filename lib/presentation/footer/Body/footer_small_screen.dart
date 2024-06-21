@@ -25,39 +25,49 @@ class FooterSmallScreen extends StatelessWidget {
       alignment: AlignmentDirectional.centerStart,
       child: Column(
         children: [
+          const SizedBox(height: 30),
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              getFooterTopItem(
-                  size: 30,
-                  icon: Icons.place,
-                  title: "ADRESSE",
-                  content: "15 Rue des Peupliers,\n49000 Angers, France"),
+              Expanded(
+                child: getFooterTopItem(
+                    size: 30,
+                    icon: Icons.place,
+                    title: "ADRESSE",
+                    content: "15 Rue des Peupliers,\n49000 Angers, France"),
+              ),
               getDivider(height: 40),
-              getFooterTopItem(
-                  size: 30,
-                  icon: Icons.phone,
-                  title: "TELEPHONE",
-                  content: "+337 07 77 77 77"),
+              Expanded(
+                child: getFooterTopItem(
+                    size: 30,
+                    icon: Icons.phone,
+                    title: "TELEPHONE",
+                    content: "+337 07 77 77 77"),
+              ),
             ],
           ),
           const SizedBox(height: 30),
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              getFooterTopItem(
-                  icon: Icons.email,
-                  title: "EMAIL",
-                  content: "ohana@entreprise.com",
-                  size: 30),
+              Expanded(
+                child: getFooterTopItem(
+                    icon: Icons.email,
+                    title: "EMAIL",
+                    content: "ohana@entreprise.com",
+                    size: 30),
+              ),
               getDivider(height: 40),
-              getFooterTopItem(
-                  size: 30,
-                  icon: Icons.access_time,
-                  title: "HORAIRES",
-                  content: "Du Lundi au Vendredi,\n9h - 17h"),
+              Expanded(
+                child: getFooterTopItem(
+                    size: 30,
+                    icon: Icons.access_time,
+                    title: "HORAIRES",
+                    content: "Du Lundi au Vendredi,\n9h - 17h"),
+              ),
             ],
-          )
+          ),
+          const SizedBox(height: 30),
         ],
       ),
     );
@@ -78,7 +88,7 @@ class FooterSmallScreen extends StatelessWidget {
               ),
               trailing: _getAddIcon(),
               children: [
-                _getFooterLink(text: 'web', routeName: web),
+                _getFooterLink(text: 'Web', routeName: web),
                 _getFooterLink(text: "Mobile"),
                 _getFooterLink(text: "Logiciels"),
                 _getFooterLink(text: "Design"),

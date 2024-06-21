@@ -2,10 +2,10 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+
 import 'package:ohana_webapp_flutter/presentation/bloc/blog_post/blocs/recent_blog_posts_bloc.dart';
 import 'package:ohana_webapp_flutter/presentation/bloc/blog_post/blog_post_event.dart';
 import 'package:ohana_webapp_flutter/presentation/bloc/blog_post/blog_post_state.dart';
-
 import 'package:ohana_webapp_flutter/presentation/bloc/navbar_dropdown/dropdown_menu_bloc.dart';
 import 'package:ohana_webapp_flutter/presentation/bloc/navbar_dropdown/dropdown_menu_event.dart';
 import 'package:ohana_webapp_flutter/presentation/constants/dimensions.dart';
@@ -22,14 +22,14 @@ import 'package:ohana_webapp_flutter/presentation/widgets/composants/text_format
 import 'package:ohana_webapp_flutter/presentation/widgets/patterns/partners_carousel.dart';
 import 'package:ohana_webapp_flutter/presentation/widgets/patterns/strong_points_section.dart';
 
-class HomePageLargeScreen extends StatefulWidget {
-  const HomePageLargeScreen({super.key});
+class HomePage extends StatefulWidget {
+  const HomePage({super.key});
 
   @override
-  State<HomePageLargeScreen> createState() => _HomePageLargeScreenState();
+  State<HomePage> createState() => _HomePageLargeScreenState();
 }
 
-class _HomePageLargeScreenState extends State<HomePageLargeScreen> {
+class _HomePageLargeScreenState extends State<HomePage> {
   @override
   void initState() {
     context.read<RecentBlogPostsBloc>().add(FetchMostRecentBlogPosts(2));
@@ -79,10 +79,11 @@ class _HomePageLargeScreenState extends State<HomePageLargeScreen> {
                 imagePath:
                     'assets/homepage_image/programming-background-collage.jpg',
               ),
+              const SizedBox(height: 30),
               const ExpertisesList(),
-              const SizedBox(height: 70),
+              const SizedBox(height: 80),
               const StrongPointsSection(),
-              const SizedBox(height: 50),
+              const SizedBox(height: 60),
               const OurPartners(),
               const SizedBox(height: 50),
               _getTwoLastBlogs(),
@@ -103,50 +104,33 @@ class ExpertisesList extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      // color: Colors.amber,
-      padding: const EdgeInsets.only(top: 10),
-      child: const Column(
-        children: [
-          Row(
-            mainAxisAlignment: MainAxisAlignment.start,
-            children: [
-              SizedBox(
-                width: spaceLeftBigTitle,
-              ),
-              CustomUnderlineTitle(
-                title: 'Expertises',
-              )
-            ],
-          ),
-          SizedBox(
-            height: spaceBetweenBigTitleAndTextBody,
-          ),
-          Wrap(
-            spacing: 40, //horizontal space between children
-            alignment: WrapAlignment.center,
-            children: [
-              ExpertisesCard(
-                  svgLink: 'dev_services/devLogo.svg', title: 'DÉVELOPPEMENT'),
-              ExpertisesCard(
-                  svgLink: 'dev_services/design.svg', title: 'DESIGN'),
-              ExpertisesCard(
-                  svgLink: 'dev_services/locked.svg', title: 'CYBERSECURITÉ'),
-              ExpertisesCard(
-                  svgLink: 'dev_services/ref.svg', title: 'RÉFÉRENCEMENT'),
-              ExpertisesCard(
-                  svgLink: 'dev_services/testValidate.svg', title: 'TESTING'),
-              ExpertisesCard(
-                  svgLink: 'dev_services/increase.svg', title: 'IA GENERATIVE'),
-            ],
-          )
-        ],
-      ),
+    return const Column(
+      children: [
+        CustomUnderlineTitle(title: 'Expertises'),
+        SizedBox(height: spaceBetweenBigTitleAndTextBody),
+        Wrap(
+          spacing: 40, //horizontal space between children
+          alignment: WrapAlignment.center,
+          children: [
+            ExpertisesCard(
+                svgLink: 'dev_services/devLogo.svg', title: 'DÉVELOPPEMENT'),
+            ExpertisesCard(svgLink: 'dev_services/design.svg', title: 'DESIGN'),
+            ExpertisesCard(
+                svgLink: 'dev_services/locked.svg', title: 'CYBERSECURITÉ'),
+            ExpertisesCard(
+                svgLink: 'dev_services/ref.svg', title: 'RÉFÉRENCEMENT'),
+            ExpertisesCard(
+                svgLink: 'dev_services/testValidate.svg', title: 'TESTING'),
+            ExpertisesCard(
+                svgLink: 'dev_services/increase.svg', title: 'IA GENERATIVE'),
+          ],
+        )
+      ],
     );
   }
 }
 
-//----OUR PARTNER
+//---- OUR PARTNERS
 
 class OurPartners extends StatelessWidget {
   const OurPartners({super.key});
@@ -155,7 +139,7 @@ class OurPartners extends StatelessWidget {
   Widget build(BuildContext context) {
     return const Column(
       children: [
-        CustomUnderlineTitle(title: 'IL NOUS FONT CONFIANCE'),
+        CustomUnderlineTitle(title: 'ILS NOUS FONT CONFIANCE'),
         SizedBox(height: spaceBetweenBigTitleAndTextBody),
         PartnersCarousel(),
       ],

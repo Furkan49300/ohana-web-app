@@ -59,6 +59,7 @@ Row getFooterTopItem({
   double size = 45,
 }) {
   return Row(
+    mainAxisAlignment: MainAxisAlignment.center,
     children: [
       Icon(
         icon,
