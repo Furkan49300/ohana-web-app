@@ -15,13 +15,13 @@ import "package:ohana_webapp_flutter/presentation/pages/aboutUsPages/carreersPag
 import "package:ohana_webapp_flutter/presentation/pages/aboutUsPages/carreersPage/single_carreer_page_largescreen.dart";
 import "package:ohana_webapp_flutter/presentation/pages/aboutUsPages/estimatePage/estimate_page_largescreen.dart";
 import "package:ohana_webapp_flutter/presentation/pages/aboutUsPages/contactPage/contact_page_largescreen.dart";
-import "package:ohana_webapp_flutter/presentation/pages/expertisesPages/DEV/MAINPAGE/dev_services_page_largescreen.dart";
+import "package:ohana_webapp_flutter/presentation/pages/DEV/MAINPAGE/dev_services_page_largescreen.dart";
 import "package:ohana_webapp_flutter/presentation/pages/homePage/home_page.dart";
 import "package:ohana_webapp_flutter/presentation/pages/no_existing_page.dart";
 import "package:ohana_webapp_flutter/presentation/constants/router_constants.dart";
-import "package:ohana_webapp_flutter/presentation/pages/expertisesPages/MAINPAGE/services_largescreen_page.dart";
-import "package:ohana_webapp_flutter/presentation/pages/expertisesPages/DEV/webDevelopmentPage/web_service_page_largescreen.dart";
-import "package:ohana_webapp_flutter/presentation/pages/offersPages/MAINPAGE/widgets/offers_page_largescreen.dart";
+import "package:ohana_webapp_flutter/presentation/pages/expertisesPage/services_largescreen_page.dart";
+import "package:ohana_webapp_flutter/presentation/pages/DEV/webDevelopmentPage/web_service_page_largescreen.dart";
+import "package:ohana_webapp_flutter/presentation/pages/offersPage/offers_page_largescreen.dart";
 import "package:ohana_webapp_flutter/presentation/pages/searchPage/search_page_largescreen.dart";
 
 class AppRouter {

@@ -11,11 +11,8 @@ import 'package:ohana_webapp_flutter/presentation/footer/footer_screen_fit.dart'
 import 'package:ohana_webapp_flutter/presentation/navbar/largescreen/megaDropdown/dropdown_menu_about_us.dart';
 import 'package:ohana_webapp_flutter/presentation/navbar/largescreen/megaDropdown/dropdown_menu_expertises.dart';
 import 'package:ohana_webapp_flutter/presentation/navbar/largescreen/megaDropdown/dropdown_menu_offers.dart';
-import 'package:ohana_webapp_flutter/presentation/navbar/largescreen/navigation_bar_contents_largescreen.dart';
 import 'package:ohana_webapp_flutter/presentation/navbar/navbar_responsiveness.dart';
 import 'package:ohana_webapp_flutter/presentation/navbar/search_bar.dart';
-import 'package:ohana_webapp_flutter/presentation/pages/expertisesPages/widgets/services_banner.dart';
-import 'package:ohana_webapp_flutter/presentation/widgets/composants/text_format/bold_text_customiser.dart';
 import 'package:ohana_webapp_flutter/presentation/widgets/patterns/custom_carousel.dart';
 import 'package:ohana_webapp_flutter/presentation/widgets/patterns/strong_points_section.dart';
 

@@ -2,8 +2,8 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 
-import 'package:ohana_webapp_flutter/presentation/footer/Body/footer_large_screen.dart';
-import 'package:ohana_webapp_flutter/presentation/footer/Body/footer_small_screen.dart';
+import 'package:ohana_webapp_flutter/presentation/footer/body/footer_large_screen.dart';
+import 'package:ohana_webapp_flutter/presentation/footer/body/footer_small_screen.dart';
 
 class Footer extends StatelessWidget {
   const Footer({super.key});

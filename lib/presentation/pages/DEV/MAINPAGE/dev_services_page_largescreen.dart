@@ -2,7 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:ohana_webapp_flutter/presentation/constants/colors.dart';
 import 'package:ohana_webapp_flutter/presentation/constants/router_constants.dart';
-import 'package:ohana_webapp_flutter/presentation/pages/offersPages/MAINPAGE/widgets/circular_image_loader.dart';
+import 'package:ohana_webapp_flutter/presentation/pages/offersPage/widgets/circular_image_loader.dart';
 import 'package:ohana_webapp_flutter/presentation/widgets/composants/button_format/button.dart';
 import 'package:ohana_webapp_flutter/presentation/widgets/patterns/custom_banner.dart';
 import 'package:flutter/material.dart';

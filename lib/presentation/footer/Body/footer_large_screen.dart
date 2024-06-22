@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:ohana_webapp_flutter/presentation/constants/colors.dart';
-import "package:google_fonts/google_fonts.dart";
 import 'package:ohana_webapp_flutter/presentation/constants/router_constants.dart';
 import 'package:ohana_webapp_flutter/presentation/footer/widget/footer_tools.dart';
 import 'package:ohana_webapp_flutter/presentation/widgets/composants/logo.dart';
