@@ -6,6 +6,7 @@ import 'package:ohana_webapp_flutter/presentation/bloc/navbar_dropdown/dropdown_
 import 'package:ohana_webapp_flutter/presentation/bloc/navbar_dropdown/dropdown_menu_event.dart';
 import 'package:ohana_webapp_flutter/presentation/bloc/navbar_dropdown/dropdown_menu_state.dart';
 import 'package:ohana_webapp_flutter/presentation/constants/animation_constants.dart';
+import 'package:ohana_webapp_flutter/presentation/pages/responsive.dart';
 import 'package:ohana_webapp_flutter/presentation/widgets/composants/input_field/custom_input_field.dart';
 import 'package:ohana_webapp_flutter/presentation/widgets/composants/logo.dart';
 
@@ -14,7 +15,7 @@ class NavigationBarContentsSmallScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    double screenSizeWidth = MediaQuery.of(context).size.width;
+    double screenSizeWidth = Responsive.getScreenSizeWidth(context);
 
     return Container(
       color: Colors.white,

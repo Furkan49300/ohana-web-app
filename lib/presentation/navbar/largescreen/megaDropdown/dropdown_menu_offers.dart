@@ -10,13 +10,14 @@ import 'package:ohana_webapp_flutter/presentation/constants/router_constants.dar
 import 'package:ohana_webapp_flutter/presentation/navbar/largescreen/megaDropdown/dropdown_header_section.dart';
 import 'package:ohana_webapp_flutter/presentation/navbar/largescreen/navbar_link.dart';
 import 'package:ohana_webapp_flutter/presentation/navbar/navbar_menu_title.dart';
+import 'package:ohana_webapp_flutter/presentation/pages/responsive.dart';
 
 class DropdownMenuOffers extends StatelessWidget {
   const DropdownMenuOffers({super.key});
 
   @override
   Widget build(BuildContext context) {
-    double screenSizeWidth = MediaQuery.of(context).size.width;
+    double screenSizeWidth = Responsive.getScreenSizeWidth(context);
     double paddingValue =
         screenSizeWidth * 0.02; // 5% of screen width as padding
     double sectionWidth = (screenSizeWidth / 2) - 10;

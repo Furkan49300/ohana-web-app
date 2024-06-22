@@ -44,6 +44,7 @@ class CustomBanner extends StatelessWidget {
                 alignment: Alignment.center,
                 child: Text(
                   message,
+                  textAlign: TextAlign.center,
                   style: GoogleFonts.majorMonoDisplay(
                       color: textColor, fontSize: 40),
                 ),
