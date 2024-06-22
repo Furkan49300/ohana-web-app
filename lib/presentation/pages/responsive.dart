@@ -9,4 +9,8 @@ class Responsive {
   static getScreenSizeWidth(BuildContext context) {
     return MediaQuery.of(context).size.width;
   }
+
+  static getScreenSize(BuildContext context) {
+    return MediaQuery.of(context).size;
+  }
 }

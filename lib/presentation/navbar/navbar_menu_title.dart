@@ -38,15 +38,32 @@ class _NavbarMenuTitleState extends State<NavbarMenuTitle> {
             _isHovered = false;
           });
         },
-        child: Container(
-          padding: const EdgeInsets.only(bottom: 3),
-          decoration: BoxDecoration(
-              border: Border(bottom: BorderSide(color: globalColor, width: 2))),
-          child: Text(
-            widget.title,
-            style: TextStyle(color: globalColor, fontWeight: FontWeight.bold),
-          ),
-        ),
+        child: NavbarMenuTitleContent(
+            globalColor: globalColor, title: widget.title),
+      ),
+    );
+  }
+}
+
+class NavbarMenuTitleContent extends StatelessWidget {
+  const NavbarMenuTitleContent({
+    super.key,
+    required this.globalColor,
+    required this.title,
+  });
+
+  final Color globalColor;
+  final String title;
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      padding: const EdgeInsets.only(bottom: 3),
+      decoration: BoxDecoration(
+          border: Border(bottom: BorderSide(color: globalColor, width: 2))),
+      child: Text(
+        title,
+        style: TextStyle(color: globalColor, fontWeight: FontWeight.bold),
       ),
     );
   }

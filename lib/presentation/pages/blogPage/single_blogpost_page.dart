@@ -5,42 +5,38 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_quill/flutter_quill.dart' as quill;
 import 'package:intl/intl.dart';
+
 import 'package:ohana_webapp_flutter/logic/entities/blog_post.dart';
 import 'package:ohana_webapp_flutter/logic/entities/blog_post_content.dart';
 import 'package:ohana_webapp_flutter/presentation/bloc/blog_post/blocs/single_blog_post_bloc.dart';
 import 'package:ohana_webapp_flutter/presentation/bloc/blog_post/blog_post_state.dart';
-
 import 'package:ohana_webapp_flutter/presentation/bloc/navbar_dropdown/dropdown_menu_bloc.dart';
 import 'package:ohana_webapp_flutter/presentation/bloc/navbar_dropdown/dropdown_menu_event.dart';
 import 'package:ohana_webapp_flutter/presentation/constants/colors.dart';
-import 'package:ohana_webapp_flutter/presentation/constants/dimensions.dart';
 import 'package:ohana_webapp_flutter/presentation/footer/footer_screen_fit.dart';
 import 'package:ohana_webapp_flutter/presentation/navbar/largescreen/megaDropdown/dropdown_menu_about_us.dart';
 import 'package:ohana_webapp_flutter/presentation/navbar/largescreen/megaDropdown/dropdown_menu_expertises.dart';
 import 'package:ohana_webapp_flutter/presentation/navbar/largescreen/megaDropdown/dropdown_menu_offers.dart';
-import 'package:ohana_webapp_flutter/presentation/navbar/largescreen/navigation_bar_contents_largescreen.dart';
 import 'package:ohana_webapp_flutter/presentation/navbar/navbar_responsiveness.dart';
 import 'package:ohana_webapp_flutter/presentation/navbar/search_bar.dart';
+import 'package:ohana_webapp_flutter/presentation/pages/responsive.dart';
 
-class SingleBlogPostPageLargeScreen extends StatefulWidget {
-  const SingleBlogPostPageLargeScreen({super.key});
+class SingleBlogPostPage extends StatefulWidget {
+  const SingleBlogPostPage({super.key});
 
   @override
-  State<SingleBlogPostPageLargeScreen> createState() =>
-      _SingleBlogPostPageLargeScreenState();
+  State<SingleBlogPostPage> createState() => _SingleBlogPostPageState();
 }
 
-class _SingleBlogPostPageLargeScreenState
-    extends State<SingleBlogPostPageLargeScreen> {
+class _SingleBlogPostPageState extends State<SingleBlogPostPage> {
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
-    Size screenSize = MediaQuery.of(context).size;
+    Size screenSize = Responsive.getScreenSize(context);
     return Scaffold(
         backgroundColor: Colors.white,
         appBar: NavbarResponsiveness.getNavbar(screenSize.width),

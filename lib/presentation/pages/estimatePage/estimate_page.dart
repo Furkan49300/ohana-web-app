@@ -4,9 +4,8 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:ohana_webapp_flutter/data/repositories/firebase/user_actions_firebase_repository.dart';
-import 'package:ohana_webapp_flutter/logic/usecases/user_action_usescases.dart';
 
+import 'package:ohana_webapp_flutter/logic/usecases/user_action_usescases.dart';
 import 'package:ohana_webapp_flutter/presentation/bloc/navbar_dropdown/dropdown_menu_bloc.dart';
 import 'package:ohana_webapp_flutter/presentation/bloc/navbar_dropdown/dropdown_menu_event.dart';
 import 'package:ohana_webapp_flutter/presentation/constants/colors.dart';
@@ -17,24 +16,25 @@ import 'package:ohana_webapp_flutter/presentation/navbar/largescreen/megaDropdow
 import 'package:ohana_webapp_flutter/presentation/navbar/largescreen/megaDropdown/dropdown_menu_expertises.dart';
 import 'package:ohana_webapp_flutter/presentation/navbar/largescreen/megaDropdown/dropdown_menu_offers.dart';
 import 'package:ohana_webapp_flutter/presentation/navbar/largescreen/navigation_bar_contents_largescreen.dart';
+import 'package:ohana_webapp_flutter/presentation/navbar/navbar_responsiveness.dart';
 import 'package:ohana_webapp_flutter/presentation/navbar/search_bar.dart';
+import 'package:ohana_webapp_flutter/presentation/pages/responsive.dart';
 import 'package:ohana_webapp_flutter/presentation/widgets/composants/input_field/custom_input_field.dart';
 import 'package:ohana_webapp_flutter/presentation/widgets/patterns/custom_banner.dart';
 import 'package:ohana_webapp_flutter/presentation/widgets/composants/button_format/button.dart';
 import 'package:ohana_webapp_flutter/presentation/widgets/patterns/text_check_case.dart';
 
-class EstimatePageLargeScreen extends StatelessWidget {
-  const EstimatePageLargeScreen({super.key});
+class EstimatePage extends StatelessWidget {
+  const EstimatePage({super.key});
 
   @override
   Widget build(BuildContext context) {
-    Size screenSize = MediaQuery.of(context).size;
+    double screenSizeWidth = Responsive.getScreenSizeWidth(context);
 
     return Scaffold(
         backgroundColor: Colors.white,
-        appBar: PreferredSize(
-            preferredSize: Size(screenSize.width, navBarHeight),
-            child: const NavigationBarContentsLargeScreen()),
+        appBar: NavbarResponsiveness.getNavbar(screenSizeWidth),
+        endDrawer: NavbarResponsiveness.getEndDrawer(screenSizeWidth),
         body: Stack(
           children: [
             // CONTENT
@@ -42,7 +42,7 @@ class EstimatePageLargeScreen extends StatelessWidget {
               onTap: () {
                 context.read<DropdownMenuBloc>().add(HideMenuEvent());
               },
-              child: _content(screenSize, context),
+              child: _content(screenSizeWidth, context),
             ),
             // NAVBAR MEGA-DROPDOWN MENUS
             const DropdownMenuExpertises(),
@@ -57,11 +57,11 @@ class EstimatePageLargeScreen extends StatelessWidget {
         ));
   }
 
-  _content(Size screenSize, context) {
+  _content(double screenSizeWidth, context) {
     return Expanded(
       child: SingleChildScrollView(
         child: Container(
-          width: screenSize.width,
+          width: screenSizeWidth,
           color: Colors.white,
           child: Column(
             mainAxisAlignment: MainAxisAlignment.start,

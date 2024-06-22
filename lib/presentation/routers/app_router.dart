@@ -9,11 +9,11 @@ import "package:ohana_webapp_flutter/presentation/bloc/job_offer/blocs/paginated
 import "package:ohana_webapp_flutter/presentation/bloc/job_offer/blocs/single_job_offer_bloc.dart";
 import "package:ohana_webapp_flutter/presentation/pages/aboutUsPage/about_us.dart";
 import "package:ohana_webapp_flutter/presentation/pages/blogPage/MAINPAGE/blog_page_largescreen.dart";
-import "package:ohana_webapp_flutter/presentation/pages/blogPage/single_blogpost_page_largescreen.dart";
+import "package:ohana_webapp_flutter/presentation/pages/blogPage/single_blogpost_page.dart";
 import "package:ohana_webapp_flutter/presentation/pages/carreersPage/MAINPAGE/carreers_page_largescreen.dart";
 import "package:ohana_webapp_flutter/presentation/pages/carreersPage/applying/applying_page.dart";
 import "package:ohana_webapp_flutter/presentation/pages/carreersPage/single_carreer_page_largescreen.dart";
-import "package:ohana_webapp_flutter/presentation/pages/estimatePage/estimate_page_largescreen.dart";
+import "package:ohana_webapp_flutter/presentation/pages/estimatePage/estimate_page.dart";
 import "package:ohana_webapp_flutter/presentation/pages/contactPage/contact_page.dart";
 import "package:ohana_webapp_flutter/presentation/pages/developmentServicesPage/dev_services_page.dart";
 import "package:ohana_webapp_flutter/presentation/pages/homePage/home_page.dart";
@@ -111,7 +111,7 @@ class AppRouter {
         return MaterialPageRoute(
             builder: (e) => BlocProvider.value(
                   value: _singleBlogPostsBloc,
-                  child: const SingleBlogPostPageLargeScreen(),
+                  child: const SingleBlogPostPage(),
                 ));
 
 //OFFERS
@@ -127,8 +127,7 @@ class AppRouter {
 //QUOTE/ESTIMATE
 
       case estimate:
-        return MaterialPageRoute(
-            builder: (e) => const EstimatePageLargeScreen());
+        return MaterialPageRoute(builder: (e) => const EstimatePage());
 
 //SEARCH
 

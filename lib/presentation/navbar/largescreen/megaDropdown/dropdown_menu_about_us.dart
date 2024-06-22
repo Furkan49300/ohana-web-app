@@ -77,10 +77,8 @@ class DropdownMenuAboutUs extends StatelessWidget {
                   child: const Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      NavbarMenuTitle(
-                        title: "Clients",
-                        routeName: "",
-                      ),
+                      NavbarMenuTitleContent(
+                          globalColor: Colors.white, title: "Clients"),
                       SizedBox(height: 10),
                       NavbarLink(text: "NOS PARTENAIRES", routeName: ""),
                       SizedBox(height: 5),
@@ -100,10 +98,9 @@ class DropdownMenuAboutUs extends StatelessWidget {
                   child: const Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      NavbarMenuTitle(
-                        title: "Carrières et Blogs",
-                        routeName: "",
-                      ),
+                      NavbarMenuTitleContent(
+                          globalColor: Colors.white,
+                          title: "Carrières et Blogs"),
                       SizedBox(height: 10),
                       SocialMediaButtons(),
                       SizedBox(height: 5),
