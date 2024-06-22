@@ -6,15 +6,14 @@ import 'package:ohana_webapp_flutter/presentation/widgets/composants/logo.dart';
 import 'package:ohana_webapp_flutter/presentation/widgets/patterns/social_media_buttons.dart';
 
 class FooterLargeScreen extends StatelessWidget {
-  const FooterLargeScreen({super.key, required this.screenSize});
-  final Size screenSize;
+  const FooterLargeScreen({super.key});
   @override
   Widget build(BuildContext context) {
     return Column(
       children: [
         _getFooterTopSectionLargeScreen(),
         _getFooterMiddleSectionLargeScreen(),
-        getFooterBottomSection(screenSize.width),
+        getFooterBottomSection(context),
       ],
     );
   }

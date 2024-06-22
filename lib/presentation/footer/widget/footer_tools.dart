@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import "package:google_fonts/google_fonts.dart";
 import 'package:ohana_webapp_flutter/presentation/constants/colors.dart';
+import 'package:ohana_webapp_flutter/presentation/pages/responsive.dart';
 
 class FooterLink extends StatefulWidget {
   final String text;
@@ -38,10 +39,10 @@ class _FooterLinkState extends State<FooterLink> {
   }
 }
 
-getFooterBottomSection(double screenSizeWidth) {
+getFooterBottomSection(context) {
   return Container(
     height: 40,
-    width: screenSizeWidth,
+    width: Responsive.getScreenSizeWidth(context),
     color: purpleNeutral,
     padding: const EdgeInsets.only(left: 30.0),
     alignment: Alignment.centerLeft,

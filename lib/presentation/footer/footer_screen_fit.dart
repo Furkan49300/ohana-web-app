@@ -10,12 +10,9 @@ class Footer extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    Size screenSize = MediaQuery.of(context).size;
     return LayoutBuilder(builder: (context, constraints) {
       if (constraints.maxWidth > 1184) {
-        return FooterLargeScreen(
-          screenSize: screenSize,
-        );
+        return const FooterLargeScreen();
       } else {
         return const FooterSmallScreen();
       }

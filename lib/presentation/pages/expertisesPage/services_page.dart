@@ -16,8 +16,8 @@ import 'package:ohana_webapp_flutter/presentation/navbar/search_bar.dart';
 import 'package:ohana_webapp_flutter/presentation/widgets/patterns/custom_carousel.dart';
 import 'package:ohana_webapp_flutter/presentation/widgets/patterns/strong_points_section.dart';
 
-class ServicesPageLargeScreen extends StatelessWidget {
-  const ServicesPageLargeScreen({super.key});
+class ExpertisesPage extends StatelessWidget {
+  const ExpertisesPage({super.key});
 
   @override
   Widget build(BuildContext context) {

@@ -9,12 +9,11 @@ class FooterSmallScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    double screenWidth = MediaQuery.of(context).size.width;
     return Column(
       children: [
         _getFooterTopSectionSmallScreen(),
         _getFooterMiddleSectionSmallScreen(),
-        getFooterBottomSection(screenWidth)
+        getFooterBottomSection(context)
       ],
     );
   }
