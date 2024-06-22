@@ -3,8 +3,8 @@ import 'package:ohana_webapp_flutter/data/repositories/firebase/job_offer_fireba
 
 import 'package:ohana_webapp_flutter/logic/entities/job_offer.dart';
 import 'package:ohana_webapp_flutter/logic/usecases/job_offer_usecase.dart';
-import 'package:ohana_webapp_flutter/presentation/bloc/carreers/job_offer_event.dart';
-import 'package:ohana_webapp_flutter/presentation/bloc/carreers/job_offer_state.dart';
+import 'package:ohana_webapp_flutter/presentation/bloc/job_offer/job_offer_event.dart';
+import 'package:ohana_webapp_flutter/presentation/bloc/job_offer/job_offer_state.dart';
 
 class PaginatedJobOfferBloc extends Bloc<JobOfferEvent, JobOfferState> {
   PaginatedJobOfferBloc() : super(JobOfferInitialState()) {

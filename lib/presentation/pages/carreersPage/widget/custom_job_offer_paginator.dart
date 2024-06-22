@@ -1,9 +1,9 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import 'package:ohana_webapp_flutter/presentation/bloc/carreers/job_offer_event.dart';
-import 'package:ohana_webapp_flutter/presentation/bloc/carreers/job_offer_state.dart';
-import 'package:ohana_webapp_flutter/presentation/bloc/carreers/blocs/paginated_job_offer_bloc.dart';
+import 'package:ohana_webapp_flutter/presentation/bloc/job_offer/job_offer_event.dart';
+import 'package:ohana_webapp_flutter/presentation/bloc/job_offer/job_offer_state.dart';
+import 'package:ohana_webapp_flutter/presentation/bloc/job_offer/blocs/paginated_job_offer_bloc.dart';
 import 'package:ohana_webapp_flutter/presentation/widgets/composants/button_format/button.dart';
 
 class CustomJobOfferSmartPaginator extends StatefulWidget {

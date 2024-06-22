@@ -13,22 +13,23 @@ import 'package:ohana_webapp_flutter/presentation/footer/footer_screen_fit.dart'
 import 'package:ohana_webapp_flutter/presentation/navbar/largescreen/megaDropdown/dropdown_menu_about_us.dart';
 import 'package:ohana_webapp_flutter/presentation/navbar/largescreen/megaDropdown/dropdown_menu_expertises.dart';
 import 'package:ohana_webapp_flutter/presentation/navbar/largescreen/megaDropdown/dropdown_menu_offers.dart';
-import 'package:ohana_webapp_flutter/presentation/navbar/largescreen/navigation_bar_contents_largescreen.dart';
+import 'package:ohana_webapp_flutter/presentation/navbar/navbar_responsiveness.dart';
 import 'package:ohana_webapp_flutter/presentation/navbar/search_bar.dart';
+import 'package:ohana_webapp_flutter/presentation/pages/responsive.dart';
 import 'package:ohana_webapp_flutter/presentation/widgets/composants/text_format/bold_text_customiser.dart';
 import 'package:ohana_webapp_flutter/presentation/widgets/composants/text_format/custom_underlined_title.dart';
 import 'package:ohana_webapp_flutter/presentation/widgets/patterns/custom_banner.dart';
 import 'package:ohana_webapp_flutter/presentation/widgets/patterns/custom_text_block.dart';
 import 'package:ohana_webapp_flutter/presentation/widgets/patterns/partners_carousel.dart';
 
-class AboutUsLargeScreen extends StatefulWidget {
-  AboutUsLargeScreen({super.key});
+class AboutUsPage extends StatefulWidget {
+  AboutUsPage({super.key});
 
   @override
-  State<AboutUsLargeScreen> createState() => _AboutUsLargeScreenState();
+  State<AboutUsPage> createState() => _AboutUsPageState();
 }
 
-class _AboutUsLargeScreenState extends State<AboutUsLargeScreen> {
+class _AboutUsPageState extends State<AboutUsPage> {
   final Map<String, dynamic> companyShowingUp = {
     'title': 'OHana Entreprise',
     'body': [
@@ -61,7 +62,7 @@ class _AboutUsLargeScreenState extends State<AboutUsLargeScreen> {
   };
 
   bool isOnDetails = false;
-  _removeBoxOfDteails() {
+  _removeBoxOfDetails() {
     setState(() {
       isOnDetails = false;
     });
@@ -69,34 +70,33 @@ class _AboutUsLargeScreenState extends State<AboutUsLargeScreen> {
 
   @override
   Widget build(BuildContext context) {
-    Size screenSize = MediaQuery.of(context).size;
+    double screenSizeWidth = Responsive.getScreenSizeWidth(context);
+
     Color blackColorwhiteOpacity = Colors.black.withOpacity(0.5);
     ColorFilter colorFilter = ColorFilter.mode(
         isOnDetails ? blackColorwhiteOpacity : Colors.transparent,
         BlendMode.srcATop);
+
     return Scaffold(
       backgroundColor: isOnDetails ? blackColorwhiteOpacity : Colors.white,
-      appBar: PreferredSize(
-        preferredSize: Size(screenSize.width, navBarHeight),
-        child: ColorFiltered(
-            colorFilter: colorFilter,
-            child: const NavigationBarContentsLargeScreen()),
-      ),
+      appBar: NavbarResponsiveness.getNavbar(screenSizeWidth,
+          isOnDetails: isOnDetails),
+      endDrawer: NavbarResponsiveness.getEndDrawer(screenSizeWidth),
       body: Expanded(
         child: SizedBox(
-            width: screenSize.width,
+            width: screenSizeWidth,
             child: Stack(
               children: [
                 // CONTENT
                 GestureDetector(
                   onTap: () {
                     context.read<DropdownMenuBloc>().add(HideMenuEvent());
-                    _removeBoxOfDteails();
+                    _removeBoxOfDetails();
                   },
                   child: ColorFiltered(
                     colorFilter: colorFilter,
                     child: SingleChildScrollView(
-                      child: _content(screenSize, context),
+                      child: _content(screenSizeWidth, context),
                     ),
                   ),
                 ),
@@ -108,7 +108,7 @@ class _AboutUsLargeScreenState extends State<AboutUsLargeScreen> {
                   BoxOfDetails(
                     content: companyShowingUp,
                     onBack: () {
-                      _removeBoxOfDteails();
+                      _removeBoxOfDetails();
                     },
                   ),
                 //SEARCH BAR
@@ -122,7 +122,7 @@ class _AboutUsLargeScreenState extends State<AboutUsLargeScreen> {
     );
   }
 
-  _content(Size screenSize, context) {
+  _content(double screenSizeWidth, context) {
     return Column(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
@@ -131,13 +131,13 @@ class _AboutUsLargeScreenState extends State<AboutUsLargeScreen> {
         const SizedBox(height: 40),
         _getAboutUsText(companyShowingUp['body'][0]['paragraph']),
         const SizedBox(height: 40),
-        _getOurSites(screenSize.width),
+        _getOurSites(screenSizeWidth),
         const SizedBox(height: 70),
         _getOurValues(),
         const SizedBox(height: 70),
-        _getOurTeamWork(screenSize.width),
+        _getOurTeamWork(screenSizeWidth),
         const SizedBox(height: 70),
-        const PartnersCarousel(title: 'Nos Partners'),
+        const PartnersCarousel(title: 'Nos Partenaires'),
         const SizedBox(height: 70),
         _getLocalisation(),
         const SizedBox(height: 70),
@@ -150,25 +150,17 @@ class _AboutUsLargeScreenState extends State<AboutUsLargeScreen> {
 
   _getAboutUsText(paragraphOne) {
     return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
+      crossAxisAlignment: CrossAxisAlignment.center,
       mainAxisSize: MainAxisSize.min,
-      children: <Widget>[
-        const Row(mainAxisAlignment: MainAxisAlignment.start, children: [
-          SizedBox(
-            width: spaceLeftBigTitle,
-          ),
-          CustomUnderlineTitle(
-            title: 'Notre Entreprise',
-          )
-        ]),
+      children: [
+        const CustomUnderlineTitle(title: 'Notre Entreprise'),
         const SizedBox(
           height: spaceBetweenBigTitleAndTextBody,
         ),
         Container(
-          padding: const EdgeInsets.only(
-              left: 1.5 * spaceLeftBigTitle, right: 1.5 * spaceLeftBigTitle),
+          padding: const EdgeInsets.only(left: 20, right: 20),
           child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
+            crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               BoldTextCustomizer(
                 text: paragraphOne,
@@ -185,7 +177,7 @@ class _AboutUsLargeScreenState extends State<AboutUsLargeScreen> {
                 child: const MouseRegion(
                   cursor: SystemMouseCursors.click,
                   child: Text(
-                    '... Découvrer plus!',
+                    '... Découvrez plus!',
                     style: TextStyle(color: purpleNeutral, fontSize: 19),
                   ),
                 ),

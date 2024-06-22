@@ -4,7 +4,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:ohana_webapp_flutter/data/repositories/user_actions/user_actions_manager_repository.dart';
+import 'package:ohana_webapp_flutter/data/repositories/firebase/user_actions_firebase_repository.dart';
 import 'package:ohana_webapp_flutter/logic/usecases/user_action_usescases.dart';
 
 import 'package:ohana_webapp_flutter/presentation/bloc/navbar_dropdown/dropdown_menu_bloc.dart';

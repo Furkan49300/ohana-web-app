@@ -7,19 +7,19 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 import 'package:ohana_webapp_flutter/presentation/bloc/navbar_dropdown/dropdown_menu_bloc.dart';
 import 'package:ohana_webapp_flutter/presentation/bloc/navbar_dropdown/dropdown_menu_event.dart';
-import 'package:ohana_webapp_flutter/presentation/constants/dimensions.dart';
 import 'package:ohana_webapp_flutter/presentation/footer/footer_screen_fit.dart';
 import 'package:ohana_webapp_flutter/presentation/navbar/largescreen/megaDropdown/dropdown_menu_about_us.dart';
 import 'package:ohana_webapp_flutter/presentation/navbar/largescreen/megaDropdown/dropdown_menu_expertises.dart';
 import 'package:ohana_webapp_flutter/presentation/navbar/largescreen/megaDropdown/dropdown_menu_offers.dart';
-import 'package:ohana_webapp_flutter/presentation/navbar/largescreen/navigation_bar_contents_largescreen.dart';
+import 'package:ohana_webapp_flutter/presentation/navbar/navbar_responsiveness.dart';
 import 'package:ohana_webapp_flutter/presentation/navbar/search_bar.dart';
+import 'package:ohana_webapp_flutter/presentation/pages/responsive.dart';
 import 'package:ohana_webapp_flutter/presentation/widgets/composants/infos_pannel.dart';
 import 'package:ohana_webapp_flutter/presentation/widgets/patterns/custom_carousel.dart';
 import 'package:ohana_webapp_flutter/presentation/widgets/patterns/custom_text_block.dart';
 
-class WebServicePageLargeScreen extends StatelessWidget {
-  WebServicePageLargeScreen({super.key});
+class WebServicePage extends StatelessWidget {
+  WebServicePage({super.key});
 
   final Map<String, GlobalKey> keysMap = {
     "Conception_de_Sites_Web_Personnalisés": GlobalKey(),
@@ -35,16 +35,14 @@ class WebServicePageLargeScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    Size screenSize = MediaQuery.of(context).size;
+    double screenSizeWidth = Responsive.getScreenSizeWidth(context);
     return Scaffold(
       backgroundColor: Colors.white,
-      appBar: PreferredSize(
-        preferredSize: Size(screenSize.width, navBarHeight),
-        child: const NavigationBarContentsLargeScreen(),
-      ),
+      appBar: NavbarResponsiveness.getNavbar(screenSizeWidth),
+      endDrawer: NavbarResponsiveness.getEndDrawer(screenSizeWidth),
       body: Expanded(
         child: SizedBox(
-            width: screenSize.width,
+            width: screenSizeWidth,
             child: Stack(
               children: [
                 // CONTENT
@@ -53,7 +51,7 @@ class WebServicePageLargeScreen extends StatelessWidget {
                     context.read<DropdownMenuBloc>().add(HideMenuEvent());
                   },
                   child: SingleChildScrollView(
-                    child: _content(screenSize, context),
+                    child: _content(screenSizeWidth, context),
                   ),
                 ),
                 // NAVBAR MEGA-DROPDOWN MENUS
@@ -71,31 +69,25 @@ class WebServicePageLargeScreen extends StatelessWidget {
     );
   }
 
-  _content(Size screenSize, context) {
+  _content(double screenSizeWidth, context) {
     return Column(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
-        ..._getBanner(screenSize),
+        ..._getBanner(screenSizeWidth),
         const SizedBox(height: 50),
         _getDevServicesList(),
-        const SizedBox(
-          height: 10,
-        ),
-        _getTextCustomCard(screenSize: screenSize),
+        const SizedBox(height: 10),
+        _getTextCustomCard(),
         const SizedBox(
           height: 10,
         ),
         _getProcessShowcases(),
-        const SizedBox(
-          height: 70,
-        ),
+        const SizedBox(height: 70),
         _getCustomImage(
             title: 'Nous restons à votre service',
             imagePath:
                 'assets/services_images/services_acceuil_official_free_image.webp'),
-        const SizedBox(
-          height: 10,
-        ),
+        const SizedBox(height: 10),
         const Footer()
       ],
     );
@@ -103,11 +95,11 @@ class WebServicePageLargeScreen extends StatelessWidget {
 
 //BANNER
 
-  List<Widget> _getBanner(screenSize) {
+  List<Widget> _getBanner(screenSizeWidth) {
     return [
       Image.asset(
         'assets/services_images/dev_services/web/programming-background-with-person-working-with-codes-computer.jpg',
-        width: screenSize.width,
+        width: screenSizeWidth,
         height: 500,
         fit: BoxFit.cover,
       ),
@@ -129,7 +121,7 @@ class WebServicePageLargeScreen extends StatelessWidget {
   }
 
 //TEXT BODY
-  _getTextCustomCard({bool reverseMode = false, required Size screenSize}) {
+  _getTextCustomCard() {
     TextDirection rtlDirection = TextDirection.rtl;
     return Column(
       mainAxisSize: MainAxisSize.min,

@@ -3,8 +3,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:ohana_webapp_flutter/data/repositories/firebase/job_offer_firebase_repository.dart';
 import 'package:ohana_webapp_flutter/logic/entities/job_offer.dart';
 import 'package:ohana_webapp_flutter/logic/usecases/job_offer_usecase.dart';
-import 'package:ohana_webapp_flutter/presentation/bloc/carreers/job_offer_event.dart';
-import 'package:ohana_webapp_flutter/presentation/bloc/carreers/job_offer_state.dart';
+import 'package:ohana_webapp_flutter/presentation/bloc/job_offer/job_offer_event.dart';
+import 'package:ohana_webapp_flutter/presentation/bloc/job_offer/job_offer_state.dart';
 
 class SingleJobOfferBloc extends Bloc<JobOfferEvent, JobOfferState> {
   SingleJobOfferBloc() : super(JobOfferInitialState()) {

@@ -5,9 +5,9 @@ import "package:ohana_webapp_flutter/presentation/bloc/blog_post/blocs/blog_glob
 import "package:ohana_webapp_flutter/presentation/bloc/blog_post/blocs/paginated_blog_posts_bloc.dart";
 import "package:ohana_webapp_flutter/presentation/bloc/blog_post/blocs/recent_blog_posts_bloc.dart";
 import "package:ohana_webapp_flutter/presentation/bloc/blog_post/blocs/single_blog_post_bloc.dart";
-import "package:ohana_webapp_flutter/presentation/bloc/carreers/blocs/paginated_job_offer_bloc.dart";
-import "package:ohana_webapp_flutter/presentation/bloc/carreers/blocs/single_job_offer_bloc.dart";
-import "package:ohana_webapp_flutter/presentation/pages/aboutUsPage/about_us_largescreen.dart";
+import "package:ohana_webapp_flutter/presentation/bloc/job_offer/blocs/paginated_job_offer_bloc.dart";
+import "package:ohana_webapp_flutter/presentation/bloc/job_offer/blocs/single_job_offer_bloc.dart";
+import "package:ohana_webapp_flutter/presentation/pages/aboutUsPage/about_us.dart";
 import "package:ohana_webapp_flutter/presentation/pages/blogPage/MAINPAGE/blog_page_largescreen.dart";
 import "package:ohana_webapp_flutter/presentation/pages/blogPage/single_blogpost_page_largescreen.dart";
 import "package:ohana_webapp_flutter/presentation/pages/carreersPage/MAINPAGE/carreers_page_largescreen.dart";
@@ -20,7 +20,7 @@ import "package:ohana_webapp_flutter/presentation/pages/homePage/home_page.dart"
 import "package:ohana_webapp_flutter/presentation/pages/no_existing_page.dart";
 import "package:ohana_webapp_flutter/presentation/constants/router_constants.dart";
 import "package:ohana_webapp_flutter/presentation/pages/expertisesPage/expertises_page.dart";
-import "package:ohana_webapp_flutter/presentation/pages/developmentServicesPage/DEV/webDevelopmentPage/web_service_page_largescreen.dart";
+import "package:ohana_webapp_flutter/presentation/pages/developmentServicesPage/DEV/webDevelopmentPage/web_service_page.dart";
 import "package:ohana_webapp_flutter/presentation/pages/offersPage/offers_page_largescreen.dart";
 import "package:ohana_webapp_flutter/presentation/pages/searchPage/search_page_largescreen.dart";
 
@@ -57,12 +57,12 @@ class AppRouter {
         return MaterialPageRoute(builder: (e) => const ExpertisesPage());
 
       case web:
-        return MaterialPageRoute(builder: (e) => WebServicePageLargeScreen());
+        return MaterialPageRoute(builder: (e) => WebServicePage());
 
 //ABOUT US
 
       case aboutUs:
-        return MaterialPageRoute(builder: (e) => AboutUsLargeScreen());
+        return MaterialPageRoute(builder: (e) => AboutUsPage());
 
 //CARREERS
 

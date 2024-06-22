@@ -1,17 +1,10 @@
-import 'dart:convert';
-import 'dart:io';
-import 'dart:typed_data';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:dotted_border/dotted_border.dart';
-import 'package:flutter_svg/flutter_svg.dart';
-import 'package:firebase_storage/firebase_storage.dart';
 import 'package:ohana_webapp_flutter/logic/entities/user.dart';
 import 'package:ohana_webapp_flutter/logic/entities/user_file.dart';
 import 'package:ohana_webapp_flutter/logic/usecases/user_action_usescases.dart';
-
 import 'package:ohana_webapp_flutter/presentation/bloc/navbar_dropdown/dropdown_menu_bloc.dart';
 import 'package:ohana_webapp_flutter/presentation/bloc/navbar_dropdown/dropdown_menu_event.dart';
 import 'package:ohana_webapp_flutter/presentation/constants/default_values.dart';

@@ -34,7 +34,7 @@ class ExpertisesDrawerSection extends StatelessWidget {
                 icon: const Icon(Icons.arrow_forward, size: 15)),
           ]),
           children: const [
-            CustomListTile(title: "WEB"),
+            CustomListTile(title: "WEB", routeName: web),
             CustomListTile(title: "MOBILE"),
             CustomListTile(title: "LOGICIELS"),
             CustomListTile(title: "DESIGN"),

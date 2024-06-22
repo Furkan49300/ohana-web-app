@@ -4,7 +4,7 @@ import 'package:ohana_webapp_flutter/logic/entities/user.dart';
 import 'package:ohana_webapp_flutter/logic/entities/user_file.dart';
 import 'package:ohana_webapp_flutter/logic/repositories/user_actions_repository.dart';
 
-class UserActionsManager implements UserActionsRepository {
+class UserActionsFirebaseRepository implements UserActionsRepository {
   @override
 
   //UPLOAD FILES
