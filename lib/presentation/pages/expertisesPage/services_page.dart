@@ -13,6 +13,8 @@ import 'package:ohana_webapp_flutter/presentation/navbar/largescreen/megaDropdow
 import 'package:ohana_webapp_flutter/presentation/navbar/largescreen/megaDropdown/dropdown_menu_offers.dart';
 import 'package:ohana_webapp_flutter/presentation/navbar/navbar_responsiveness.dart';
 import 'package:ohana_webapp_flutter/presentation/navbar/search_bar.dart';
+import 'package:ohana_webapp_flutter/presentation/pages/responsive.dart';
+import 'package:ohana_webapp_flutter/presentation/widgets/composants/text_format/custom_underlined_title.dart';
 import 'package:ohana_webapp_flutter/presentation/widgets/patterns/custom_carousel.dart';
 import 'package:ohana_webapp_flutter/presentation/widgets/patterns/strong_points_section.dart';
 
@@ -21,14 +23,15 @@ class ExpertisesPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    Size screenSize = MediaQuery.of(context).size;
+    double screenSizeWidth = Responsive.getScreenSizeWidth(context);
+
     return Scaffold(
       backgroundColor: Colors.white,
-      appBar: NavbarResponsiveness.getNavbar(screenSize.width),
-      endDrawer: NavbarResponsiveness.getEndDrawer(screenSize.width),
+      appBar: NavbarResponsiveness.getNavbar(screenSizeWidth),
+      endDrawer: NavbarResponsiveness.getEndDrawer(screenSizeWidth),
       body: Expanded(
         child: SizedBox(
-            width: screenSize.width,
+            width: screenSizeWidth,
             child: Stack(
               children: [
                 // CONTENT
@@ -37,7 +40,7 @@ class ExpertisesPage extends StatelessWidget {
                     context.read<DropdownMenuBloc>().add(HideMenuEvent());
                   },
                   child: SingleChildScrollView(
-                    child: _content(screenSize, context),
+                    child: _content(screenSizeWidth, context),
                   ),
                 ),
                 // NAVBAR MEGA-DROPDOWN MENUS
@@ -56,21 +59,18 @@ class ExpertisesPage extends StatelessWidget {
     );
   }
 
-  _content(Size screenSize, context) {
+  _content(double screenSizeWidth, context) {
     return Column(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
         Image.asset(
           'assets/services_images/services_acceuil_official_free_image.webp',
-          width: screenSize.width,
+          width: screenSizeWidth,
           height: 500,
           fit: BoxFit.cover,
         ),
         const SizedBox(height: 50),
-        const Text(
-          'Nos Services',
-          style: TextStyle(fontSize: 35, fontWeight: FontWeight.bold),
-        ),
+        const CustomUnderlineTitle(title: 'Nos Services'),
         const SizedBox(height: 40),
         const SizedBox(
           width: 900,
@@ -82,7 +82,7 @@ class ExpertisesPage extends StatelessWidget {
         ),
         const SizedBox(height: 60),
         const ServicesCards(),
-        const SizedBox(height: 40),
+        const SizedBox(height: 70),
         const StrongPointsSection(),
         const SizedBox(height: 70),
         const Footer()
@@ -181,25 +181,19 @@ class ServicesCards extends StatelessWidget {
       child: Column(
         children: [
           const SizedBox(height: spaceBetweenBigTitleAndTextBody),
-          const Text(
-            'Services de développement',
-            style: TextStyle(fontSize: 35, fontWeight: FontWeight.bold),
-          ),
+          const CustomUnderlineTitle(title: 'Services de développement'),
           const SizedBox(height: 35),
           CustomCarousel(
             widgets: devServices,
-            viewportFraction: 0.5,
+            viewportFraction: 0.3,
             carouselHeight: 320,
           ),
           const SizedBox(height: 50),
-          const Text(
-            'Services de cybersécurité',
-            style: TextStyle(fontSize: 35, fontWeight: FontWeight.bold),
-          ),
+          const CustomUnderlineTitle(title: 'Services de cybersécurité'),
           const SizedBox(height: 35),
           CustomCarousel(
             widgets: cybersecurity,
-            viewportFraction: 0.5,
+            viewportFraction: 0.3,
             carouselHeight: 320,
           ),
         ],
