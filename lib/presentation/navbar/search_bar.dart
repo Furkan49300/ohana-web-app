@@ -7,6 +7,7 @@ import 'package:ohana_webapp_flutter/presentation/bloc/navbar_dropdown/dropdown_
 import 'package:ohana_webapp_flutter/presentation/bloc/navbar_dropdown/dropdown_menu_state.dart';
 import 'package:ohana_webapp_flutter/presentation/constants/animation_constants.dart';
 import 'package:ohana_webapp_flutter/presentation/constants/router_constants.dart';
+import 'package:ohana_webapp_flutter/presentation/pages/responsive.dart';
 import 'package:ohana_webapp_flutter/presentation/widgets/composants/button_format/button.dart';
 import 'package:ohana_webapp_flutter/presentation/widgets/composants/input_field/custom_input_field.dart';
 
@@ -23,11 +24,17 @@ class SearchNavBar extends StatelessWidget {
     return BlocBuilder<DropdownMenuBloc, DropdownMenuState>(
       builder: (context, state) {
         return AnimatedOpacity(
-          opacity: state is SearchNavbarShowedState ? 1 : 0,
+          opacity: state is SearchNavbarShowedState &&
+                  Responsive.isSmallBreakpointReached(context)
+              ? 1
+              : 0,
           duration: animationStandardDuration,
           child: AnimatedContainer(
             duration: animationStandardDuration,
-            height: state is SearchNavbarShowedState ? 70 : 0,
+            height: state is SearchNavbarShowedState &&
+                    Responsive.isSmallBreakpointReached(context)
+                ? 70
+                : 0,
             color: const Color.fromARGB(255, 190, 151, 218),
             child: Row(mainAxisAlignment: MainAxisAlignment.center, children: [
               CustomInputField(

@@ -27,14 +27,14 @@ import 'package:ohana_webapp_flutter/presentation/widgets/patterns/text_check_ca
 
 // MAIN BODY
 
-class PostulationPage extends StatefulWidget {
-  const PostulationPage({super.key});
+class ApplyingPage extends StatefulWidget {
+  const ApplyingPage({super.key});
 
   @override
-  State<PostulationPage> createState() => _PostulationPageState();
+  State<ApplyingPage> createState() => _ApplyingPageState();
 }
 
-class _PostulationPageState extends State<PostulationPage> {
+class _ApplyingPageState extends State<ApplyingPage> {
   int currentStep = 1;
 
   void changeCurrentStepState(int currentstep) {
@@ -108,7 +108,7 @@ class _PostulationPageState extends State<PostulationPage> {
               const SizedBox(height: 30),
               _getProcessStep(step: currentStep),
               const SizedBox(height: 30),
-              PostulationForm(
+              ApplyingForm(
                 step: currentStep,
                 changeCurrentStep: changeCurrentStepState,
               ),
@@ -183,8 +183,8 @@ class _PostulationPageState extends State<PostulationPage> {
 
 //FORM AND DATA
 
-class PostulationForm extends StatefulWidget {
-  PostulationForm({
+class ApplyingForm extends StatefulWidget {
+  ApplyingForm({
     super.key,
     required this.step,
     required this.changeCurrentStep,
@@ -204,10 +204,10 @@ class PostulationForm extends StatefulWidget {
 //CHILD WIDGET STATE
 
   @override
-  State<PostulationForm> createState() => _PostulationFormState();
+  State<ApplyingForm> createState() => _ApplyingFormState();
 }
 
-class _PostulationFormState extends State<PostulationForm> {
+class _ApplyingFormState extends State<ApplyingForm> {
 //
   bool emailAlert = false;
   double widthBalance = 0.5;
