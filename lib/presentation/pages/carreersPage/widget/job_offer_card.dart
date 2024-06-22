@@ -1,8 +1,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
-import 'package:ohana_webapp_flutter/presentation/pages/aboutUsPages/carreersPage/widget/job_offer_largescreen_card.dart';
-import 'package:ohana_webapp_flutter/presentation/pages/aboutUsPages/carreersPage/widget/job_offer_small_screen_card.dart';
+import 'package:ohana_webapp_flutter/presentation/pages/carreersPage/widget/job_offer_largescreen_card.dart';
+import 'package:ohana_webapp_flutter/presentation/pages/carreersPage/widget/job_offer_small_screen_card.dart';
 
 class CustomJobOfferCard extends StatelessWidget {
   const CustomJobOfferCard({

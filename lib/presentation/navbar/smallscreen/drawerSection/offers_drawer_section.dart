@@ -29,7 +29,7 @@ class OffersDrawerSection extends StatelessWidget {
             const SizedBox(width: 150, child: Text('Nos offres')),
             IconButton(
                 onPressed: () {
-                  Navigator.of(context).pushNamed("");
+                  Navigator.of(context).pushNamed(offers);
                 },
                 icon: const Icon(Icons.arrow_forward, size: 15)),
           ]),

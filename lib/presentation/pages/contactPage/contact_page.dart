@@ -7,13 +7,13 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 import 'package:ohana_webapp_flutter/presentation/bloc/navbar_dropdown/dropdown_menu_bloc.dart';
 import 'package:ohana_webapp_flutter/presentation/bloc/navbar_dropdown/dropdown_menu_event.dart';
-import 'package:ohana_webapp_flutter/presentation/constants/dimensions.dart';
 import 'package:ohana_webapp_flutter/presentation/footer/footer_screen_fit.dart';
 import 'package:ohana_webapp_flutter/presentation/navbar/largescreen/megaDropdown/dropdown_menu_about_us.dart';
 import 'package:ohana_webapp_flutter/presentation/navbar/largescreen/megaDropdown/dropdown_menu_expertises.dart';
 import 'package:ohana_webapp_flutter/presentation/navbar/largescreen/megaDropdown/dropdown_menu_offers.dart';
-import 'package:ohana_webapp_flutter/presentation/navbar/largescreen/navigation_bar_contents_largescreen.dart';
+import 'package:ohana_webapp_flutter/presentation/navbar/navbar_responsiveness.dart';
 import 'package:ohana_webapp_flutter/presentation/navbar/search_bar.dart';
+import 'package:ohana_webapp_flutter/presentation/pages/responsive.dart';
 import 'package:ohana_webapp_flutter/presentation/widgets/composants/button_format/button.dart';
 import 'package:ohana_webapp_flutter/presentation/widgets/composants/input_field/Custom_textarea.dart';
 import 'package:ohana_webapp_flutter/presentation/widgets/composants/input_field/custom_input_field.dart';
@@ -25,12 +25,11 @@ class ContactPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    Size screenSize = MediaQuery.of(context).size;
+    double screenSizeWidth = Responsive.getScreenSizeWidth(context);
     return Scaffold(
         backgroundColor: Colors.white,
-        appBar: PreferredSize(
-            preferredSize: Size(screenSize.width, navBarHeight),
-            child: const NavigationBarContentsLargeScreen()),
+        appBar: NavbarResponsiveness.getNavbar(screenSizeWidth),
+        endDrawer: NavbarResponsiveness.getEndDrawer(screenSizeWidth),
         body: Stack(
           children: [
             // CONTENT
@@ -38,7 +37,7 @@ class ContactPage extends StatelessWidget {
               onTap: () {
                 context.read<DropdownMenuBloc>().add(HideMenuEvent());
               },
-              child: _content(screenSize, context),
+              child: _content(screenSizeWidth, context),
             ),
             // NAVBAR MEGA-DROPDOWN MENUS
             const DropdownMenuExpertises(),
@@ -53,11 +52,11 @@ class ContactPage extends StatelessWidget {
         ));
   }
 
-  _content(Size screenSize, context) {
+  _content(double screenSizeWidth, context) {
     return Expanded(
       child: SingleChildScrollView(
         child: Container(
-          width: screenSize.width,
+          width: screenSizeWidth,
           color: Colors.white,
           child: Column(
             mainAxisAlignment: MainAxisAlignment.start,
