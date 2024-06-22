@@ -19,7 +19,7 @@ import "package:ohana_webapp_flutter/presentation/pages/DEV/MAINPAGE/dev_service
 import "package:ohana_webapp_flutter/presentation/pages/homePage/home_page.dart";
 import "package:ohana_webapp_flutter/presentation/pages/no_existing_page.dart";
 import "package:ohana_webapp_flutter/presentation/constants/router_constants.dart";
-import "package:ohana_webapp_flutter/presentation/pages/expertisesPage/services_page.dart";
+import "package:ohana_webapp_flutter/presentation/pages/expertisesPage/expertises_page.dart";
 import "package:ohana_webapp_flutter/presentation/pages/DEV/webDevelopmentPage/web_service_page_largescreen.dart";
 import "package:ohana_webapp_flutter/presentation/pages/offersPage/offers_page_largescreen.dart";
 import "package:ohana_webapp_flutter/presentation/pages/searchPage/search_page_largescreen.dart";
