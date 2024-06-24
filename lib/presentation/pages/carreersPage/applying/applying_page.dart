@@ -7,7 +7,7 @@ import 'package:ohana_webapp_flutter/logic/entities/user_file.dart';
 import 'package:ohana_webapp_flutter/logic/usecases/user_action_usescases.dart';
 import 'package:ohana_webapp_flutter/presentation/bloc/navbar_dropdown/dropdown_menu_bloc.dart';
 import 'package:ohana_webapp_flutter/presentation/bloc/navbar_dropdown/dropdown_menu_event.dart';
-import 'package:ohana_webapp_flutter/presentation/constants/default_values.dart';
+import 'package:ohana_webapp_flutter/presentation/constants/regex_controller.dart';
 import 'package:ohana_webapp_flutter/presentation/constants/dimensions.dart';
 import 'package:ohana_webapp_flutter/presentation/navbar/largescreen/megaDropdown/dropdown_menu_about_us.dart';
 import 'package:ohana_webapp_flutter/presentation/navbar/largescreen/megaDropdown/dropdown_menu_expertises.dart';

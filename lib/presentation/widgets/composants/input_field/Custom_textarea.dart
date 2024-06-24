@@ -16,6 +16,7 @@ class CustomTextarea extends StatelessWidget {
     return SizedBox(
       width: screenSizeWidth * widthBalance,
       child: TextField(
+        controller: textEditingController,
         maxLines: 7,
         decoration: InputDecoration(
             hintText: placeholder,

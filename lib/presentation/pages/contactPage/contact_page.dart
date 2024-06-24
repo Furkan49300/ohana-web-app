@@ -4,9 +4,11 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:ohana_webapp_flutter/logic/usecases/user_action_usescases.dart';
 
 import 'package:ohana_webapp_flutter/presentation/bloc/navbar_dropdown/dropdown_menu_bloc.dart';
 import 'package:ohana_webapp_flutter/presentation/bloc/navbar_dropdown/dropdown_menu_event.dart';
+import 'package:ohana_webapp_flutter/presentation/constants/regex_controller.dart';
 import 'package:ohana_webapp_flutter/presentation/footer/footer_screen_fit.dart';
 import 'package:ohana_webapp_flutter/presentation/navbar/largescreen/megaDropdown/dropdown_menu_about_us.dart';
 import 'package:ohana_webapp_flutter/presentation/navbar/largescreen/megaDropdown/dropdown_menu_expertises.dart';
@@ -78,24 +80,32 @@ class ContactPage extends StatelessWidget {
   }
 }
 
-class ContactForm extends StatelessWidget {
+class ContactForm extends StatefulWidget {
   ContactForm({super.key});
 
-  bool emailAlert = false;
-  String emailAlertMessage = "Veuillez entrer une adresse valide!";
+  @override
+  State<ContactForm> createState() => _ContactFormState();
+}
+
+class _ContactFormState extends State<ContactForm> {
+  // CONTROLLER
   TextEditingController firstNameFieldController = TextEditingController();
   TextEditingController lastNameFieldController = TextEditingController();
   TextEditingController emailFieldController = TextEditingController();
   TextEditingController subjectFieldController = TextEditingController();
   TextEditingController messageFieldController = TextEditingController();
+
   GlobalKey<TextCheckCaseState> checkBoxGlobalKey =
       GlobalKey<TextCheckCaseState>();
 
-  _getTitle(title) {
-    return Text(title,
-        style: const TextStyle(fontSize: 15, fontWeight: FontWeight.bold));
-  }
+  // ERROR MESSAGE
+  String lastNameErrorMessage = '';
+  String firstNameErrorMessage = '';
+  String emailErrorMessage = '';
+  String subjectErrorMessage = '';
+  String contentErrorMessage = '';
 
+  // MAIN CONTENT
   @override
   Widget build(BuildContext context) {
     double spaceBetween = 30;
@@ -103,47 +113,28 @@ class ContactForm extends StatelessWidget {
       mainAxisAlignment: MainAxisAlignment.start,
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        const SizedBox(height: 5),
-        _getTitle("Nom"),
-        CustomInputField(
-          placeholder: 'Nom',
-          widthBalance: 1 / 2,
-          textEditingController: firstNameFieldController,
-        ),
+        ..._getInputField(
+            title: 'Nom',
+            errorMessage: lastNameErrorMessage,
+            textController: lastNameFieldController),
         SizedBox(height: spaceBetween),
-        _getTitle('Prénom'),
-        const SizedBox(height: 5),
-        CustomInputField(
-          placeholder: 'Prénom',
-          widthBalance: 1 / 2,
-          textEditingController: lastNameFieldController,
-        ),
+        ..._getInputField(
+            title: 'Prénom',
+            errorMessage: firstNameErrorMessage,
+            textController: firstNameFieldController),
         SizedBox(height: spaceBetween),
-        _getTitle('Email'),
-        const SizedBox(height: 5),
-        CustomInputField(
-          placeholder: 'exemple@email.com',
-          widthBalance: 1 / 2,
-          textEditingController: emailFieldController,
-        ),
-        emailAlert
-            ? Text(emailAlertMessage,
-                style: const TextStyle(color: Colors.red, fontSize: 15))
-            : const SizedBox(),
+        ..._getInputField(
+            title: 'Email',
+            errorMessage: emailErrorMessage,
+            textController: emailFieldController),
         SizedBox(height: spaceBetween),
-        _getTitle('Sujet'),
-        const SizedBox(height: 5),
-        CustomInputField(
-          placeholder: 'Ecrire le sujet du message',
-          widthBalance: 1 / 2,
-          textEditingController: subjectFieldController,
-        ),
+        ..._getInputField(
+            title: 'Sujet',
+            errorMessage: subjectErrorMessage,
+            textController: subjectFieldController),
         SizedBox(height: spaceBetween),
         const SizedBox(height: 5),
-        CustomTextarea(
-          placeholder: "Message ...",
-          textEditingController: messageFieldController,
-        ),
+        ..._getTextarea(errorMessage: contentErrorMessage),
         const SizedBox(height: 10),
         Button('Envoyer', type: ButtonType.standard, onTap: () {
           _sendData(checkBoxGlobalKey);
@@ -158,18 +149,152 @@ class ContactForm extends StatelessWidget {
     );
   }
 
+  _getTitle(title) {
+    return Text(title,
+        style: const TextStyle(fontSize: 15, fontWeight: FontWeight.bold));
+  }
+
+  List<Widget> _getInputField(
+      {String? title,
+      required String errorMessage,
+      required TextEditingController textController,
+      String? placeholder,
+      double widthBalance = 1 / 2}) {
+    return [
+      _getTitle(title ?? ""),
+      CustomInputField(
+        placeholder: placeholder ?? title ?? '',
+        widthBalance: widthBalance,
+        textEditingController: textController,
+      ),
+      if (errorMessage.isNotEmpty)
+        Text(
+          errorMessage,
+          style: const TextStyle(
+              fontSize: 14, color: Colors.red, fontWeight: FontWeight.bold),
+        ),
+    ];
+  }
+
+  List<Widget> _getTextarea({required String errorMessage}) {
+    return [
+      CustomTextarea(
+        placeholder: "Message ...",
+        textEditingController: messageFieldController,
+      ),
+      if (errorMessage.isNotEmpty)
+        Text(
+          errorMessage,
+          style: const TextStyle(
+              fontSize: 14, color: Colors.red, fontWeight: FontWeight.bold),
+        ),
+    ];
+  }
+
   _sendData(GlobalKey<TextCheckCaseState> checkBoxGlobalKey) {
-    String firstName = firstNameFieldController.text;
-    String lastName = lastNameFieldController.text;
-    String email = emailFieldController.text;
-    String subject = subjectFieldController.text;
-    String message = messageFieldController.text;
-    TextCheckCaseState? checkBox = checkBoxGlobalKey.currentState;
-    if (checkBox != null && checkBox.isChecked) {
-      final RegExp emailRegex = RegExp(r'^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$');
-      if (emailRegex.hasMatch(email)) {
-        firstName = const HtmlEscape().convert(firstName);
+    String firstName = firstNameFieldController.text.trim();
+    String lastName = lastNameFieldController.text.trim();
+    String email = emailFieldController.text.trim();
+    String subject = subjectFieldController.text.trim();
+    String message = messageFieldController.text.trim();
+    bool isCheckedCase = checkBoxGlobalKey.currentState!.isChecked;
+    bool validate = textFieldValidate(
+        firstName: firstName,
+        lastNameText: lastName,
+        email: email,
+        subject: subject,
+        content: message);
+    if (validate) {
+      if (isCheckedCase) {
+        HtmlEscape htmlEscape = const HtmlEscape();
+        lastName = htmlEscape.convert(lastName);
+        firstName = htmlEscape.convert(firstName);
+        email = htmlEscape.convert(email);
+        subject = htmlEscape.convert(subject);
+        message = htmlEscape.convert(message);
+        UserActionsUsescases().pushJsonDocumentToFirebase('contacts', {
+          'lastName': lastName,
+          'firstName': firstName,
+          'email': email,
+          'subject': subject,
+          'content': message,
+        });
+        ScaffoldMessenger.of(context)
+            .showSnackBar(const SnackBar(content: Text('Envoi réussi')));
+      } else {
+        ScaffoldMessenger.of(context)
+            .showSnackBar(const SnackBar(content: Text('Cochez la case')));
       }
     }
+  }
+
+  bool textFieldValidate(
+      {required String firstName,
+      required String lastNameText,
+      required String email,
+      required String subject,
+      required String content}) {
+    // email test
+    bool emailformatValidate = emailRegex.hasMatch(email) && email.isNotEmpty;
+
+    // firstName test
+    bool firstNameformatValidate =
+        nameRegex.hasMatch(firstName) && firstName.isNotEmpty;
+
+    // lastName test
+    bool lastNameformatValidate =
+        nameRegex.hasMatch(lastNameText) && lastNameText.isNotEmpty;
+
+    // subject test
+    bool subjectformatValidate =
+        nameRegex.hasMatch(subject) && subject.isNotEmpty;
+
+    // content test
+    bool contentformatValidate = content.isNotEmpty;
+
+    setState(() {
+      // first name validate notice
+      firstNameErrorMessage = firstNameformatValidate
+          ? ""
+          : "Veuillez renseigner correctement ce champ";
+
+      // last name validate notice
+      lastNameErrorMessage = lastNameformatValidate
+          ? ""
+          : "Veuillez renseigner correctement ce champ";
+
+      // email validate notice
+      emailErrorMessage = emailformatValidate
+          ? ""
+          : "Veuillez renseigner correctement ce champ";
+
+      // subject validate notice
+      subjectErrorMessage = subjectformatValidate
+          ? ""
+          : "Veuillez renseigner correctement ce champ";
+
+      // content validate notice
+      contentErrorMessage = contentformatValidate
+          ? ""
+          : "Veuillez renseigner correctement ce champ";
+    });
+
+    // is validate ?
+    return firstNameformatValidate &&
+        lastNameformatValidate &&
+        emailformatValidate &&
+        subjectformatValidate &&
+        contentformatValidate;
+  }
+
+  @override
+  void dispose() {
+    // TODO: implement dispose
+    super.dispose();
+    lastNameFieldController.dispose();
+    firstNameFieldController.dispose();
+    emailFieldController.dispose();
+    subjectFieldController.dispose();
+    messageFieldController.dispose();
   }
 }

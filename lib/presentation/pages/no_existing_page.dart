@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 
 import 'package:ohana_webapp_flutter/presentation/constants/router_constants.dart';
-import 'package:ohana_webapp_flutter/presentation/pages/homePage/home_page.dart';
 
 class NoExistingPage extends StatelessWidget {
   const NoExistingPage({super.key});

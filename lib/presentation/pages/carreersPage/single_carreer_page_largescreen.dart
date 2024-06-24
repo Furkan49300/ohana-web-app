@@ -9,7 +9,7 @@ import 'package:ohana_webapp_flutter/presentation/bloc/job_offer/blocs/single_jo
 
 import 'package:ohana_webapp_flutter/presentation/bloc/navbar_dropdown/dropdown_menu_bloc.dart';
 import 'package:ohana_webapp_flutter/presentation/bloc/navbar_dropdown/dropdown_menu_event.dart';
-import 'package:ohana_webapp_flutter/presentation/constants/default_values.dart';
+import 'package:ohana_webapp_flutter/presentation/constants/regex_controller.dart';
 import 'package:ohana_webapp_flutter/presentation/constants/dimensions.dart';
 import 'package:ohana_webapp_flutter/presentation/constants/router_constants.dart';
 import 'package:ohana_webapp_flutter/presentation/footer/footer_screen_fit.dart';
@@ -67,6 +67,7 @@ class SingleCarreerPageLargeScreen extends StatelessWidget {
                   children: [
                     const SizedBox(height: 50),
                     Image.asset(
+                      //control if the image value is null
                       state.jobOffers.imagePath != '' &&
                               state.jobOffers.imagePath != null
                           ? state.jobOffers.imagePath

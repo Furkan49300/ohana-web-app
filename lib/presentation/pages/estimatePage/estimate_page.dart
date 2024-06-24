@@ -9,13 +9,11 @@ import 'package:ohana_webapp_flutter/logic/usecases/user_action_usescases.dart';
 import 'package:ohana_webapp_flutter/presentation/bloc/navbar_dropdown/dropdown_menu_bloc.dart';
 import 'package:ohana_webapp_flutter/presentation/bloc/navbar_dropdown/dropdown_menu_event.dart';
 import 'package:ohana_webapp_flutter/presentation/constants/colors.dart';
-import 'package:ohana_webapp_flutter/presentation/constants/default_values.dart';
-import 'package:ohana_webapp_flutter/presentation/constants/dimensions.dart';
+import 'package:ohana_webapp_flutter/presentation/constants/regex_controller.dart';
 import 'package:ohana_webapp_flutter/presentation/footer/footer_screen_fit.dart';
 import 'package:ohana_webapp_flutter/presentation/navbar/largescreen/megaDropdown/dropdown_menu_about_us.dart';
 import 'package:ohana_webapp_flutter/presentation/navbar/largescreen/megaDropdown/dropdown_menu_expertises.dart';
 import 'package:ohana_webapp_flutter/presentation/navbar/largescreen/megaDropdown/dropdown_menu_offers.dart';
-import 'package:ohana_webapp_flutter/presentation/navbar/largescreen/navigation_bar_contents_largescreen.dart';
 import 'package:ohana_webapp_flutter/presentation/navbar/navbar_responsiveness.dart';
 import 'package:ohana_webapp_flutter/presentation/navbar/search_bar.dart';
 import 'package:ohana_webapp_flutter/presentation/pages/responsive.dart';
@@ -206,25 +204,31 @@ class _DevisFormState extends State<DevisForm> {
     String lastNameText = lastNameFieldController.text.trim();
     String emailText = emailFieldController.text.trim();
     String? seletedService = serviceDropdownKey.currentState!._selectedValue;
+    bool isCheckedCase = checkBoxKey.currentState!.isChecked;
     bool validate = textFieldValidate(
         firstName: firstNameText,
         lastNameText: lastNameText,
         email: emailText,
         selectedValue: seletedService);
     if (seletedService != null && validate) {
-      HtmlEscape htmlEscape = const HtmlEscape();
-      String lastName = htmlEscape.convert(lastNameText);
-      String firstName = htmlEscape.convert(firstNameText);
-      String email = htmlEscape.convert(emailText);
-      UserActionsUsescases().pushJsonDocumentToFirebase('devis', {
-        'lastName': lastName,
-        'firstName': firstName,
-        'email': email,
-        'service': serviceDropdownKey.currentState!._selectedValue
-      });
-      ScaffoldMessenger.of(context)
-          .showSnackBar(const SnackBar(content: Text('Envoi réussi')));
-    } else {}
+      if (isCheckedCase) {
+        HtmlEscape htmlEscape = const HtmlEscape();
+        String lastName = htmlEscape.convert(lastNameText);
+        String firstName = htmlEscape.convert(firstNameText);
+        String email = htmlEscape.convert(emailText);
+        UserActionsUsescases().pushJsonDocumentToFirebase('devis', {
+          'lastName': lastName,
+          'firstName': firstName,
+          'email': email,
+          'service': serviceDropdownKey.currentState!._selectedValue
+        });
+        _getSnackBar('Envoi Réussi');
+      } else {
+        _getSnackBar("Veullez cocher la case");
+      }
+    } else {
+      // _getSnackBar('');
+    }
   }
 
   textFieldValidate(
@@ -232,50 +236,53 @@ class _DevisFormState extends State<DevisForm> {
       required String lastNameText,
       required String email,
       String? selectedValue}) {
-    bool emailformatValidate = emailRegex.hasMatch(email);
+    bool emailformatValidate = emailRegex.hasMatch(email) && email != '';
     bool firstNameformatValidate =
         nameRegex.hasMatch(firstName) && firstName != "";
     bool lastNameformatValidate =
-        nameRegex.hasMatch(lastNameText) && firstName != "";
-    if (!firstNameformatValidate) {
-      setState(() {
-        firstNameErrorMessage = "Veuillez renseigner correctement ce champ";
-      });
-    } else {
-      setState(() {
-        firstNameErrorMessage = "";
-      });
-    }
-    if (!lastNameformatValidate) {
-      setState(() {
-        lastNameErrorMessage = "Veuillez renseigner correctement ce champ";
-      });
-    } else {
-      setState(() {
-        lastNameErrorMessage = "";
-      });
-    }
-    if (!emailformatValidate) {
-      setState(() {
-        emailErrorMessage = "Veuillez renseigner correctement ce champ";
-      });
-    } else {
-      setState(() {
-        emailErrorMessage = "";
-      });
-    }
-    if (!(selectedValue != null)) {
-      setState(() {
-        selectedErrorMessage = "Selectionnez une prestation!!";
-      });
-    } else {
-      setState(() {
-        selectedErrorMessage = "";
-      });
-    }
+        nameRegex.hasMatch(lastNameText) && lastNameText != "";
+
+    //first name validate test
+    setState(() {
+      // first name validate notice
+      firstNameErrorMessage = firstNameformatValidate
+          ? ""
+          : "Veuillez renseigner correctement ce champ";
+
+      // last name validate notice
+      lastNameErrorMessage = lastNameformatValidate
+          ? ""
+          : "Veuillez renseigner correctement ce champ";
+
+      // email validate notice
+      emailErrorMessage = emailformatValidate
+          ? ""
+          : "Veuillez renseigner correctement ce champ";
+
+      // subject validate notice
+      selectedErrorMessage =
+          selectedValue != null ? "" : "Selectionnez une prestation!!";
+    });
+
+    //is validate ?
+
     return firstNameformatValidate &&
         lastNameformatValidate &&
         emailformatValidate;
+  }
+
+  _getSnackBar(String text) {
+    return ScaffoldMessenger.of(context)
+        .showSnackBar(SnackBar(content: Text(text)));
+  }
+
+  @override
+  void dispose() {
+    // TODO: implement dispose
+    super.dispose();
+    firstNameFieldController.dispose();
+    lastNameFieldController.dispose();
+    emailFieldController.dispose();
   }
 }
 
@@ -318,5 +325,11 @@ class ServicesDropdownState extends State<ServicesDropdown> {
         );
       }).toList(),
     );
+  }
+
+  @override
+  void dispose() {
+    // TODO: implement dispose
+    super.dispose();
   }
 }
