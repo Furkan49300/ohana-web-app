@@ -41,3 +41,5 @@ class FetchMostRecentBlogPosts extends BlogPostEvent {
   final int number;
   FetchMostRecentBlogPosts(this.number);
 }
+
+class FetchBlogPostsPaginatingNumber extends BlogPostEvent {}

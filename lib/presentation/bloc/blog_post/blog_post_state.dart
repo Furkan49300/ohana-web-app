@@ -34,3 +34,12 @@ class BlogPostError extends BlogPostState {
   @override
   List<Object> get props => [errorMessage];
 }
+
+class BlogPostPaginatingNumber extends BlogPostState {
+  final int paginatingNumber;
+
+  const BlogPostPaginatingNumber(this.paginatingNumber);
+
+  @override
+  List<Object> get props => [paginatingNumber];
+}

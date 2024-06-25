@@ -2,7 +2,6 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:ohana_webapp_flutter/logic/entities/blog_post.dart';
 import 'package:ohana_webapp_flutter/logic/entities/blog_post_content.dart';
 import 'package:ohana_webapp_flutter/logic/repositories/blog_post_repository.dart';
-import 'package:ohana_webapp_flutter/presentation/constants/router_constants.dart';
 
 class BlogPostFirebaseRepository implements BlogPostRepository {
   final int pageSize = 6;
@@ -10,12 +9,12 @@ class BlogPostFirebaseRepository implements BlogPostRepository {
 //NUMBER OF BLOG POST PAGE
 
   @override
-  Future<int> getNumberOfBlogPostsPage() async {
-    QuerySnapshot snapshot =
+  Future<int> getBlogPostsPaginatingNumber() async {
+    QuerySnapshot querySnapshot =
         await FirebaseFirestore.instance.collection('blogposts').get();
-    int blogsNumber = snapshot.docs.length;
-    double pagesNumberFraction = blogsNumber / pageSize;
-    int blogPagesNumber = pagesNumberFraction.round();
+    int numberOfUsers = querySnapshot.size;
+    double pagesNumberFraction = numberOfUsers / pageSize;
+    int blogPagesNumber = pagesNumberFraction.ceil();
     return blogPagesNumber;
   }
 
@@ -23,11 +22,8 @@ class BlogPostFirebaseRepository implements BlogPostRepository {
 
   @override
   Future<List<BlogPost>> getAllBlogPosts() async {
-    // Récupère une référence à la collection 'blogposts'
     QuerySnapshot querySnapshot =
         await FirebaseFirestore.instance.collection('blogposts').get();
-
-    // Parcourt les documents dans la collection
     return querySnapshot.docs.map(_blogPostMapping).toList();
   }
 
@@ -130,16 +126,19 @@ class BlogPostFirebaseRepository implements BlogPostRepository {
         .doc(firstDocumentId)
         .get();
 
-    // Step 2: Utiliser startAfter avec le document recuperé
+    // Step 2: Utiliser startBefore avec le document recuperé
     QuerySnapshot querySnapshot = await FirebaseFirestore.instance
         .collection('blogposts')
         .orderBy('publish_date', descending: true)
         .endBeforeDocument(firstDocSnapshot)
-        .limit(pageSize)
+        // .limit(pageSize)
         .get();
 
+    List<QueryDocumentSnapshot> querySnapshotreverse =
+        querySnapshot.docs.reversed.take(pageSize).toList();
+
     // Parcourt les documents dans la collection
-    return querySnapshot.docs.map(_blogPostMapping).toList();
+    return querySnapshotreverse.map(_blogPostMapping).toList();
   }
 
 //NTH BLOG  PAGE

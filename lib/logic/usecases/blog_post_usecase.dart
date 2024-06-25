@@ -42,4 +42,8 @@ class BlogPostUsecase {
   Future<List<BlogPost>> getNthBlogPostsPage(int nth) {
     return blogPostRepository.getNthBlogPostsPage(nth);
   }
+
+  Future<int> getBlogPostsPaginatingNumber() {
+    return blogPostRepository.getBlogPostsPaginatingNumber();
+  }
 }

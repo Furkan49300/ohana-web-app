@@ -97,9 +97,11 @@ class JobOfferFirebaseRepository implements JobOffersRepository {
   }
 
   @override
-  Future<int> getNumberJobOffersPage() {
-    // TODO: implement getNumberJobOffersPage
-    throw UnimplementedError();
+  Future<int> getNumberJobOffersPage() async {
+    QuerySnapshot querySnapshot =
+        await FirebaseFirestore.instance.collection('joboffers').get();
+    int numberOfUsers = querySnapshot.size;
+    return numberOfUsers;
   }
 
 //MAPPER

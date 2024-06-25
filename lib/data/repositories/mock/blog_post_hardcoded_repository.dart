@@ -442,4 +442,10 @@ class BlogPostHardCodedRepository implements BlogPostRepository {
     // TODO: implement getSearchBlogPost
     throw UnimplementedError();
   }
+
+  @override
+  Future<int> getBlogPostsPaginatingNumber() {
+    // TODO: implement getBlogPostsPaginatingNumber
+    throw UnimplementedError();
+  }
 }

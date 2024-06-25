@@ -1,5 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+
+import 'package:ohana_webapp_flutter/data/repositories/firebase/blog_post_firebase_repository.dart';
 import 'package:ohana_webapp_flutter/presentation/bloc/blog_post/blocs/paginated_blog_posts_bloc.dart';
 import 'package:ohana_webapp_flutter/presentation/bloc/blog_post/blog_post_event.dart';
 import 'package:ohana_webapp_flutter/presentation/bloc/blog_post/blog_post_state.dart';
@@ -7,10 +9,7 @@ import 'package:ohana_webapp_flutter/presentation/bloc/blog_post/blog_post_state
 import 'package:ohana_webapp_flutter/presentation/widgets/composants/button_format/button.dart';
 
 class CustomBlogPostSmartPaginator extends StatefulWidget {
-  const CustomBlogPostSmartPaginator(
-      {super.key, required this.startIndicator, required this.endIndicator});
-  final int startIndicator;
-  final int endIndicator;
+  CustomBlogPostSmartPaginator({super.key});
 
   @override
   State<CustomBlogPostSmartPaginator> createState() =>
@@ -19,9 +18,28 @@ class CustomBlogPostSmartPaginator extends StatefulWidget {
 
 class _CustomBlogPostSmartPaginatorState
     extends State<CustomBlogPostSmartPaginator> {
-  int currentPageIndex = 0;
+  int currentPageIndex = 1;
   bool previousPageDisabled = true;
   bool nextPageDisabled = false;
+  int startIndicator = 1; // default value
+  int endIndicator = 0; //default value
+  late int blogPostPaginatingNumber;
+
+  @override
+  void initState() {
+    super.initState();
+    _getEndIndicator();
+  }
+
+  void _getEndIndicator() async {
+    blogPostPaginatingNumber =
+        await BlogPostFirebaseRepository().getBlogPostsPaginatingNumber();
+    setState(() {
+      endIndicator =
+          blogPostPaginatingNumber < 4 ? blogPostPaginatingNumber : 4;
+      nextPageDisabled = blogPostPaginatingNumber <= 4;
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -29,8 +47,7 @@ class _CustomBlogPostSmartPaginatorState
       spacing: 5,
       children: [
         _previousPage(),
-        for (var i = widget.startIndicator; i <= widget.endIndicator; i++)
-          _getNthPage(i),
+        for (var i = startIndicator; i <= endIndicator; i++) _getNthPage(i),
         const SizedBox(width: 10),
         _nextPage(),
       ],
@@ -51,14 +68,32 @@ class _CustomBlogPostSmartPaginatorState
           }
           setState(() {
             if (currentPageIndex > 1) {
+              if (currentPageIndex == startIndicator && startIndicator != 1) {
+                int previousEndIndicator = endIndicator;
+                endIndicator = startIndicator;
+                startIndicator =
+                    ((startIndicator - 4) > 0 && previousEndIndicator != 4)
+                        ? (startIndicator - 4)
+                        : 1;
+              }
               currentPageIndex--;
-              previousPageDisabled = currentPageIndex == widget.startIndicator;
+              previousPageDisabled = currentPageIndex == 1;
               nextPageDisabled = false;
+              _updateIndicatorOnPreviousPage();
             }
           });
         }
       },
     );
+  }
+
+  _updateIndicatorOnPreviousPage() {
+    if (currentPageIndex == startIndicator && startIndicator != 1) {
+      endIndicator = startIndicator;
+      startIndicator = ((startIndicator - 4) > 0 && endIndicator != 4)
+          ? (startIndicator - 4)
+          : 1;
+    }
   }
 
   _getNthPage(i) {
@@ -74,7 +109,9 @@ class _CustomBlogPostSmartPaginatorState
             setState(() {
               currentPageIndex = i; // get the current page index
               previousPageDisabled =
-                  false; //disabel the light effect on the previous button
+                  currentPageIndex == 1; // Disable previous button
+              nextPageDisabled = currentPageIndex ==
+                  blogPostPaginatingNumber; // Disable next button
             });
           },
         ));
@@ -94,12 +131,25 @@ class _CustomBlogPostSmartPaginatorState
                 .add(FetchNextBlogPostsPage(currentState.blogPosts.last.id));
           }
           setState(() {
-            currentPageIndex = currentPageIndex + 1;
-            nextPageDisabled = currentPageIndex == widget.endIndicator;
+            _updateIndicatorOnNextPage();
+            currentPageIndex++;
+            nextPageDisabled = currentPageIndex == endIndicator;
             previousPageDisabled = false;
           });
         }
       },
     );
+  }
+
+  _updateIndicatorOnNextPage() {
+    if (currentPageIndex == endIndicator) {
+      if ((blogPostPaginatingNumber - currentPageIndex) < 4) {
+        startIndicator = endIndicator;
+        endIndicator = blogPostPaginatingNumber;
+      } else {
+        startIndicator = endIndicator;
+        endIndicator = endIndicator + 4;
+      }
+    }
   }
 }

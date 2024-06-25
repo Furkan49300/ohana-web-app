@@ -12,6 +12,7 @@ import 'package:ohana_webapp_flutter/presentation/bloc/blog_post/blog_post_event
 import 'package:ohana_webapp_flutter/presentation/bloc/blog_post/blog_post_state.dart';
 import 'package:ohana_webapp_flutter/presentation/bloc/navbar_dropdown/dropdown_menu_bloc.dart';
 import 'package:ohana_webapp_flutter/presentation/bloc/navbar_dropdown/dropdown_menu_event.dart';
+import 'package:ohana_webapp_flutter/presentation/constants/router_constants.dart';
 import 'package:ohana_webapp_flutter/presentation/footer/footer_screen_fit.dart';
 import 'package:ohana_webapp_flutter/presentation/navbar/largescreen/megaDropdown/dropdown_menu_about_us.dart';
 import 'package:ohana_webapp_flutter/presentation/navbar/largescreen/megaDropdown/dropdown_menu_expertises.dart';
@@ -159,12 +160,11 @@ class _BlogPageLargeScreenState extends State<BlogPageLargeScreen> {
 
 //NUMBER LIST
   _getPaginatorButtons() {
-    return const CustomBlogPostSmartPaginator(
-        startIndicator: 1, endIndicator: 4);
+    return CustomBlogPostSmartPaginator();
   }
 }
 
-class RecentBlogCarouselSection extends StatelessWidget {
+class RecentBlogCarouselSection extends StatefulWidget {
   //ATTRIBUTE
 
   const RecentBlogCarouselSection({
@@ -178,12 +178,17 @@ class RecentBlogCarouselSection extends StatelessWidget {
   final double width;
   final BlogPost blogPost;
 
-//CONTENT
+  @override
+  State<RecentBlogCarouselSection> createState() =>
+      _RecentBlogCarouselSectionState();
+}
 
+class _RecentBlogCarouselSectionState extends State<RecentBlogCarouselSection> {
+//CONTENT
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-        width: width,
+        width: widget.width,
         child: Stack(
           children: [
             _getBackImage(),
@@ -209,28 +214,26 @@ class RecentBlogCarouselSection extends StatelessWidget {
   }
 
 //IMAGE
-
   _getBackImage() {
     return ColorFiltered(
       colorFilter: ColorFilter.mode(
         Colors.black.withOpacity(0.5),
         BlendMode.srcATop,
       ),
-      child: Image.asset(
-        blogPost.imagePath,
-        height: height,
-        width: width,
+      child: Image.network(
+        widget.blogPost.imagePath,
+        height: widget.height,
+        width: widget.width,
         fit: BoxFit.cover,
       ),
     );
   }
 
 //TITLE
-
   _getTitle() {
     return SizedBox(
       child: Text(
-        blogPost.title,
+        widget.blogPost.title,
         style: const TextStyle(
             fontSize: 50, fontWeight: FontWeight.bold, color: Colors.white),
       ),
@@ -238,10 +241,9 @@ class RecentBlogCarouselSection extends StatelessWidget {
   }
 
 //DATE
-
   _getDate() {
     DateFormat dateFormat = DateFormat('dd/MM/yyyy');
-    String dateFormatted = dateFormat.format(blogPost.creationDate);
+    String dateFormatted = dateFormat.format(widget.blogPost.creationDate);
     return Text(
       dateFormatted,
       style: const TextStyle(
@@ -250,11 +252,10 @@ class RecentBlogCarouselSection extends StatelessWidget {
   }
 
 //DESCRIPTION
-
   _getDescription() {
     return SizedBox(
       child: Text(
-        blogPost.description,
+        widget.blogPost.description,
         maxLines: 3,
         overflow: TextOverflow.ellipsis,
         style: const TextStyle(
@@ -264,14 +265,14 @@ class RecentBlogCarouselSection extends StatelessWidget {
   }
 
 // VIEW MORE BUTTON
-
   _getButton(BuildContext context) {
     return TextButton(
       onPressed: () {
         //open one recent blog post
         context
             .read<SingleBlogPostBloc>()
-            .add(FetchSingleBlogPost(blogPost.id));
+            .add(FetchSingleBlogPost(widget.blogPost.id));
+        Navigator.of(context).pushNamed(singleBlog);
       },
       style: TextButton.styleFrom(
           foregroundColor: Colors.white, // Couleur du texte du bouton

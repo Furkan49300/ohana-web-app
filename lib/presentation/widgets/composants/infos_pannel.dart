@@ -1,7 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:ohana_webapp_flutter/presentation/constants/colors.dart';
 
 class InfosPannel extends StatelessWidget {
   const InfosPannel(
