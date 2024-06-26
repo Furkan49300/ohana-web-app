@@ -1,3 +1,5 @@
+import 'dart:js_interop';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
@@ -22,8 +24,9 @@ class SoftwareServicePage extends StatelessWidget {
   SoftwareServicePage({super.key});
 
   final Map<String, GlobalKey> keysMap = {
-    "Application_marketing": GlobalKey(),
-    "Application_E_commerce": GlobalKey(),
+    'Analyse_des_Besoins_et_Conception': GlobalKey(),
+    "Développement_et_Intégration_de_Logiciels": GlobalKey(),
+    'Gestion_de_Projets_Agile': GlobalKey(),
   };
 
   @override
@@ -68,7 +71,7 @@ class SoftwareServicePage extends StatelessWidget {
       children: [
         ..._getBanner(screenSizeWidth),
         const SizedBox(height: 50),
-        _getDevServicesList(),
+        _getSoftwareServicesList(),
         const SizedBox(height: 10),
         _getTextCustomCard(),
         const SizedBox(
@@ -122,28 +125,41 @@ class SoftwareServicePage extends StatelessWidget {
       children: [
         const SizedBox(height: 50),
 
-//Application Marketing
+//Analyse des Besoins et Conception
 
         CustomTextBlock(
-          key: keysMap["Application_marketing"],
+          key: keysMap["Analyse_des_Besoins_et_Conception"],
           image:
               'assets/services_images/dev_services/software_services/employees-working-together-side-view.jpg',
-          title: 'Application Marketing',
+          title: 'Analyse des Besoins et Conception',
           text:
-              "Nos applications de marketing direct permettent aux entreprises de communiquer directement avec leurs clients via des notifications push, des messages in-app et des campagnes promotionnelles ciblées. Cette approche personnalisée augmente l'engagement et les taux de conversion.",
+              "Nous commençons chaque projet par une analyse approfondie des besoins de nos clients. En collaborant étroitement avec vous, nous identifions vos exigences, vos défis et vos objectifs commerciaux. Cette étape cruciale nous permet de concevoir des solutions logicielles sur mesure qui répondent parfaitement à vos attentes. Nous fournissons des maquettes détaillées et des prototypes pour valider les concepts avant de passer au développement.",
         ),
         const SizedBox(height: 50),
 
-// Application E-Commerce
+// Développement et Intégration de Logiciels
 
         CustomTextBlock(
-          key: keysMap["Application_E_commerce"],
-          title: 'Application E-Commerce',
+          key: keysMap["Développement_et_Intégration_de_Logiciels"],
+          title: 'Développement et Intégration de Logiciels',
           image:
               'assets/services_images/dev_services/software_services/mobile_dev.jpg',
           textDirection: rtlDirection,
           text:
-              "nous transformons votre vision e-commerce en une application mobile exceptionnelle. Nos solutions offrent une expérience utilisateur intuitive avec un design attrayant, facilitant la navigation et les transactions. Nous intégrons des fonctionnalités clés comme la gestion des stocks en temps réel, des options de paiement sécurisées, et des solutions de livraison flexibles. Nos outils de marketing intégrés, tels que les notifications push et les programmes de fidélité, augmentent l'engagement des clients. De plus, nous fournissons des analyses détaillées pour optimiser vos stratégies de vente. Choisissez Ohana Entreprise pour une application e-commerce mobile sécurisée, performante et adaptée à vos besoins spécifiques. Contactez-nous dès aujourd'hui pour booster votre commerce en ligne",
+              "Nos développeurs sont experts dans une variété de langages et de frameworks, incluant Java, C#, Python, et .NET. Nous créons des logiciels robustes et évolutifs, intégrant des fonctionnalités complexes et des interfaces utilisateur intuitives. Nous assurons également une intégration transparente avec vos systèmes existants, garantissant une transition fluide et une fonctionnalité optimale.",
+        ),
+        const SizedBox(height: 50),
+
+// Développement et Intégration de Logiciels
+
+        CustomTextBlock(
+          key: keysMap["Gestion_de_Projets_Agile"],
+          title: 'Gestion de Projets Agile',
+          image:
+              'assets/services_images/dev_services/software_services/action-process-directions-performance-verification-icon.jpg',
+          textDirection: rtlDirection,
+          text:
+              "Nous adoptons la méthodologie Agile pour assurer une livraison rapide et efficace de nos projets logiciels. Cette approche flexible nous permet de nous adapter rapidement aux changements et d'itérer en fonction des retours d’expérience. Vous êtes impliqué à chaque étape du développement, garantissant que le produit final répond parfaitement à vos besoins.",
         ),
         const SizedBox(height: 50),
 
@@ -258,28 +274,33 @@ class SoftwareServicePage extends StatelessWidget {
     );
   }
 
-//CATALOG LIST
-  _getDevServicesList() {
-    List<Widget> devServices = [
-      _getCatalogItem(
-          title: 'Application Marketing',
+//_getSoftwareServicesList LIST
+  _getSoftwareServicesList() {
+    List<Widget> softwareServices = [
+      _getCarouselItem(
+          title: 'Analyse des Besoins et Conception',
           imagePath: 'employees-working-together-side-view.jpg',
-          globalKey: keysMap["Application_marketing"],
+          globalKey: keysMap["Analyse_des_Besoins_et_Conception"],
           duration: 2),
-      _getCatalogItem(
-          title: 'Application E-Commerce',
+      _getCarouselItem(
+          title: 'Développement et Intégration de Logiciels',
           imagePath: 'mobile_dev.jpg',
-          globalKey: keysMap['Application_E_commerce'],
+          globalKey: keysMap['Développement_et_Intégration_de_Logiciels'],
           duration: 1),
+      _getCarouselItem(
+          title: "Gestion de Projets Agile",
+          imagePath:
+              "action-process-directions-performance-verification-icon.jpg",
+          globalKey: keysMap['Gestion_de_Projets_Agile'])
     ];
 
     return CustomCarousel(
         carouselHeight: 312,
         title: 'Nos Services De Développement',
-        widgets: devServices);
+        widgets: softwareServices);
   }
 
-  _getCatalogItem(
+  _getCarouselItem(
       {required String title,
       required String imagePath,
       globalKey,

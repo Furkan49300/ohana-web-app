@@ -7,6 +7,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 import 'package:ohana_webapp_flutter/presentation/bloc/navbar_dropdown/dropdown_menu_bloc.dart';
 import 'package:ohana_webapp_flutter/presentation/bloc/navbar_dropdown/dropdown_menu_event.dart';
+import 'package:ohana_webapp_flutter/presentation/constants/colors.dart';
 import 'package:ohana_webapp_flutter/presentation/footer/footer_screen_fit.dart';
 import 'package:ohana_webapp_flutter/presentation/navbar/largescreen/megaDropdown/dropdown_menu_about_us.dart';
 import 'package:ohana_webapp_flutter/presentation/navbar/largescreen/megaDropdown/dropdown_menu_expertises.dart';
@@ -133,8 +134,7 @@ class WebServicePage extends StatelessWidget {
 
         CustomTextBlock(
           key: keysMap["Conception_et_UX/UI_Design"],
-          image:
-              'assets/services_images/dev_services/web/Tiny_graphic_designer_drawing_with_big_pen_on_computer screen.jpg',
+          image: 'assets/services_images/dev_services/web/design.jpg',
           title: 'Conception et UX/UI Design',
           text:
               "L'expérience utilisateur (UX) et l'interface utilisateur (UI) sont au cœur de nos processus de développement. Nous concevons des interfaces intuitives et visuellement attrayantes qui offrent une navigation fluide et améliorent l'engagement des utilisateurs. Nos designers travaillent en étroite collaboration avec vous pour comprendre votre vision et vos besoins, créant ainsi des maquettes et des prototypes interactifs avant de passer au développement.",
@@ -173,7 +173,8 @@ class WebServicePage extends StatelessWidget {
           title: 'E-commerce et Solutions de Paiement',
           text:
               "Nous développons des plateformes e-commerce sur mesure qui simplifient la gestion des produits, des commandes et des clients. En intégrant des solutions de paiement sécurisées, nous assurons une transaction fluide et sécurisée pour vos clients. Nos solutions incluent également des fonctionnalités de gestion des stocks, des analyses de ventes et des outils marketing pour maximiser vos ventes en ligne.",
-          image: 'assets/services_images/dev_services/web/customer.jpg',
+          image:
+              'assets/services_images/dev_services/web/young-man-using-discount-coupon-his-smartphone-some-online-shopping-laptop.jpg',
           boldList: const [''],
         ),
         const SizedBox(height: 50),
@@ -185,7 +186,8 @@ class WebServicePage extends StatelessWidget {
           title: 'SEO et Performance Web',
           text:
               "La visibilité et la performance de votre site web sont cruciales. C’est pourquoi nous intégrons les meilleures pratiques de SEO (Search Engine Optimization) dès le début du développement. Nous optimisons la vitesse de chargement des pages, la structure du site et le contenu pour améliorer le classement dans les moteurs de recherche, attirer plus de visiteurs et augmenter les conversions.",
-          image: 'assets/services_images/dev_services/web/seo.jpg',
+          image:
+              'assets/services_images/dev_services/web/homepage-concept-with-search-bar.jpg',
           boldList: const [''],
         ),
         const SizedBox(height: 50),
@@ -342,8 +344,7 @@ class WebServicePage extends StatelessWidget {
     List<Widget> devServices = [
       _getCarouselItems(
           title: 'Conception et UX/UI Design',
-          imagePath:
-              'Tiny_graphic_designer_drawing_with_big_pen_on_computer screen.jpg',
+          imagePath: 'design.jpg',
           globalKey: keysMap['Conception_et_UX/UI_Design'],
           duration: 1),
       _getCarouselItems(
@@ -358,12 +359,13 @@ class WebServicePage extends StatelessWidget {
           duration: 1),
       _getCarouselItems(
           title: 'E-commerce et Solutions de Paiement',
-          imagePath: 'customer.jpg',
+          imagePath:
+              'young-man-using-discount-coupon-his-smartphone-some-online-shopping-laptop.jpg',
           globalKey: keysMap["e_commerce"],
           duration: 1),
       _getCarouselItems(
           title: 'SEO et Performance Web',
-          imagePath: 'seo.jpg',
+          imagePath: 'homepage-concept-with-search-bar.jpg',
           globalKey: keysMap["SEO_et_Performance_Web"],
           duration: 2),
       _getCarouselItems(
@@ -387,7 +389,7 @@ class WebServicePage extends StatelessWidget {
   _getCarouselItems(
       {required String title,
       required String imagePath,
-      Color textColor = Colors.black,
+      Color textColor = purpleLight,
       globalKey,
       int duration = 0}) {
     double width = 700;

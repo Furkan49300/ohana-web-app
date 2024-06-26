@@ -3,7 +3,6 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import 'package:ohana_webapp_flutter/data/repositories/firebase/job_offer_firebase_repository.dart';
-import 'package:ohana_webapp_flutter/presentation/bloc/blog_post/blog_post_state.dart';
 import 'package:ohana_webapp_flutter/presentation/bloc/job_offer/blocs/paginated_job_offer_bloc.dart';
 import 'package:ohana_webapp_flutter/presentation/bloc/job_offer/job_offer_event.dart';
 import 'package:ohana_webapp_flutter/presentation/bloc/job_offer/job_offer_state.dart';
