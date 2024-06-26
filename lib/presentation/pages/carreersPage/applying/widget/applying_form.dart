@@ -6,6 +6,7 @@ import 'package:dotted_border/dotted_border.dart';
 import 'package:ohana_webapp_flutter/logic/entities/user.dart';
 import 'package:ohana_webapp_flutter/logic/entities/user_file.dart';
 import 'package:ohana_webapp_flutter/logic/usecases/user_action_usescases.dart';
+import 'package:ohana_webapp_flutter/presentation/constants/colors.dart';
 import 'package:ohana_webapp_flutter/presentation/constants/regex_controller.dart';
 import 'package:ohana_webapp_flutter/presentation/widgets/composants/button_format/button.dart';
 import 'package:ohana_webapp_flutter/presentation/widgets/composants/input_field/custom_input_field.dart';
@@ -108,19 +109,19 @@ class _ApplyingFormState extends State<ApplyingForm> {
         mainAxisSize: MainAxisSize.min,
         children: [
           SizedBox(height: spaceBetween),
-          ..._getInputTextFIeld(
+          ..._buildInputTextFIeld(
               title: 'Nom',
               placeholder: '',
               textEditingController: lastNameFieldController,
               inputErrorMessage: lastNameErrorMessage),
           SizedBox(height: spaceBetween),
-          ..._getInputTextFIeld(
+          ..._buildInputTextFIeld(
               title: 'Prénom',
               placeholder: '',
               textEditingController: firstNameFieldController,
               inputErrorMessage: firstNameErrorMessage),
           SizedBox(height: spaceBetween),
-          ..._getInputTextFIeld(
+          ..._buildInputTextFIeld(
               title: 'Email',
               placeholder: 'example@email.com',
               textEditingController: emailFieldController,
@@ -134,7 +135,7 @@ class _ApplyingFormState extends State<ApplyingForm> {
     ];
   }
 
-  List<Widget> _getInputTextFIeld(
+  List<Widget> _buildInputTextFIeld(
       {required String title,
       required String placeholder,
       required TextEditingController textEditingController,
@@ -183,7 +184,14 @@ class _ApplyingFormState extends State<ApplyingForm> {
     return [
       Container(
         width: 700,
-        color: Colors.white,
+        decoration: const BoxDecoration(
+          // color: Colors.white,
+          gradient: LinearGradient(
+              colors: [purpleLight, purpleNeutral],
+              begin: Alignment.topLeft,
+              end: Alignment.bottomRight,
+              stops: [0.2, 0.8]),
+        ),
         padding: const EdgeInsets.all(25),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
@@ -198,21 +206,58 @@ class _ApplyingFormState extends State<ApplyingForm> {
 
             const SizedBox(height: 30),
 
-            ..._getThirdStepTextCase(
+            ..._buildEditableField(
                 title: 'Nom',
                 value: lastName,
-                editState: _isEditActionOnLastName),
+                inputTextController: lastNameFieldController,
+                editState: _isEditActionOnLastName,
+                toggleEditState: () {
+                  setState(() {
+                    _isEditActionOnLastName = !_isEditActionOnLastName;
+                  });
+                },
+                updateValue: (newValue) {
+                  setState(() {
+                    lastName = newValue;
+                  });
+                }),
 
             //LAST NAME FIELD
 
-            ..._getThirdStepTextCase(
+            ..._buildEditableField(
                 title: 'Prénom',
                 value: firstName,
-                editState: _isEditActionOnFirstName),
+                inputTextController: firstNameFieldController,
+                editState: _isEditActionOnFirstName,
+                toggleEditState: () {
+                  setState(() {
+                    _isEditActionOnFirstName = !_isEditActionOnFirstName;
+                  });
+                },
+                updateValue: (newValue) {
+                  setState(() {
+                    firstName = newValue;
+                  });
+                }),
 
             //EMAIL FIELD
-            ..._getThirdStepTextCase(
-                title: 'Email', value: email, editState: _isEditActionOnEmail),
+
+            ..._buildEditableField(
+                title: 'Email',
+                value: email,
+                type: 'email',
+                inputTextController: emailFieldController,
+                editState: _isEditActionOnEmail,
+                toggleEditState: () {
+                  setState(() {
+                    _isEditActionOnEmail = !_isEditActionOnEmail;
+                  });
+                },
+                updateValue: (newValue) {
+                  setState(() {
+                    email = newValue;
+                  });
+                }),
 
             //FILE/DOC FIELD
 
@@ -253,39 +298,72 @@ class _ApplyingFormState extends State<ApplyingForm> {
     ];
   }
 
-  List<Widget> _getThirdStepTextCase({
+  List<Widget> _buildEditableField({
     required String title,
     required String value,
+    String? type,
     required bool editState,
+    required Function toggleEditState,
+    required Function updateValue,
+    required TextEditingController inputTextController,
   }) {
+    Color textColors = Colors.white;
     return [
-      _getTitle(title, color: Colors.black),
+      _getTitle(title, color: textColors),
       const SizedBox(height: 20),
       Container(
         padding: const EdgeInsets.only(bottom: 5),
-        decoration:
-            const BoxDecoration(border: Border(bottom: BorderSide(width: 2))),
+        decoration: BoxDecoration(
+            border: editState
+                ? const Border()
+                : Border(bottom: BorderSide(width: 2, color: textColors))),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: [
-            Expanded(
-              child: Text(
-                value,
-                style: const TextStyle(
-                  fontSize: 19,
-                  fontWeight: FontWeight.w300,
-                ),
-                softWrap: true,
-              ),
-            ),
+            editState
+                ? Expanded(
+                    child: CustomInputField(
+                      placeholder: value,
+                      textEditingController: inputTextController,
+                      fillColor: purpleNeutral,
+                      textColors: textColors,
+                    ),
+                  )
+                : Expanded(
+                    child: Text(
+                      value,
+                      style: TextStyle(
+                          fontSize: 19,
+                          fontWeight: FontWeight.w300,
+                          color: textColors),
+                      softWrap: true,
+                    ),
+                  ),
             IconButton(
               icon:
                   editState ? const Icon(Icons.close) : const Icon(Icons.edit),
               iconSize: 20,
+              color: textColors,
               onPressed: () {
-                setState(() {
-                  editState = !editState; // Toggle the state
-                });
+                String input = inputTextController.text.trim();
+                if (!editState) {
+                  toggleEditState();
+                } else {
+                  if (type == 'email') {
+                    emailRegex.hasMatch(input) && input.isNotEmpty
+                        ? updateValue(input)
+                        : ScaffoldMessenger.of(context).showSnackBar(
+                            const SnackBar(
+                                content: Text('Vérifier votre adrèsse')));
+                  } else {
+                    nameRegex.hasMatch(input) && input.isNotEmpty
+                        ? updateValue(input)
+                        : ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+                            content: Text(
+                                'Votre nom ou prénom ne respect pas un format valide')));
+                  }
+                  toggleEditState();
+                }
               },
             ),
           ],

@@ -36,7 +36,7 @@ class ExpertisesDrawerSection extends StatelessWidget {
           children: const [
             CustomListTile(title: "WEB", routeName: web),
             CustomListTile(title: "MOBILE"),
-            CustomListTile(title: "LOGICIELS"),
+            CustomListTile(title: "LOGICIELS", routeName: softwares),
             CustomListTile(title: "DESIGN"),
             CustomListTile(title: "REFERENCEMENT (SEO)"),
             CustomListTile(title: "IA GENERATIVE"),

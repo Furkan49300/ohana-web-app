@@ -22,15 +22,13 @@ class WebServicePage extends StatelessWidget {
   WebServicePage({super.key});
 
   final Map<String, GlobalKey> keysMap = {
-    "Conception_de_Sites_Web_Personnalisés": GlobalKey(),
-    "Développement_site_responsive": GlobalKey(),
-    "Maintenance_et_Support": GlobalKey(),
-    "landing_page": GlobalKey(),
-    'e_commerce': GlobalKey(),
-    'marketing_digital_pub': GlobalKey(),
-    'hub': GlobalKey(),
-    'showcase_site': GlobalKey(),
-    'ref': GlobalKey()
+    "Conception et UX/UI Design": GlobalKey(),
+    'front_end': GlobalKey(),
+    "developpement_Back-End": GlobalKey(),
+    "e_commerce": GlobalKey(),
+    'SEO_et_Performance_Web': GlobalKey(),
+    'Sécurité_et_Maintenance': GlobalKey(),
+    'Support_et_Formation': GlobalKey(),
   };
 
   @override
@@ -82,7 +80,9 @@ class WebServicePage extends StatelessWidget {
           height: 10,
         ),
         _getProcessShowcases(),
-        const SizedBox(height: 70),
+        const SizedBox(height: 10),
+        _getConcludingText(),
+        const SizedBox(height: 10),
         _getCustomImage(
             title: 'Nous restons à votre service',
             imagePath:
@@ -129,111 +129,90 @@ class WebServicePage extends StatelessWidget {
       children: [
         const SizedBox(height: 50),
 
-//CONCEPTION SITE SUR MESURE
+//Conception et UX/UI Design
 
         CustomTextBlock(
-          key: keysMap["Conception_de_Sites_Web_Personnalisés"],
+          key: keysMap["Conception_et_UX/UI_Design"],
           image:
-              'assets/services_images/dev_services/web/representations-ui-ux-ordinateur-portable_23-2150201871.jpg',
-          title: 'Conception de Sites Web Personnalisés',
+              'assets/services_images/dev_services/web/Tiny_graphic_designer_drawing_with_big_pen_on_computer screen.jpg',
+          title: 'Conception et UX/UI Design',
           text:
-              "Un site web sur mesure est construit spécifiquement pour répondre aux besoins uniques d'une entreprise ou d'une organisation. Contrairement aux plateformes CMS (Content Management System) comme WordPress, un site sur mesure est développé à partir de zéro en utilisant des technologies et des fonctionnalités spécifiques, offrant ainsi une flexibilité et une personnalisation maximales pour répondre aux exigences particulières du client.",
+              "L'expérience utilisateur (UX) et l'interface utilisateur (UI) sont au cœur de nos processus de développement. Nous concevons des interfaces intuitives et visuellement attrayantes qui offrent une navigation fluide et améliorent l'engagement des utilisateurs. Nos designers travaillent en étroite collaboration avec vous pour comprendre votre vision et vos besoins, créant ainsi des maquettes et des prototypes interactifs avant de passer au développement.",
         ),
         const SizedBox(height: 50),
 
-// E-COMMERCE SERVICE
+// Développement Front-End
+
+        CustomTextBlock(
+          key: keysMap["front_end"],
+          title: 'Développement Front-End',
+          image: 'assets/services_images/dev_services/web/front-end.jpg',
+          textDirection: rtlDirection,
+          text:
+              "Notre équipe de développeurs front-end est experte dans les technologies les plus récentes telles que HTML5, CSS3, JavaScript et frameworks modernes comme React, Angular et Vue.js. Nous nous assurons que chaque site web est optimisé pour les performances, compatible avec tous les navigateurs et entièrement responsive, garantissant une expérience utilisateur cohérente sur tous les appareils.",
+        ),
+        const SizedBox(height: 50),
+
+// Développement Back-End
+
+        CustomTextBlock(
+          key: keysMap["developpement_Back-End"],
+          title: 'Développement Back-End',
+          text:
+              "Pour des applications web robustes et évolutives, notre équipe back-end utilise des technologies de pointe comme Node.js, Django, Ruby on Rails, et PHP. Nous construisons des architectures solides qui assurent la fiabilité, la sécurité et la rapidité des sites web. Nos solutions back-end sont conçues pour gérer efficacement les bases de données, les serveurs et les API, permettant une intégration transparente avec d'autres systèmes et services.",
+          image: 'assets/services_images/dev_services/web/back-end.jpg',
+          boldList: const [''],
+        ),
+        const SizedBox(height: 50),
+
+//E-commerce et Solutions de Paiement
 
         CustomTextBlock(
           key: keysMap["e_commerce"],
-          title: 'Développement site E-commerce',
-          image:
-              'assets/services_images/dev_services/web/homepage-seen-computer-screen.jpg',
           textDirection: rtlDirection,
+          title: 'E-commerce et Solutions de Paiement',
           text:
-              "Le développement d'un site e-commerce implique la création d'une plateforme en ligne permettant aux entreprises de vendre leurs produits ou services directement aux consommateurs via Internet. Un site e-commerce doit inclure des fonctionnalités telles que la gestion de catalogues de produits, des paniers d'achat, des passerelles de paiement sécurisées, la gestion des commandes, etc.",
-          textBulletList: const [
-            'CMS (Systèmes de Gestion de Contenu): Nous mettons en place des CMS comme WordPress, Joomla ou Drupal pour vous permettre de gérer facilement votre contenu et de mettre à jour votre site sans connaissances techniques avancées.',
-            'Optimisation SEO: Nos sites sont conçus pour être facilement trouvés sur les moteurs de recherche grâce à des techniques avancées de référencement naturel (SEO).'
-          ],
-        ),
-        const SizedBox(height: 50),
-
-// MAINTENANCE
-
-        CustomTextBlock(
-          key: keysMap["Maintenance_et_Support"],
-          title: 'Maintenance et Support',
-          text:
-              'Nous offrons des services de maintenance continue pour garantir que votre site reste à jour, sécurisé et performant. Notre équipe de support est disponible pour répondre à toutes vos questions et besoins.',
-          image:
-              'assets/services_images/dev_services/web/miniature-workmen-repairing-laptop-keyboard.jpg',
+              "Nous développons des plateformes e-commerce sur mesure qui simplifient la gestion des produits, des commandes et des clients. En intégrant des solutions de paiement sécurisées, nous assurons une transaction fluide et sécurisée pour vos clients. Nos solutions incluent également des fonctionnalités de gestion des stocks, des analyses de ventes et des outils marketing pour maximiser vos ventes en ligne.",
+          image: 'assets/services_images/dev_services/web/customer.jpg',
           boldList: const [''],
         ),
         const SizedBox(height: 50),
 
-//LANDING PAGE
+//SEO et Performance Web
 
         CustomTextBlock(
-          key: keysMap["landing_page"],
+          key: keysMap["SEO_et_Performance_Web"],
+          title: 'SEO et Performance Web',
+          text:
+              "La visibilité et la performance de votre site web sont cruciales. C’est pourquoi nous intégrons les meilleures pratiques de SEO (Search Engine Optimization) dès le début du développement. Nous optimisons la vitesse de chargement des pages, la structure du site et le contenu pour améliorer le classement dans les moteurs de recherche, attirer plus de visiteurs et augmenter les conversions.",
+          image: 'assets/services_images/dev_services/web/seo.jpg',
+          boldList: const [''],
+        ),
+        const SizedBox(height: 50),
+
+//Sécurité et Maintenance
+
+        CustomTextBlock(
+          key: keysMap["Sécurité_et_Maintenance"],
           textDirection: rtlDirection,
-          title: 'Landing Page',
+          title: 'Sécurité et Maintenance',
           text:
-              "Une landing page (ou page d'atterrissage) est une page web conçue spécifiquement pour convertir les visiteurs en leads ou en clients potentiels. Elle est généralement utilisée dans le cadre de campagnes marketing ou publicitaires et se concentre sur un objectif spécifique, comme l'inscription à une newsletter, le téléchargement d'un ebook ou l'achat d'un produit.",
+              "Chez Ohana Entreprise, la sécurité de vos données est notre priorité. Nous appliquons des mesures de sécurité rigoureuses, incluant des audits réguliers, le cryptage des données et la protection contre les cybermenaces. De plus, nous offrons des services de maintenance continue pour assurer que votre site reste à jour, performant et sécurisé.",
           image:
-              'assets/services_images/dev_services/web/landing-page-exemple-1.png',
+              'assets/services_images/dev_services/web/Wavy_Bus-41_Single-09.jpg',
           boldList: const [''],
         ),
         const SizedBox(height: 50),
 
-//MARKETING/PUBLICITE DIGITAL
+//Support et Formation
 
         CustomTextBlock(
-          key: keysMap["marketing_digital_pub"],
-          title: 'Marketing et publicités digitales',
+          key: keysMap["Support_et_Formation"],
+          title: 'Support et Formation',
           text:
-              "Le marketing et la publicité digitale font référence aux stratégies et aux tactiques utilisées pour promouvoir un produit, un service ou une marque sur Internet. Cela peut inclure des campagnes de publicité payante sur les réseaux sociaux, les moteurs de recherche (comme Google Ads), le marketing par e-mail, le marketing de contenu, le SEO (optimisation pour les moteurs de recherche) et d'autres formes de marketing en ligne pour attirer et convertir les clients potentiels.",
+              "Notre engagement ne s’arrête pas à la mise en ligne de votre site. Nous fournissons un support technique constant et proposons des sessions de formation pour vous aider à gérer et à maintenir votre site web de manière autonome. Notre équipe est toujours disponible pour répondre à vos questions et vous assister dans l’utilisation de votre nouvelle solution web.",
           image:
-              'assets/services_images/dev_services/web/Qui-sont-principaux-acteurs-publicite-digitale--F.jpg',
-          boldList: const [''],
-        ),
-        const SizedBox(height: 50),
-
-//HEBERGEMENT
-
-        CustomTextBlock(
-          key: keysMap["hub"],
-          textDirection: rtlDirection,
-          title: 'Hébergement',
-          text:
-              "L'hébergement web est le service qui permet à un site web d'être accessible sur Internet. Cela implique de stocker les fichiers du site sur un serveur web, assurant ainsi que le site est disponible 24/7 pour les visiteurs. Les services d'hébergement peuvent varier en termes de performances, de sécurité, de support technique et de capacités spécifiques (comme le support pour des bases de données spécifiques ou des langages de programmation).",
-          image: 'assets/services_images/dev_services/web/hebergement-web.jpg',
-          boldList: const [''],
-        ),
-        const SizedBox(height: 50),
-
-//SITE VITRINE
-
-        CustomTextBlock(
-          key: keysMap["showcase_site"],
-          title: 'Site vitrine',
-          text:
-              "Un site vitrine est une plateforme web conçue principalement pour présenter une entreprise, ses produits, ses services et ses valeurs. Il sert souvent de première impression pour les visiteurs et vise à informer, attirer et convertir les visiteurs en clients potentiels. Généralement, un site vitrine est statique et ne comporte pas de fonctionnalités avancées de commerce en ligne.",
-          image:
-              'assets/services_images/dev_services/web/carte-visite-logo-site-vitrine-04-16-258.jpg',
-          boldList: const [''],
-        ),
-        const SizedBox(height: 50),
-
-//REFERENC...
-
-        CustomTextBlock(
-          key: keysMap["ref"],
-          textDirection: rtlDirection,
-          title: 'Référencement\n (SEO - Search Engine Optimization)',
-          text:
-              "Le référencement est l'ensemble des techniques et stratégies visant à améliorer la visibilité d'un site web dans les résultats des moteurs de recherche (comme Google, Bing, Yahoo, etc.). L'objectif principal du SEO est d'augmenter le trafic organique (non payant) vers un site web en favorisant son classement dans les résultats de recherche pour des mots-clés pertinents.",
-          image:
-              'assets/services_images/dev_services/web/referencement-web.jpg',
+              'assets/services_images/dev_services/web/employees_with_laptops.jpg',
           boldList: const [''],
         ),
         const SizedBox(height: 50),
@@ -349,48 +328,53 @@ class WebServicePage extends StatelessWidget {
     );
   }
 
-//CATALOG LIST
+//CONCLUDING TEXT
+  _getConcludingText() {
+    return const SizedBox(
+        width: 900,
+        child: Text(
+            "En choisissant Ohana Entreprise pour vos besoins en développement web, vous bénéficiez de l'expertise d'une équipe dédiée et passionnée, prête à transformer vos idées en réalité. Nous nous engageons à fournir des solutions web qui non seulement répondent à vos attentes mais qui surpassent les standards de l'industrie, garantissant ainsi la croissance et le succès de votre entreprise en ligne.",
+            textAlign: TextAlign.center,
+            style: TextStyle(fontSize: 19)));
+  }
+
   _getDevServicesList() {
     List<Widget> devServices = [
-      _getCatalogItem(
-          title: 'SITE VITRINE',
-          imagePath: 'webshowcases.jpg',
-          globalKey: keysMap['showcase_site'],
-          duration: 2),
-      _getCatalogItem(
-          title: 'SITE E-COMMERCE',
-          imagePath: 'e-commerce.jpg',
-          globalKey: keysMap['e_commerce'],
+      _getCarouselItems(
+          title: 'Conception et UX/UI Design',
+          imagePath:
+              'Tiny_graphic_designer_drawing_with_big_pen_on_computer screen.jpg',
+          globalKey: keysMap['Conception_et_UX/UI_Design'],
           duration: 1),
-      _getCatalogItem(
-          title: 'LANDING PAGE',
-          imagePath: 'landingPage.jpg',
-          globalKey: keysMap["landing_page"],
+      _getCarouselItems(
+          title: 'Front-End',
+          imagePath: 'front-end.jpg',
+          globalKey: keysMap['front_end'],
           duration: 1),
-      _getCatalogItem(
-          title: 'SITE SUR MESURE',
-          imagePath: 'measurement.jpg',
-          globalKey: keysMap["Conception_de_Sites_Web_Personnalisés"],
-          duration: 2),
-      _getCatalogItem(
-          title: 'HEBERGEMENT',
-          imagePath: 'accomodation.jpg',
-          globalKey: keysMap["hub"],
-          duration: 2),
-      _getCatalogItem(
-          title: 'MAINTENANCE',
-          imagePath: 'maintain.jpg',
-          globalKey: keysMap["Maintenance_et_Support"],
+      _getCarouselItems(
+          title: 'Développement Back-End',
+          imagePath: 'back-end.jpg',
+          globalKey: keysMap["developpement_Back-End"],
           duration: 1),
-      _getCatalogItem(
-          title: 'RÉFÉRENCEMENT',
-          imagePath: 'ref.jpg',
-          globalKey: keysMap['ref'],
+      _getCarouselItems(
+          title: 'E-commerce et Solutions de Paiement',
+          imagePath: 'customer.jpg',
+          globalKey: keysMap["e_commerce"],
+          duration: 1),
+      _getCarouselItems(
+          title: 'SEO et Performance Web',
+          imagePath: 'seo.jpg',
+          globalKey: keysMap["SEO_et_Performance_Web"],
           duration: 2),
-      _getCatalogItem(
-          title: 'MAKETING/PUBLICITES DIGITALES',
-          imagePath: 'webpub.jpg',
-          globalKey: keysMap["marketing_digital_pub"],
+      _getCarouselItems(
+          title: 'Sécurité et Maintenance',
+          imagePath: 'Wavy_Bus-41_Single-09.jpg',
+          globalKey: keysMap["Sécurité_et_Maintenance"],
+          duration: 2),
+      _getCarouselItems(
+          title: 'Support et Formation',
+          imagePath: 'employees_with_laptops.jpg',
+          globalKey: keysMap['Support_et_Formation'],
           duration: 2),
     ];
 
@@ -400,9 +384,10 @@ class WebServicePage extends StatelessWidget {
         widgets: devServices);
   }
 
-  _getCatalogItem(
+  _getCarouselItems(
       {required String title,
       required String imagePath,
+      Color textColor = Colors.black,
       globalKey,
       int duration = 0}) {
     double width = 700;
@@ -420,7 +405,7 @@ class WebServicePage extends StatelessWidget {
           alignment: Alignment.centerLeft,
           children: [
             Image.asset(
-              'assets/services_images/dev_services/catalog_images/$imagePath',
+              'assets/services_images/dev_services/web/$imagePath',
               fit: BoxFit.cover,
               width: width,
               height: height,
@@ -432,8 +417,8 @@ class WebServicePage extends StatelessWidget {
                   alignment: Alignment.centerLeft,
                   child: Text(
                     title,
-                    style: const TextStyle(
-                        color: Colors.white,
+                    style: TextStyle(
+                        color: textColor,
                         fontSize: 20,
                         fontWeight: FontWeight.bold),
                   ),

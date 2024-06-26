@@ -42,16 +42,19 @@ class JobOfferFirebaseRepository implements JobOffersRepository {
         .doc(firstDocumentId)
         .get();
 
-    // Step 2: Utiliser startAfter avec le document recuperé
+    // Step 2: Utiliser startBefore avec le document recuperé
     QuerySnapshot querySnapshot = await FirebaseFirestore.instance
         .collection('joboffers')
-        .orderBy('publish_date', descending: false)
+        .orderBy('publish_date', descending: true)
         .endBeforeDocument(firstDocSnapshot)
-        .limit(pageSize)
+        // .limit(pageSize)
         .get();
 
+    List<QueryDocumentSnapshot> querySnapshotreverse =
+        querySnapshot.docs.reversed.take(pageSize).toList();
+
     // Parcourt les documents dans la collection
-    return querySnapshot.docs.map(_jobOfferMapping).toList();
+    return querySnapshotreverse.map(_jobOfferMapping).toList();
   }
 
 //NEXT
@@ -67,7 +70,7 @@ class JobOfferFirebaseRepository implements JobOffersRepository {
     // Step 2: Utiliser startAfter avec le document recuperé
     QuerySnapshot querySnapshot = await FirebaseFirestore.instance
         .collection('joboffers')
-        .orderBy('publish_date', descending: false)
+        .orderBy('publish_date', descending: true)
         .startAfterDocument(lastDocSnapshot)
         .limit(pageSize)
         .get();
@@ -82,7 +85,7 @@ class JobOfferFirebaseRepository implements JobOffersRepository {
   Future<List<JobOffer>> getNthJobOffersPage(int nPage) async {
     Query query = FirebaseFirestore.instance
         .collection('joboffers')
-        .orderBy('publish_date', descending: false);
+        .orderBy('publish_date', descending: true);
     DocumentSnapshot lastDocument;
     for (int i = 1; i < nPage; i++) {
       QuerySnapshot querySnapshot = await query.limit(pageSize).get();
@@ -101,7 +104,9 @@ class JobOfferFirebaseRepository implements JobOffersRepository {
     QuerySnapshot querySnapshot =
         await FirebaseFirestore.instance.collection('joboffers').get();
     int numberOfUsers = querySnapshot.size;
-    return numberOfUsers;
+    double pagesNumberFraction = numberOfUsers / pageSize;
+    int jobOfferPageNumber = pagesNumberFraction.ceil();
+    return jobOfferPageNumber;
   }
 
 //MAPPER

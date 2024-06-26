@@ -44,7 +44,7 @@ flutter:
     - assets/services_icons/dev_services/
     - assets/services_images/dev_services/
     - assets/services_images/cyber_services/
-    - assets/services_images/dev_services/catalog_images/
+    - assets/services_images/dev_services/web/carousel_images/
     - assets/services_images/dev_services/web/
     - assets/about_us_image/
     - assets/logo_partners/
@@ -54,3 +54,5 @@ flutter:
     - assets/offers_svg/
     - assets/alert_images/
     - assets/values_icons/
+    - assets/services_images/dev_services/software_services/
+    - assets/services_images/dev_services/software_services/carousel_images/

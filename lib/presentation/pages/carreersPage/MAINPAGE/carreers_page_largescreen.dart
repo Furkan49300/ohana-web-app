@@ -217,7 +217,6 @@ class _CarreersPageLargeScreenState extends State<CarreersPageLargeScreen> {
 
 //NUMBER LIST
   _getListNumber() {
-    return const CustomJobOfferSmartPaginator(
-        startIndicator: 1, endIndicator: 4);
+    return CustomJobOfferSmartPaginator();
   }
 }

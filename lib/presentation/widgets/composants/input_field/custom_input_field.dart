@@ -6,10 +6,14 @@ class CustomInputField extends StatelessWidget {
       {super.key,
       required this.placeholder,
       this.widthBalance = 2 / 3,
-      required this.textEditingController});
+      required this.textEditingController,
+      this.fillColor = const Color(0xFFF0F2F2),
+      this.textColors = Colors.black});
 
   final String placeholder;
   final double widthBalance;
+  final Color fillColor;
+  final Color textColors;
   final TextEditingController textEditingController;
 
   @override
@@ -25,13 +29,11 @@ class CustomInputField extends StatelessWidget {
               hintStyle: const TextStyle(color: Colors.grey),
               border: InputBorder.none,
               filled: true,
-              fillColor: const Color(0xFFF0F2F2),
+              fillColor: fillColor,
               focusedBorder: const OutlineInputBorder(
                 borderSide: BorderSide(color: purpleNeutral),
               )),
-          style: const TextStyle(
-            color: Colors.black,
-          )),
+          style: TextStyle(color: textColors)),
     );
   }
 }

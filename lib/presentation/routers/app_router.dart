@@ -13,6 +13,7 @@ import "package:ohana_webapp_flutter/presentation/pages/blogPage/single_blogpost
 import "package:ohana_webapp_flutter/presentation/pages/carreersPage/MAINPAGE/carreers_page_largescreen.dart";
 import "package:ohana_webapp_flutter/presentation/pages/carreersPage/applying/applying_page.dart";
 import "package:ohana_webapp_flutter/presentation/pages/carreersPage/single_carreer_page_largescreen.dart";
+import "package:ohana_webapp_flutter/presentation/pages/developmentServicesPage/DEV/softwareDevelopmentPage/software_service_page.dart";
 import "package:ohana_webapp_flutter/presentation/pages/estimatePage/estimate_page.dart";
 import "package:ohana_webapp_flutter/presentation/pages/contactPage/contact_page.dart";
 import "package:ohana_webapp_flutter/presentation/pages/developmentServicesPage/dev_services_page.dart";
@@ -119,11 +120,6 @@ class AppRouter {
       case offers:
         return MaterialPageRoute(builder: (e) => const OffersPageLargeScreen());
 
-//DEV SERVICES
-
-      case devServices:
-        return MaterialPageRoute(builder: (e) => const DevelopmentServices());
-
 //QUOTE/ESTIMATE
 
       case estimate:
@@ -137,6 +133,16 @@ class AppRouter {
                   value: _blogPostGlobalManagerBloc,
                   child: const SearchPageLargeScreen(),
                 ));
+
+//DEV SERVICES
+
+      case devServices:
+        return MaterialPageRoute(builder: (e) => const DevelopmentServices());
+
+//SOFTWARE SERVICES
+
+      case softwares:
+        return MaterialPageRoute(builder: (e) => SoftwareServicePage());
 
 //NO EXISTING PAGE
 

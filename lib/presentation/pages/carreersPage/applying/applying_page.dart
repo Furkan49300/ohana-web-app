@@ -74,7 +74,7 @@ class _ApplyingPageState extends State<ApplyingPage> {
             BlendMode.srcATop,
           ),
           child: Image.asset(
-            "maxresdefault.jpg",
+            "apply-online-application-form-recruitment-concept.jpg",
             height: screenSize.height,
             width: screenSize.width,
             fit: BoxFit.cover,
