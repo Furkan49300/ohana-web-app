@@ -87,6 +87,7 @@ class AppRouter {
                 ));
 
 //POSTULATION
+
       case apply:
         return MaterialPageRoute(
             builder: (e) => BlocProvider.value(

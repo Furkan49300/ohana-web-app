@@ -27,4 +27,9 @@ class FetchNthJobOffersPage extends JobOfferEvent {
   FetchNthJobOffersPage({required this.numberPage});
 }
 
+class FetchSingleJobOfferType extends JobOfferEvent {
+  String jobOfferType;
+  FetchSingleJobOfferType(this.jobOfferType);
+}
+
 //-----------

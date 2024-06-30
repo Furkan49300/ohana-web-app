@@ -27,6 +27,11 @@ class SoftwareServicePage extends StatelessWidget {
     'Analyse_des_Besoins_et_Conception': GlobalKey(),
     "Développement_et_Intégration_de_Logiciels": GlobalKey(),
     'Gestion_de_Projets_Agile': GlobalKey(),
+    'Tests_et_Assurance_Qualite': GlobalKey(),
+    "Maintenance_et_Support": GlobalKey(),
+    "Solutions_Personnalisees": GlobalKey(),
+    'Sécurite_et_Conformite': GlobalKey(),
+    'Formation_et_Documentation': GlobalKey()
   };
 
   @override
@@ -78,7 +83,9 @@ class SoftwareServicePage extends StatelessWidget {
           height: 10,
         ),
         _getProcessShowcases(),
-        const SizedBox(height: 70),
+        const SizedBox(height: 10),
+        _getConcludingText(),
+        const SizedBox(height: 10),
         _getCustomImage(
             title: 'Nous restons à votre service',
             imagePath:
@@ -101,7 +108,7 @@ class SoftwareServicePage extends StatelessWidget {
       ),
       const SizedBox(height: 70),
       const Text(
-        '',
+        'Service Logiciel',
         style: TextStyle(fontSize: 35, fontWeight: FontWeight.bold),
       ),
       const SizedBox(height: 40),
@@ -157,9 +164,66 @@ class SoftwareServicePage extends StatelessWidget {
           title: 'Gestion de Projets Agile',
           image:
               'assets/services_images/dev_services/software_services/action-process-directions-performance-verification-icon.jpg',
-          textDirection: rtlDirection,
           text:
               "Nous adoptons la méthodologie Agile pour assurer une livraison rapide et efficace de nos projets logiciels. Cette approche flexible nous permet de nous adapter rapidement aux changements et d'itérer en fonction des retours d’expérience. Vous êtes impliqué à chaque étape du développement, garantissant que le produit final répond parfaitement à vos besoins.",
+        ),
+        const SizedBox(height: 50),
+
+// Tests et Assurance Qualité
+        CustomTextBlock(
+          key: keysMap["Tests_et_Assurance_Qualite"],
+          title: 'Tests et Assurance Qualité',
+          textDirection: rtlDirection,
+          image:
+              'assets/services_images/dev_services/software_services/test.jpg',
+          text:
+              "La qualité est au cœur de notre processus de développement. Nous effectuons des tests rigoureux à chaque étape pour identifier et corriger les bugs, assurant ainsi la stabilité et la fiabilité du logiciel. Nos tests incluent des tests unitaires, des tests d'intégration et des tests de performance, garantissant que le produit final est de la plus haute qualité.",
+        ),
+        const SizedBox(height: 50),
+
+// Maintenance et Support
+        CustomTextBlock(
+          key: keysMap["Maintenance_et_Support"],
+          title: 'Maintenance et Support',
+          image:
+              'assets/services_images/dev_services/software_services/maintenance.png',
+          text:
+              "Nos services ne s'arrêtent pas à la livraison du logiciel. Nous offrons une maintenance continue pour assurer que votre logiciel reste à jour avec les dernières technologies et fonctionne sans interruption. Notre équipe de support est toujours disponible pour résoudre les problèmes, répondre aux questions et fournir des mises à jour régulières.",
+        ),
+        const SizedBox(height: 50),
+
+// Solutions Personnalisées
+        CustomTextBlock(
+          key: keysMap["Solutions_Personnalisees"],
+          title: 'Solutions Personnalisées',
+          textDirection: rtlDirection,
+          image:
+              'assets/services_images/dev_services/software_services/0cce3725a511c5482aa36adf6e280e83.jpg',
+          text:
+              "Que vous ayez besoin d'un système de gestion d'entreprise, d'une application métier, ou d'un logiciel de gestion de la relation client (CRM), nous avons l'expertise pour développer des solutions personnalisées. Chaque logiciel que nous développons est conçu pour s'adapter parfaitement à vos processus métier, offrant ainsi une solution efficace et intuitive.",
+        ),
+        const SizedBox(height: 50),
+
+// Sécurité et Conformité
+        CustomTextBlock(
+          key: keysMap["Sécurite_et_Conformite"],
+          title: 'Sécurité et Conformité',
+          image:
+              'assets/services_images/dev_services/software_services/visuel-image-a-la-une-reglementations-securite-informatique-1024x683.jpg',
+          text:
+              "Que vous ayez besoin d'un système de gestion d'entreprise, d'une application métier, ou d'un logiciel de gestion de la relation client (CRM), nous avons l'expertise pour développer des solutions personnalisées. Chaque logiciel que nous développons est conçu pour s'adapter parfaitement à vos processus métier, offrant ainsi une solution efficace et intuitive.",
+        ),
+        const SizedBox(height: 50),
+
+// Formation et Documentation
+        CustomTextBlock(
+          key: keysMap["Formation_et_Documentation"],
+          title: 'Formation et Documentation',
+          textDirection: rtlDirection,
+          image:
+              'assets/services_images/dev_services/software_services/3784896.jpg',
+          text:
+              "Nous fournissons une documentation complète et des sessions de formation pour garantir une adoption rapide et efficace de votre nouveau logiciel. Notre objectif est de vous rendre autonome dans l'utilisation et la gestion de votre solution logicielle, tout en restant disponible pour toute assistance supplémentaire..",
         ),
         const SizedBox(height: 50),
 
@@ -255,6 +319,16 @@ class SoftwareServicePage extends StatelessWidget {
     );
   }
 
+//CONCLUDING TEXT
+  _getConcludingText() {
+    return const SizedBox(
+        width: 900,
+        child: Text(
+            "Chez Ohana Entreprise, nous nous engageons à développer des logiciels qui non seulement répondent à vos besoins, mais qui surpassent vos attentes en termes de performance, de sécurité et de facilité d'utilisation. Faites confiance à notre expertise pour transformer vos idées en solutions logicielles puissantes et innovantes, conçues pour propulser votre entreprise vers de nouveaux sommets.",
+            textAlign: TextAlign.center,
+            style: TextStyle(fontSize: 19)));
+  }
+
   _getCustomImage({required String imagePath, required String title}) {
     return Column(
       mainAxisSize: MainAxisSize.min,
@@ -275,13 +349,14 @@ class SoftwareServicePage extends StatelessWidget {
   }
 
 //_getSoftwareServicesList LIST
+
   _getSoftwareServicesList() {
     List<Widget> softwareServices = [
       _getCarouselItem(
           title: 'Analyse des Besoins et Conception',
           imagePath: 'employees-working-together-side-view.jpg',
           globalKey: keysMap["Analyse_des_Besoins_et_Conception"],
-          duration: 2),
+          duration: 1),
       _getCarouselItem(
           title: 'Développement et Intégration de Logiciels',
           imagePath: 'mobile_dev.jpg',
@@ -291,7 +366,33 @@ class SoftwareServicePage extends StatelessWidget {
           title: "Gestion de Projets Agile",
           imagePath:
               "action-process-directions-performance-verification-icon.jpg",
-          globalKey: keysMap['Gestion_de_Projets_Agile'])
+          globalKey: keysMap['Gestion_de_Projets_Agile'],
+          duration: 1),
+      _getCarouselItem(
+          title: "Tests et Assurance Qualité",
+          imagePath: "test.jpg",
+          globalKey: keysMap['Tests_et_Assurance_Qualite']),
+      _getCarouselItem(
+          title: "Maintenance et Support",
+          imagePath: "maintenance.png",
+          globalKey: keysMap['Maintenance_et_Support'],
+          duration: 1),
+      _getCarouselItem(
+          title: "Solutions Personnalisées",
+          imagePath: "0cce3725a511c5482aa36adf6e280e83.jpg",
+          globalKey: keysMap['Solutions_Personnalisees'],
+          duration: 2),
+      _getCarouselItem(
+          title: "Sécurité et Conformité",
+          imagePath:
+              "visuel-image-a-la-une-reglementations-securite-informatique-1024x683.jpg",
+          globalKey: keysMap['Sécurite_et_Conformite'],
+          duration: 2),
+      _getCarouselItem(
+          title: 'Formation et Documentation',
+          imagePath: '3784896.jpg',
+          globalKey: keysMap["Formation_et_Documentation"],
+          duration: 2)
     ];
 
     return CustomCarousel(

@@ -4,7 +4,7 @@ import 'package:ohana_webapp_flutter/logic/entities/job_offer.dart';
 import 'package:ohana_webapp_flutter/logic/repositories/job_offer_repository.dart';
 
 class JobOfferFirebaseRepository implements JobOffersRepository {
-  final pageSize = 6;
+  final pageSize = 5;
   @override
   Future<List<JobOffer>> getAllJobOffers() {
     // TODO: implement getAllJobOffers

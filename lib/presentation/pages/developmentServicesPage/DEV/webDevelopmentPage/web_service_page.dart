@@ -23,7 +23,7 @@ class WebServicePage extends StatelessWidget {
   WebServicePage({super.key});
 
   final Map<String, GlobalKey> keysMap = {
-    "Conception et UX/UI Design": GlobalKey(),
+    "Conception_et_UX/UI_Design": GlobalKey(),
     'front_end': GlobalKey(),
     "developpement_Back-End": GlobalKey(),
     "e_commerce": GlobalKey(),
@@ -311,6 +311,16 @@ class WebServicePage extends StatelessWidget {
     );
   }
 
+//CONCLUDING TEXT
+  _getConcludingText() {
+    return const SizedBox(
+        width: 900,
+        child: Text(
+            "En choisissant Ohana Entreprise pour vos besoins en développement web, vous bénéficiez de l'expertise d'une équipe dédiée et passionnée, prête à transformer vos idées en réalité. Nous nous engageons à fournir des solutions web qui non seulement répondent à vos attentes mais qui surpassent les standards de l'industrie, garantissant ainsi la croissance et le succès de votre entreprise en ligne.",
+            textAlign: TextAlign.center,
+            style: TextStyle(fontSize: 19)));
+  }
+
   _getCustomImage({required String imagePath, required String title}) {
     return Column(
       mainAxisSize: MainAxisSize.min,
@@ -328,16 +338,6 @@ class WebServicePage extends StatelessWidget {
         ),
       ],
     );
-  }
-
-//CONCLUDING TEXT
-  _getConcludingText() {
-    return const SizedBox(
-        width: 900,
-        child: Text(
-            "En choisissant Ohana Entreprise pour vos besoins en développement web, vous bénéficiez de l'expertise d'une équipe dédiée et passionnée, prête à transformer vos idées en réalité. Nous nous engageons à fournir des solutions web qui non seulement répondent à vos attentes mais qui surpassent les standards de l'industrie, garantissant ainsi la croissance et le succès de votre entreprise en ligne.",
-            textAlign: TextAlign.center,
-            style: TextStyle(fontSize: 19)));
   }
 
   _getDevServicesList() {

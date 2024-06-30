@@ -15,6 +15,7 @@ class PaginatedJobOfferBloc extends Bloc<JobOfferEvent, JobOfferState> {
   }
 
   void _fetchFirstJobOffersPage(FetchFirstJobOfferPage event, emit) async {
+    emit(JobOfferInitialState()); // Affiche le CircularProgressIndicator
     try {
       // Récupérer les offres
       final List<JobOffer> allJobOffers = await JobOfferUsecase(
@@ -30,6 +31,7 @@ class PaginatedJobOfferBloc extends Bloc<JobOfferEvent, JobOfferState> {
   }
 
   void _fetchNextJobOffersPage(FetchNextJobOffersPage event, emit) async {
+    emit(JobOfferInitialState()); // Affiche le CircularProgressIndicator
     try {
       // Récupérer les offres
       final List<JobOffer> jobOffersList = await JobOfferUsecase(
@@ -46,6 +48,7 @@ class PaginatedJobOfferBloc extends Bloc<JobOfferEvent, JobOfferState> {
 
   void _fetchPreviousJobOffersPage(
       FetchPreviousJobOffersPage event, emit) async {
+    emit(JobOfferInitialState()); // Affiche le CircularProgressIndicator
     try {
       // Récupérer les offres
       final List<JobOffer> jobOffersList = await JobOfferUsecase(
@@ -61,6 +64,7 @@ class PaginatedJobOfferBloc extends Bloc<JobOfferEvent, JobOfferState> {
   }
 
   void _fetchNthJobOffersPage(FetchNthJobOffersPage event, emit) async {
+    emit(JobOfferInitialState()); // Affiche le CircularProgressIndicator
     try {
       // Récupérer les offres
       final List<JobOffer> jobOffersList = await JobOfferUsecase(

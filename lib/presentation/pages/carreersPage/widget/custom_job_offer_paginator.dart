@@ -1,6 +1,5 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 
 import 'package:ohana_webapp_flutter/data/repositories/firebase/job_offer_firebase_repository.dart';
 import 'package:ohana_webapp_flutter/presentation/bloc/job_offer/blocs/paginated_job_offer_bloc.dart';
@@ -24,7 +23,8 @@ class _CustomBlogPostSmartPaginatorState
   bool nextPageDisabled = false;
   int startIndicator = 1; // default value
   int endIndicator = 0; //default value
-  late int blogPostPaginatingNumber;
+  late int jobOfferaginatingNumber;
+  final wrong = '';
 
   @override
   void initState() {
@@ -33,12 +33,11 @@ class _CustomBlogPostSmartPaginatorState
   }
 
   void _getEndIndicator() async {
-    blogPostPaginatingNumber =
+    jobOfferaginatingNumber =
         await JobOfferFirebaseRepository().getNumberJobOffersPage();
     setState(() {
-      endIndicator =
-          blogPostPaginatingNumber < 4 ? blogPostPaginatingNumber : 4;
-      nextPageDisabled = blogPostPaginatingNumber <= 4;
+      endIndicator = jobOfferaginatingNumber < 4 ? jobOfferaginatingNumber : 4;
+      nextPageDisabled = jobOfferaginatingNumber <= 4;
     });
   }
 
@@ -51,6 +50,7 @@ class _CustomBlogPostSmartPaginatorState
         for (var i = startIndicator; i <= endIndicator; i++) _getNthPage(i),
         const SizedBox(width: 10),
         _nextPage(),
+        Text(wrong)
       ],
     );
   }
@@ -113,7 +113,7 @@ class _CustomBlogPostSmartPaginatorState
               previousPageDisabled =
                   currentPageIndex == 1; // Disable previous button
               nextPageDisabled = currentPageIndex ==
-                  blogPostPaginatingNumber; // Disable next button
+                  jobOfferaginatingNumber; // Disable next button
             });
           },
         ));
@@ -144,9 +144,9 @@ class _CustomBlogPostSmartPaginatorState
 
   _updateIndicatorOnNextPage() {
     if (currentPageIndex == endIndicator) {
-      if ((blogPostPaginatingNumber - currentPageIndex) < 4) {
+      if ((jobOfferaginatingNumber - currentPageIndex) < 4) {
         startIndicator = endIndicator;
-        endIndicator = blogPostPaginatingNumber;
+        endIndicator = jobOfferaginatingNumber;
       } else {
         startIndicator = endIndicator;
         endIndicator = endIndicator + 4;
