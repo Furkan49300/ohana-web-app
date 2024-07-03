@@ -5,13 +5,14 @@ import 'package:ohana_webapp_flutter/logic/repositories/blog_post_repository.dar
 
 class BlogPostFirebaseRepository implements BlogPostRepository {
   final int pageSize = 6;
+  final String blogCollection = 'article';
 
 //NUMBER OF BLOG POST PAGE
 
   @override
   Future<int> getBlogPostsPaginatingNumber() async {
     QuerySnapshot querySnapshot =
-        await FirebaseFirestore.instance.collection('blogposts').get();
+        await FirebaseFirestore.instance.collection(blogCollection).get();
     int numberOfUsers = querySnapshot.size;
     double pagesNumberFraction = numberOfUsers / pageSize;
     int blogPagesNumber = pagesNumberFraction.ceil();
@@ -23,7 +24,7 @@ class BlogPostFirebaseRepository implements BlogPostRepository {
   @override
   Future<List<BlogPost>> getAllBlogPosts() async {
     QuerySnapshot querySnapshot =
-        await FirebaseFirestore.instance.collection('blogposts').get();
+        await FirebaseFirestore.instance.collection(blogCollection).get();
     return querySnapshot.docs.map(_blogPostMapping).toList();
   }
 
@@ -31,9 +32,9 @@ class BlogPostFirebaseRepository implements BlogPostRepository {
 
   @override
   Future<List<BlogPost>> getMostRecentBlogPosts({required int number}) async {
-    // Récupère une référence à la collection 'blogposts'
+    // Récupère une référence à la collection blogCollection
     QuerySnapshot querySnapshot = await FirebaseFirestore.instance
-        .collection('blogposts')
+        .collection(blogCollection)
         .orderBy('publish_date', descending: true)
         .limit(number)
         .get();
@@ -47,10 +48,11 @@ class BlogPostFirebaseRepository implements BlogPostRepository {
   @override
   Future<BlogPost> getSingleBlogPost({required String id}) async {
     // Recuperer le dernier document via son Id
-    DocumentSnapshot querySnapshot =
-        await FirebaseFirestore.instance.collection('blogposts').doc(id).get();
+    DocumentSnapshot querySnapshot = await FirebaseFirestore.instance
+        .collection(blogCollection)
+        .doc(id)
+        .get();
 
-    // Parcourt les documents dans la collection
     return _blogPostMapping(querySnapshot);
   }
 
@@ -58,14 +60,8 @@ class BlogPostFirebaseRepository implements BlogPostRepository {
 
   @override
   Future<List<BlogPost>> getSearchBlogPost(String searchQuery) async {
-    // QuerySnapshot querySnapshot = await FirebaseFirestore.instance
-    //     .collection('blogposts')
-    //     .orderBy('title') // ensure that the field is ordered
-    //     .startAt([searchQuery]) //satrt at the precising string
-    //     .endAt([searchQuery + '\uf8ff']) // end at the string precising
-    //     .get();
     QuerySnapshot querySnapshot = await FirebaseFirestore.instance
-        .collection('blogposts')
+        .collection(blogCollection)
         .orderBy('title')
         .where('title', isEqualTo: searchQuery)
         .get();
@@ -82,9 +78,9 @@ class BlogPostFirebaseRepository implements BlogPostRepository {
 
   @override
   Future<List<BlogPost>> getFirstBlogPostsPage() async {
-    // Récupère une référence à la collection 'blogposts'
+    // Récupère une référence à la collection blogCollection
     QuerySnapshot querySnapshot = await FirebaseFirestore.instance
-        .collection('blogposts')
+        .collection(blogCollection)
         .orderBy('publish_date', descending: true)
         .limit(pageSize)
         .get();
@@ -99,13 +95,13 @@ class BlogPostFirebaseRepository implements BlogPostRepository {
   Future<List<BlogPost>> getNextBlogPostsPage(String lastDocumentId) async {
     // 1 - Recuperer le dernier document via son Id
     DocumentSnapshot lastDocSnapshot = await FirebaseFirestore.instance
-        .collection('blogposts')
+        .collection('')
         .doc(lastDocumentId)
         .get();
 
     // Step 2: Utiliser startAfter avec le document recuperé
     QuerySnapshot querySnapshot = await FirebaseFirestore.instance
-        .collection('blogposts')
+        .collection(blogCollection)
         .orderBy('publish_date', descending: true)
         .startAfterDocument(lastDocSnapshot)
         .limit(pageSize)
@@ -122,13 +118,13 @@ class BlogPostFirebaseRepository implements BlogPostRepository {
       String firstDocumentId) async {
     // 1 - Recuperer le dernier document via son Id
     DocumentSnapshot firstDocSnapshot = await FirebaseFirestore.instance
-        .collection('blogposts')
+        .collection(blogCollection)
         .doc(firstDocumentId)
         .get();
 
     // Step 2: Utiliser startBefore avec le document recuperé
     QuerySnapshot querySnapshot = await FirebaseFirestore.instance
-        .collection('blogposts')
+        .collection(blogCollection)
         .orderBy('publish_date', descending: true)
         .endBeforeDocument(firstDocSnapshot)
         // .limit(pageSize)
@@ -146,7 +142,7 @@ class BlogPostFirebaseRepository implements BlogPostRepository {
   @override
   Future<List<BlogPost>> getNthBlogPostsPage(nPage) async {
     Query query = FirebaseFirestore.instance
-        .collection('blogposts')
+        .collection(blogCollection)
         .orderBy('publish_date', descending: true);
     DocumentSnapshot lastDocument;
     for (int i = 1; i < nPage; i++) {
@@ -167,15 +163,18 @@ class BlogPostFirebaseRepository implements BlogPostRepository {
     Map<String, dynamic> data = doc.data()! as Map<String, dynamic>;
     List<BlogPostContent> content = [];
     for (Map paragraph in data['paragraphs']) {
-      content.add(BlogPostContent(textContent: paragraph["quill_content"]));
+      content.add(BlogPostContent(
+          textContent: paragraph["text"], imagePath: paragraph["url_image"]));
     }
     return BlogPost(
-        id: doc.id,
-        title: data["title"],
-        description: data["description"],
-        creationDate: data["publish_date"].toDate(),
-        content: content,
-        author: data["author"],
-        imagePath: data["image"]);
+      id: doc.id,
+      title: data["title"],
+      description: data["description"],
+      creationDate: data["publish_date"].toDate(),
+      content: content,
+      author: data["author"] ?? 'OHana Entreprise',
+      imagePath: data["image"],
+      updateDate: data["update_date"].toDate() ?? data["publish_date"].toDate(),
+    );
   }
 }

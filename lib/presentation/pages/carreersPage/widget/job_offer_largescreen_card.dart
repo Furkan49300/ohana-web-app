@@ -76,7 +76,7 @@ class JobOfferLargeScreenCard extends StatelessWidget {
                       padding: const EdgeInsets.only(top: 20, left: 0),
                       child: Wrap(spacing: 10, children: [
                         for (String item in keyWords)
-                          if (item != '' && item != null)
+                          if (item != '')
                             Button(
                               item,
                               type: ButtonType.gray,

@@ -90,7 +90,14 @@ class _SingleBlogPostPageState extends State<SingleBlogPostPage> {
                                 controller: quillController,
                                 enableInteractiveSelection: false),
                           ),
-                          // Image.asset(blogPostContent.imagePath),
+                          if (blogPostContent.imagePath != '' &&
+                              blogPostContent.imagePath != null)
+                            Image.network(
+                              blogPostContent.imagePath!,
+                              width: 800,
+                              height: 400,
+                              fit: BoxFit.cover,
+                            ),
                         ],
                       ),
                     );
@@ -138,10 +145,12 @@ class _SingleBlogPostPageState extends State<SingleBlogPostPage> {
     DateFormat dateFormat = DateFormat("dd/MM/yyyy");
     String creationDateFormatted =
         dateFormat.format(singleBlogPost.creationDate);
+
+    String updateDateFormatted = dateFormat.format(singleBlogPost.updateDate);
     return Stack(
       alignment: AlignmentDirectional.topCenter,
       children: [
-        Image.asset(
+        Image.network(
           singleBlogPost.imagePath,
           width: screenSize.width,
           height: 500,
@@ -164,7 +173,7 @@ class _SingleBlogPostPageState extends State<SingleBlogPostPage> {
                 ),
                 const SizedBox(height: 10),
                 Text(
-                  'Ecrit par ${singleBlogPost.author} le $creationDateFormatted, modifié le $creationDateFormatted ',
+                  'Ecrit par ${singleBlogPost.author} le $creationDateFormatted, modifié le $updateDateFormatted ',
                   style: const TextStyle(fontSize: 19),
                 ),
                 const SizedBox(

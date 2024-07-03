@@ -1,13 +1,51 @@
 {
   "project_info": {
-    "project_number": "315460266086",
-    "project_id": "ohanawebapp-4801a",
-    "storage_bucket": "ohanawebapp-4801a.appspot.com"
+    "project_number": "592154909664",
+    "project_id": "ohana-383fe",
+    "storage_bucket": "ohana-383fe.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:315460266086:android:b07b82156d6c5d3ddea5a7",
+        "mobilesdk_app_id": "1:592154909664:android:3529a0c921cd4b2e83a985",
+        "android_client_info": {
+          "package_name": "com.example.ohana_admin"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCXIVacpB6vEWgj7zBEDYrKrHjq8ufMpKU"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:592154909664:android:d6cd035f55b9f9d783a985",
+        "android_client_info": {
+          "package_name": "com.example.ohana_app"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCXIVacpB6vEWgj7zBEDYrKrHjq8ufMpKU"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:592154909664:android:467e9a29143a782f83a985",
         "android_client_info": {
           "package_name": "com.example.ohana_webapp_flutter"
         }
@@ -15,7 +53,7 @@
       "oauth_client": [],
       "api_key": [
         {
-          "current_key": "AIzaSyCcP1_7xzB6mkhk0jTnroaeENvC5iwq_BE"
+          "current_key": "AIzaSyCXIVacpB6vEWgj7zBEDYrKrHjq8ufMpKU"
         }
       ],
       "services": {

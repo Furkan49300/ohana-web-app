@@ -5,6 +5,7 @@ import 'package:ohana_webapp_flutter/logic/repositories/job_offer_repository.dar
 
 class JobOfferFirebaseRepository implements JobOffersRepository {
   final pageSize = 5;
+  final String jobOfferCollection = 'emploi';
   @override
   Future<List<JobOffer>> getAllJobOffers() {
     // TODO: implement getAllJobOffers
@@ -14,8 +15,10 @@ class JobOfferFirebaseRepository implements JobOffersRepository {
   @override
   Future<JobOffer> getSingleJobOffer(String id) async {
     // Recuperer le dernier document via son Id
-    DocumentSnapshot querySnapshot =
-        await FirebaseFirestore.instance.collection('joboffers').doc(id).get();
+    DocumentSnapshot querySnapshot = await FirebaseFirestore.instance
+        .collection(jobOfferCollection)
+        .doc(id)
+        .get();
     return _jobOfferMapping(querySnapshot);
   }
 
@@ -24,7 +27,7 @@ class JobOfferFirebaseRepository implements JobOffersRepository {
   @override
   Future<List<JobOffer>> getFirstJobOffersPage() async {
     QuerySnapshot query = await FirebaseFirestore.instance
-        .collection('joboffers')
+        .collection(jobOfferCollection)
         .orderBy('publish_date', descending: false)
         .limit(pageSize)
         .get();
@@ -38,13 +41,13 @@ class JobOfferFirebaseRepository implements JobOffersRepository {
       String firstDocumentId) async {
     // 1 - Recuperer le dernier document via son Id
     DocumentSnapshot firstDocSnapshot = await FirebaseFirestore.instance
-        .collection('joboffers')
+        .collection(jobOfferCollection)
         .doc(firstDocumentId)
         .get();
 
     // Step 2: Utiliser startBefore avec le document recuperé
     QuerySnapshot querySnapshot = await FirebaseFirestore.instance
-        .collection('joboffers')
+        .collection(jobOfferCollection)
         .orderBy('publish_date', descending: true)
         .endBeforeDocument(firstDocSnapshot)
         // .limit(pageSize)
@@ -63,13 +66,13 @@ class JobOfferFirebaseRepository implements JobOffersRepository {
   Future<List<JobOffer>> getNextJobOffersPage(String lastDocumentId) async {
     // 1 - Recuperer le dernier document via son Id
     DocumentSnapshot lastDocSnapshot = await FirebaseFirestore.instance
-        .collection('joboffers')
+        .collection(jobOfferCollection)
         .doc(lastDocumentId)
         .get();
 
     // Step 2: Utiliser startAfter avec le document recuperé
     QuerySnapshot querySnapshot = await FirebaseFirestore.instance
-        .collection('joboffers')
+        .collection(jobOfferCollection)
         .orderBy('publish_date', descending: true)
         .startAfterDocument(lastDocSnapshot)
         .limit(pageSize)
@@ -84,7 +87,7 @@ class JobOfferFirebaseRepository implements JobOffersRepository {
   @override
   Future<List<JobOffer>> getNthJobOffersPage(int nPage) async {
     Query query = FirebaseFirestore.instance
-        .collection('joboffers')
+        .collection(jobOfferCollection)
         .orderBy('publish_date', descending: true);
     DocumentSnapshot lastDocument;
     for (int i = 1; i < nPage; i++) {
@@ -102,7 +105,7 @@ class JobOfferFirebaseRepository implements JobOffersRepository {
   @override
   Future<int> getNumberJobOffersPage() async {
     QuerySnapshot querySnapshot =
-        await FirebaseFirestore.instance.collection('joboffers').get();
+        await FirebaseFirestore.instance.collection(jobOfferCollection).get();
     int numberOfUsers = querySnapshot.size;
     double pagesNumberFraction = numberOfUsers / pageSize;
     int jobOfferPageNumber = pagesNumberFraction.ceil();
@@ -116,9 +119,6 @@ class JobOfferFirebaseRepository implements JobOffersRepository {
     return JobOffer(
         id: doc.id,
         title: data['title'],
-        description: data['description'],
-        advantages: data['advantages'],
-        profil: data['profil'],
         imagePath: data['url_image'],
         place: data['place'],
         duration: data['duration'],

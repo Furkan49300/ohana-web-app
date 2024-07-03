@@ -6,15 +6,18 @@ class BlogPost {
   final String author;
   final String description;
   final DateTime creationDate;
+  final DateTime updateDate;
   final List<BlogPostContent> content;
   final String imagePath;
 
-  const BlogPost(
-      {required this.id,
-      required this.title,
-      required this.description,
-      required this.creationDate,
-      required this.content,
-      required this.author,
-      required this.imagePath});
+  const BlogPost({
+    required this.id,
+    required this.title,
+    required this.description,
+    required this.creationDate,
+    required this.content,
+    required this.author,
+    required this.imagePath,
+    required this.updateDate,
+  });
 }

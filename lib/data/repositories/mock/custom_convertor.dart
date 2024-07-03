@@ -16,13 +16,15 @@ BlogPost jsonToBlogPost(Map json) {
     ));
   }
   return BlogPost(
-      id: json['id'],
-      title: json['title'],
-      description: json['description'],
-      creationDate: dateFormat.parse(json["date"]),
-      content: content,
-      author: "Dali Ange Paterne",
-      imagePath: json['image']);
+    id: json['id'],
+    title: json['title'],
+    description: json['description'],
+    creationDate: dateFormat.parse(json["date"]),
+    content: content,
+    author: "Dali Ange Paterne",
+    imagePath: json['image'],
+    updateDate: json['updateDate'] ?? dateFormat.parse(json["date"]),
+  );
 }
 
 JobOffer jsonToJobOffer(Map json) {
@@ -30,9 +32,7 @@ JobOffer jsonToJobOffer(Map json) {
   return JobOffer(
       id: json['id'],
       title: json['title'],
-      description: json['description'],
       // advantages: "",
-      profil: json['profil'],
       imagePath: json['image'],
       place: json['place'],
       duration: json['duration'],

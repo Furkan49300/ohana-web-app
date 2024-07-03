@@ -159,7 +159,7 @@ class SingleCarreerPageLargeScreen extends StatelessWidget {
             ),
             const VerticalDivider(),
             Text(
-              jobOffer.salary ?? "",
+              jobOffer.salary != null ? jobOffer.salary.toString() : '',
               style: const TextStyle(fontSize: 19),
             ),
           ]),
@@ -171,75 +171,7 @@ class SingleCarreerPageLargeScreen extends StatelessWidget {
   _getBodyText(Size screenSize, JobOffer jobOffer) {
     return Column(
       // crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        //PART OF DESCRIPTION
-
-        const CustomUnderlineTitle(title: 'Description'),
-        const SizedBox(height: 40),
-        SizedBox(
-          width: screenSize.width * 0.55,
-          child: Text(
-            jobOffer.description,
-            style: const TextStyle(fontSize: 19),
-          ),
-        ),
-        const SizedBox(height: 50),
-
-        //PART OF MISSION
-
-        // const CustomUnderlineTitle(
-        //   title: 'Missions',
-        // ),
-        // const SizedBox(height: 40),
-        // SizedBox(
-        //     width: screenSize.width * 0.55,
-        //     child: const CustomListText(
-        //       fontSize: 19,
-        //       textList: [
-        //         "Développement Mobile : Concevoir et développer des applications mobiles de haute qualité pour les plateformes iOS et Android, en utilisant les meilleures pratiques de développement.",
-        //         "Cybersécurité : Implémenter des mesures de sécurité robustes pour protéger les données des utilisateurs et assurer la conformité avec les normes de sécurité.",
-        //         "Maintenance : Effectuer la maintenance et les mises à jour régulières des applications existantes pour améliorer la performance et la sécurité.",
-        //         "Collaboration : Travailler en étroite collaboration avec les équipes de développement, de conception et de sécurité pour assurer l'intégration transparente des fonctionnalités de sécurité.",
-        //         "Revues de Code : Participer aux revues de code pour identifier et corriger les vulnérabilités de sécurité potentielles."
-        //       ],
-        //     )),
-        // const SizedBox(height: 50),
-
-        //PART OF PROFIL
-
-        const CustomUnderlineTitle(
-          title: 'Profil recherché',
-        ),
-        const SizedBox(height: 40),
-        SizedBox(
-            width: screenSize.width * 0.55,
-            child: CustomListText(
-              fontSize: 19,
-              textList: jobOffer.profil.map((item) => item.toString()).toList(),
-            )),
-
-        //PART OF ADVANTAGES
-
-        const CustomUnderlineTitle(
-          title: 'Avantages',
-        ),
-        const SizedBox(height: 40),
-        SizedBox(
-            width: screenSize.width * 0.55,
-            child: CustomListText(
-              fontSize: 19,
-              textList:
-                  jobOffer.advantages.map((item) => item.toString()).toList(),
-            )),
-        const SizedBox(height: 30),
-        //Encouragement
-        SizedBox(
-          width: screenSize.width * 0.55,
-          child: const Text(
-              "Rejoignez-nous et contribuez à façonner l'avenir de la technologie mobile et de la cybersécurité. Postulez dès maintenant pour faire partie de notre équipe innovante !",
-              style: TextStyle(fontWeight: FontWeight.bold, fontSize: 19)),
-        )
-      ],
+      children: [],
     );
   }
 

@@ -17,7 +17,6 @@ import 'package:ohana_webapp_flutter/presentation/footer/footer_screen_fit.dart'
 import 'package:ohana_webapp_flutter/presentation/navbar/largescreen/megaDropdown/dropdown_menu_about_us.dart';
 import 'package:ohana_webapp_flutter/presentation/navbar/largescreen/megaDropdown/dropdown_menu_expertises.dart';
 import 'package:ohana_webapp_flutter/presentation/navbar/largescreen/megaDropdown/dropdown_menu_offers.dart';
-import 'package:ohana_webapp_flutter/presentation/navbar/largescreen/navigation_bar_contents_largescreen.dart';
 import 'package:ohana_webapp_flutter/presentation/navbar/navbar_responsiveness.dart';
 import 'package:ohana_webapp_flutter/presentation/navbar/search_bar.dart';
 import 'package:ohana_webapp_flutter/presentation/pages/carreersPage/widget/custom_job_offer_paginator.dart';
@@ -189,7 +188,7 @@ class _CarreersPageLargeScreenState extends State<CarreersPageLargeScreen> {
                     item.place,
                     item.contract,
                     item.duration,
-                    item.salary ?? ''
+                    item.salary != null ? item.salary.toString() : ''
                   ],
                   imagePath: item.imagePath,
                   date: item.pulishDate,
