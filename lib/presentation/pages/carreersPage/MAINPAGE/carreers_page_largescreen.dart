@@ -181,7 +181,7 @@ class _CarreersPageLargeScreenState extends State<CarreersPageLargeScreen> {
             children: [
               for (JobOffer item in state
                   .jobOffersList) //LIST_OF_OFFERS is inside widget_utils.dart doc
-                CustomJobOfferCard(
+                ResponsiveJobOfferCard(
                   id: '',
                   title: item.title,
                   keyWords: [

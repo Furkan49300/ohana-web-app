@@ -130,7 +130,8 @@ class SingleCarreerPageLargeScreen extends StatelessWidget {
                     paddingTopBottom: 5.0,
                     fontSizeVal: 24,
                     onTap: () {
-                      Navigator.of(context).pushNamed(apply);
+                      Navigator.of(context).pushNamed(apply,
+                          arguments: {'jobOfferTitle': jobOffer.title});
                     },
                   ),
                 )

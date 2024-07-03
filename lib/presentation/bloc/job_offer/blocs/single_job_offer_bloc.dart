@@ -26,18 +26,5 @@ class SingleJobOfferBloc extends Bloc<JobOfferEvent, JobOfferState> {
     }
   }
 
-  void _fetchSingleJobOfferType(FetchSingleJobOfferType event, emit) async {
-    try {
-      // Récupérer l' offre
-      final JobOffer jobOffers = await JobOfferUsecase(
-              jobOffersRepository: JobOfferFirebaseRepository())
-          .getSingleJobOffer('f');
-
-      // Retourner l'offre
-      emit(SingleJobOfferLoaded(jobOffers));
-    } catch (error) {
-      // Gérer les erreurs
-      emit(JobOfferError(error.toString())); // Affiche un message d'erreur
-    }
-  }
+  void _fetchSingleJobOfferType(FetchSingleJobOfferType event, emit) async {}
 }

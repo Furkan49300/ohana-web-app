@@ -1,7 +1,7 @@
+import "package:cloud_firestore/cloud_firestore.dart";
 import "package:flutter/material.dart";
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import "package:ohana_webapp_flutter/presentation/bloc/blog_post/blocs/blog_global_manager_bloc.dart";
 import "package:ohana_webapp_flutter/presentation/bloc/blog_post/blocs/paginated_blog_posts_bloc.dart";
 import "package:ohana_webapp_flutter/presentation/bloc/blog_post/blocs/recent_blog_posts_bloc.dart";
 import "package:ohana_webapp_flutter/presentation/bloc/blog_post/blocs/single_blog_post_bloc.dart";
@@ -23,15 +23,14 @@ import "package:ohana_webapp_flutter/presentation/constants/router_constants.dar
 import "package:ohana_webapp_flutter/presentation/pages/expertisesPage/expertises_page.dart";
 import "package:ohana_webapp_flutter/presentation/pages/developmentServicesPage/DEV/webDevelopmentPage/web_service_page.dart";
 import "package:ohana_webapp_flutter/presentation/pages/offersPage/offers_page_largescreen.dart";
-import "package:ohana_webapp_flutter/presentation/pages/searchPage/search_page_largescreen.dart";
+import "package:ohana_webapp_flutter/presentation/pages/searchPage/search_page.dart";
 
 class AppRouter {
   final PaginatedBlogPostsBloc _paginatedBlogPostsBloc =
       PaginatedBlogPostsBloc();
   final RecentBlogPostsBloc _recentBlogPostsBloc = RecentBlogPostsBloc();
   final SingleBlogPostBloc _singleBlogPostsBloc = SingleBlogPostBloc();
-  final BlogPostGlobalManagerBloc _blogPostGlobalManagerBloc =
-      BlogPostGlobalManagerBloc();
+
   final PaginatedJobOfferBloc _jobOfferBloc = PaginatedJobOfferBloc();
   final SingleJobOfferBloc _singleJobOfferBloc = SingleJobOfferBloc();
 
@@ -44,7 +43,6 @@ class AppRouter {
                   providers: [
                     BlocProvider.value(value: _recentBlogPostsBloc),
                     BlocProvider.value(value: _singleBlogPostsBloc),
-                    BlocProvider.value(value: _blogPostGlobalManagerBloc),
                   ],
                   child: const HomePage(),
                 ));
@@ -89,11 +87,17 @@ class AppRouter {
 //POSTULATION
 
       case apply:
-        return MaterialPageRoute(
-            builder: (e) => BlocProvider.value(
-                  value: _singleJobOfferBloc,
-                  child: const ApplyingPage(),
-                ));
+        return MaterialPageRoute(builder: (e) {
+          final Map<String, dynamic>? arguments =
+              routeSettings.arguments as Map<String, dynamic>?;
+
+          // Extraire le titre de l'offre d'emploi des arguments
+          final String jobOfferTitle =
+              arguments != null ? arguments['jobOfferTitle'] : '';
+          return ApplyingPage(
+            jobOfferTitle: jobOfferTitle,
+          );
+        });
 
 //BLOG
 
@@ -130,10 +134,8 @@ class AppRouter {
 
       case search:
         return MaterialPageRoute(
-            builder: (e) => BlocProvider.value(
-                  value: _blogPostGlobalManagerBloc,
-                  child: const SearchPageLargeScreen(),
-                ));
+          builder: (e) => const SearchPageLargeScreen(),
+        );
 
 //DEV SERVICES
 

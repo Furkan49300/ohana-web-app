@@ -210,7 +210,7 @@ class _ContactFormState extends State<ContactForm> {
         email = htmlEscape.convert(email);
         subject = htmlEscape.convert(subject);
         message = htmlEscape.convert(message);
-        UserActionsUsescases().pushJsonDocumentToFirebase('contacts', {
+        UserActionsUsescases().pushJsonDocumentToFirebase('messagerie', {
           'lastName': lastName,
           'firstName': firstName,
           'email': email,

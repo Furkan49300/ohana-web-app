@@ -7,11 +7,13 @@ class JobOfferSmallScreenCard extends StatelessWidget {
       {super.key,
       required this.imagePath,
       required this.title,
-      required this.keywords});
+      required this.keywords,
+      required this.onTap});
 
   final String title;
   final String imagePath;
   final List<String> keywords;
+  final Function onTap;
 
   @override
   Widget build(BuildContext context) {
@@ -28,7 +30,7 @@ class JobOfferSmallScreenCard extends StatelessWidget {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Image.asset(
+            Image.network(
               imagePath != '' && imagePath != null
                   ? imagePath
                   : jobDefaultImage,
@@ -61,7 +63,9 @@ class JobOfferSmallScreenCard extends StatelessWidget {
                 child: Button(
                   'Voir Plus',
                   type: ButtonType.standard,
-                  onTap: () {},
+                  onTap: () {
+                    onTap();
+                  },
                   paddingLeftRight: 10,
                   paddingTopBottom: 10,
                 ))

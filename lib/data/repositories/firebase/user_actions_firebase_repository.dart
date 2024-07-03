@@ -30,6 +30,7 @@ class UserActionsFirebaseRepository implements UserActionsRepository {
         'lastName': user.lastName,
         'email': user.email,
         'cv': user.cv,
+        'job_offer': user.jobOffer ?? '',
         'cover_letter': user.coverLetterUrl ?? '',
         'date': FieldValue.serverTimestamp(),
       });

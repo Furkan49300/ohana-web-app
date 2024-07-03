@@ -2,6 +2,7 @@ class User {
   String firstName;
   String lastName;
   String email;
+  String? jobOffer;
   String? cv;
   String? coverLetterUrl;
   User(
@@ -9,5 +10,6 @@ class User {
       required this.lastName,
       required this.email,
       this.cv,
-      this.coverLetterUrl});
+      this.coverLetterUrl,
+      this.jobOffer});
 }

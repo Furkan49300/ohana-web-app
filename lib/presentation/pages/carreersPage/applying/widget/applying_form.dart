@@ -13,12 +13,13 @@ import 'package:ohana_webapp_flutter/presentation/widgets/composants/input_field
 import 'package:ohana_webapp_flutter/presentation/widgets/patterns/text_check_case.dart';
 
 class ApplyingForm extends StatefulWidget {
-  ApplyingForm({
-    super.key,
-    required this.step,
-    required this.changeCurrentStep,
-    this.checkBoxState,
-  });
+  ApplyingForm(
+      {super.key,
+      required this.step,
+      required this.changeCurrentStep,
+      this.checkBoxState,
+      required this.jobOfferTitle});
+  String jobOfferTitle;
 
 //CURRENT STEP/STATES
 
@@ -516,10 +517,10 @@ class _ApplyingFormState extends State<ApplyingForm> {
     TextCheckCaseState? checkBox = checkBoxGlobalKey.currentState;
     if (checkBox!.isChecked) {
       User user = User(
-        firstName: firstName,
-        lastName: lastName,
-        email: email,
-      );
+          firstName: firstName,
+          lastName: lastName,
+          email: email,
+          jobOffer: widget.jobOfferTitle);
       UserActionsUsescases().pushFilesToFirebase(
           user: user,
           files: [cvFile, coverLetterFile],

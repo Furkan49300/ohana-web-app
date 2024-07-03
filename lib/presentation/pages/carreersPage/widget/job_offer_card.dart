@@ -4,8 +4,8 @@ import 'package:flutter/widgets.dart';
 import 'package:ohana_webapp_flutter/presentation/pages/carreersPage/widget/job_offer_largescreen_card.dart';
 import 'package:ohana_webapp_flutter/presentation/pages/carreersPage/widget/job_offer_small_screen_card.dart';
 
-class CustomJobOfferCard extends StatelessWidget {
-  const CustomJobOfferCard({
+class ResponsiveJobOfferCard extends StatelessWidget {
+  const ResponsiveJobOfferCard({
     super.key,
     required this.id,
     required this.title,
@@ -40,7 +40,11 @@ class CustomJobOfferCard extends StatelessWidget {
             ));
       } else {
         return JobOfferSmallScreenCard(
-            imagePath: imagePath, title: title, keywords: keyWords);
+          imagePath: imagePath,
+          title: title,
+          keywords: keyWords,
+          onTap: onTap,
+        );
       }
     });
   }

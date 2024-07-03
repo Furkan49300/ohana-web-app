@@ -14,8 +14,8 @@ import 'package:ohana_webapp_flutter/presentation/pages/carreersPage/applying/wi
 // MAIN BODY
 
 class ApplyingPage extends StatefulWidget {
-  const ApplyingPage({super.key});
-
+  const ApplyingPage({super.key, required this.jobOfferTitle});
+  final String jobOfferTitle;
   @override
   State<ApplyingPage> createState() => _ApplyingPageState();
 }
@@ -86,18 +86,21 @@ class _ApplyingPageState extends State<ApplyingPage> {
             mainAxisAlignment: MainAxisAlignment.center,
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              const Text("Postuler !!",
-                  style: TextStyle(
-                      fontSize: 50,
-                      fontWeight: FontWeight.bold,
-                      color: Colors.white)),
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 30),
+                child: Text('Postuler à ${widget.jobOfferTitle}',
+                    style: const TextStyle(
+                        fontSize: 50,
+                        fontWeight: FontWeight.bold,
+                        color: Colors.white)),
+              ),
               const SizedBox(height: 30),
               _getProcessStep(step: currentStep),
               const SizedBox(height: 30),
               ApplyingForm(
-                step: currentStep,
-                changeCurrentStep: changeCurrentStepState,
-              ),
+                  step: currentStep,
+                  changeCurrentStep: changeCurrentStepState,
+                  jobOfferTitle: widget.jobOfferTitle),
               if (currentStep == 3) const SizedBox(height: 100)
             ],
           ),

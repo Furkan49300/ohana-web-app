@@ -60,12 +60,16 @@ class BlogPostFirebaseRepository implements BlogPostRepository {
 
   @override
   Future<List<BlogPost>> getSearchBlogPost(String searchQuery) async {
+    String endQuery =
+        '$searchQuery\uf8ff'; // \uf8ff est un caractère Unicode de fin de plage élevé
+
     QuerySnapshot querySnapshot = await FirebaseFirestore.instance
-        .collection(blogCollection)
-        .orderBy('title')
-        .where('title', isEqualTo: searchQuery)
+        .collection(
+            blogCollection) // Remplacez par le nom de votre collection Firestore
+        .where('title', isGreaterThanOrEqualTo: searchQuery)
+        .where('title', isLessThan: endQuery)
         .get();
-    if (querySnapshot.docs.isEmpty) {
+    if (querySnapshot.docs.isNotEmpty) {
       return querySnapshot.docs.map((doc) => _blogPostMapping(doc)).toList();
     } else {
       return [];

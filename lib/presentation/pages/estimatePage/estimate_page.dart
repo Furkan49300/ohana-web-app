@@ -220,7 +220,7 @@ class _DevisFormState extends State<DevisForm> {
           'lastName': lastName,
           'firstName': firstName,
           'email': email,
-          'service': serviceDropdownKey.currentState!._selectedValue
+          'offer': serviceDropdownKey.currentState!._selectedValue
         });
         _getSnackBar('Envoi Réussi');
       } else {

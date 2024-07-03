@@ -4,6 +4,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:firebase_core/firebase_core.dart';
 
 import 'package:ohana_webapp_flutter/data/repositories/firebase/firebase_options.dart';
+import 'package:ohana_webapp_flutter/presentation/bloc/blog_post/blocs/blog_global_manager_bloc.dart';
 import 'package:ohana_webapp_flutter/presentation/bloc/navbar_dropdown/dropdown_menu_bloc.dart';
 import 'package:ohana_webapp_flutter/presentation/routers/app_router.dart';
 
@@ -27,8 +28,11 @@ class _MainAppState extends State<MainApp> {
 
   @override
   Widget build(BuildContext context) {
-    return BlocProvider<DropdownMenuBloc>(
-      create: (context) => DropdownMenuBloc(),
+    return MultiBlocProvider(
+      providers: [
+        BlocProvider.value(value: DropdownMenuBloc()),
+        BlocProvider.value(value: BlogPostGlobalManagerBloc())
+      ],
       child: MaterialApp(
         title: "OHana Entreprise",
         debugShowCheckedModeBanner: false,
