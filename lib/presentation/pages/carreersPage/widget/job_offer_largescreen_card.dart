@@ -47,7 +47,7 @@ class JobOfferLargeScreenCard extends StatelessWidget {
             borderRadius: const BorderRadius.only(
                 topLeft: Radius.circular(partialCircularItem),
                 bottomLeft: Radius.circular(partialCircularItem)),
-            child: Image.asset(
+            child: Image.network(
               imagePath != '' && imagePath != null
                   ? imagePath
                   : jobDefaultImage,

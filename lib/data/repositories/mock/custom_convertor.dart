@@ -39,5 +39,6 @@ JobOffer jsonToJobOffer(Map json) {
       contract: json['contract'],
       salary: json['salary'],
       pulishDate: dateFormat.parse(json['publish_date']),
+      textContent: json['textContent'] ?? '',
       alert: json['alert']);
 }

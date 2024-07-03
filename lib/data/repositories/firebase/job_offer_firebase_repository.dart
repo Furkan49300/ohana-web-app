@@ -125,7 +125,8 @@ class JobOfferFirebaseRepository implements JobOffersRepository {
         contract: data['contract'],
         pulishDate: data['publish_date'].toDate(),
         salary: data['salary'],
-        alert: data['alert']);
+        alert: data['alert'],
+        textContent: data['offer_content']);
   }
   //-------
 }
