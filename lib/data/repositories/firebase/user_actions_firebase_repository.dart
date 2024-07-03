@@ -9,7 +9,8 @@ class UserActionsFirebaseRepository implements UserActionsRepository {
 
   //UPLOAD FILES
   @override
-  Future<void> pushFilesToFirebase(User user, List<UserFile?> files) async {
+  Future<void> pushFilesToFirebase(
+      User user, List<UserFile?> files, String collection) async {
     try {
       for (int i = 0; i < files.length; i++) {
         if (files[i] != null) {
@@ -24,7 +25,7 @@ class UserActionsFirebaseRepository implements UserActionsRepository {
           }
         }
       }
-      await FirebaseFirestore.instance.collection('candidates').add({
+      await FirebaseFirestore.instance.collection(collection).add({
         'firstName': user.firstName,
         'lastName': user.lastName,
         'email': user.email,

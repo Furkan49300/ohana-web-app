@@ -17,8 +17,9 @@ class UserActionsUsescases {
 
   Future<void> pushFilesToFirebase({
     required User user,
+    required String collection,
     required List<UserFile?> files,
   }) async {
-    return userActionsRepository.pushFilesToFirebase(user, files);
+    return userActionsRepository.pushFilesToFirebase(user, files, collection);
   }
 }

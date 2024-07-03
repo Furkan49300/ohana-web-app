@@ -98,7 +98,7 @@ class _ApplyingFormState extends State<ApplyingForm> {
     );
   }
 
-// WIDGET
+//---------------first Step
 
   List<Widget> _getFirstStepDataView() {
     double spaceBetween = 30;
@@ -154,6 +154,25 @@ class _ApplyingFormState extends State<ApplyingForm> {
     ];
   }
 
+  getFirstInit() {
+    firstName = firstNameFieldController.text.trim();
+    lastName = lastNameFieldController.text.trim();
+    email = emailFieldController.text.trim();
+
+    //control Data
+    bool validateField = textFieldValidate(
+        firstName: firstName, lastName: lastName, email: email);
+    if (validateField) {
+      HtmlEscape htmlEscape = const HtmlEscape();
+      lastName = htmlEscape.convert(lastName);
+      firstName = htmlEscape.convert(firstName);
+      email = htmlEscape.convert(email);
+      widget.changeCurrentStep(2);
+    }
+  }
+
+//-----Second step
+
   List<Widget> _getSecondStepDataView() {
     return [
       Row(
@@ -179,6 +198,83 @@ class _ApplyingFormState extends State<ApplyingForm> {
       }),
     ];
   }
+
+  SizedBox _getSingleDownloadBlock({
+    required String placeholder,
+    required String type,
+    double? height = 220,
+    double? width = 200,
+    double paddingAll = 30,
+    MainAxisAlignment mainAxisAlignement = MainAxisAlignment.center,
+    TextDirection textDirection = TextDirection.ltr,
+  }) {
+    return SizedBox(
+      child: GestureDetector(
+        onTap: () async {
+          try {
+            _downloadFilesFromLocalStorage(type);
+          } catch (error) {
+            print(error);
+            setState(() {
+              downloadMessageError = 'Erreur lors de la sélection du fichier';
+            });
+          }
+        },
+        child: MouseRegion(
+          cursor: SystemMouseCursors.click,
+          child: DottedBorder(
+            color: Colors.purple,
+            strokeWidth: 2,
+            dashPattern: const [6, 3],
+            borderType: BorderType.Rect,
+            radius: const Radius.circular(12),
+            child: Container(
+              padding: EdgeInsets.all(paddingAll),
+              width: width,
+              height: height,
+              alignment: Alignment.center,
+              color: const Color(0xFFF4F7F9),
+              child: Row(
+                textDirection: textDirection,
+                mainAxisAlignment: mainAxisAlignement,
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  Icon(
+                    type == 'cv'
+                        ? _cvDownloadIconFile
+                        : _coverLetterdownloadIconFile,
+                    size: 30,
+                  ),
+                  Expanded(
+                    child: Text(
+                      type == 'cv'
+                          ? _cvFileName ?? placeholder
+                          : _coverLetterFileName ?? placeholder,
+                      style: const TextStyle(fontSize: 19, color: Colors.black),
+                      softWrap: true,
+                      overflow: TextOverflow.ellipsis,
+                      maxLines: 3,
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+
+  getSecondInit() {
+    if (cvPushed) {
+      widget.changeCurrentStep(3);
+    } else {
+      ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(content: Text('Votre cv est obligatoire')));
+    }
+  }
+
+//----third step
 
   List<Widget> _getThirdStepDataView(screenWidth) {
     return [
@@ -373,102 +469,12 @@ class _ApplyingFormState extends State<ApplyingForm> {
     ];
   }
 
+//---tools----
+
   Text _getTitle(title, {Color color = Colors.white}) {
     return Text(title,
         style:
             TextStyle(fontSize: 15, fontWeight: FontWeight.bold, color: color));
-  }
-
-  getFirstInit() {
-    firstName = firstNameFieldController.text.trim();
-    lastName = lastNameFieldController.text.trim();
-    email = emailFieldController.text.trim();
-
-    //control Data
-    bool validateField = textFieldValidate(
-        firstName: firstName, lastName: lastName, email: email);
-    if (validateField) {
-      HtmlEscape htmlEscape = const HtmlEscape();
-      lastName = htmlEscape.convert(lastName);
-      firstName = htmlEscape.convert(firstName);
-      email = htmlEscape.convert(email);
-      widget.changeCurrentStep(2);
-    }
-  }
-
-  getSecondInit() {
-    if (cvPushed) {
-      widget.changeCurrentStep(3);
-    } else {
-      ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(content: Text('Votre cv est obligatoire')));
-    }
-  }
-
-  SizedBox _getSingleDownloadBlock({
-    required String placeholder,
-    required String type,
-    double? height = 220,
-    double? width = 200,
-    double paddingAll = 30,
-    MainAxisAlignment mainAxisAlignement = MainAxisAlignment.center,
-    TextDirection textDirection = TextDirection.ltr,
-  }) {
-    return SizedBox(
-      child: GestureDetector(
-        onTap: () async {
-          try {
-            _downloadFilesFromLocalStorage(type);
-          } catch (error) {
-            print(error);
-            setState(() {
-              downloadMessageError = 'Erreur lors de la sélection du fichier';
-            });
-          }
-        },
-        child: MouseRegion(
-          cursor: SystemMouseCursors.click,
-          child: DottedBorder(
-            color: Colors.purple,
-            strokeWidth: 2,
-            dashPattern: const [6, 3],
-            borderType: BorderType.Rect,
-            radius: const Radius.circular(12),
-            child: Container(
-              padding: EdgeInsets.all(paddingAll),
-              width: width,
-              height: height,
-              alignment: Alignment.center,
-              color: const Color(0xFFF4F7F9),
-              child: Row(
-                textDirection: textDirection,
-                mainAxisAlignment: mainAxisAlignement,
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  Icon(
-                    type == 'cv'
-                        ? _cvDownloadIconFile
-                        : _coverLetterdownloadIconFile,
-                    size: 30,
-                  ),
-                  Expanded(
-                    child: Text(
-                      type == 'cv'
-                          ? _cvFileName ?? placeholder
-                          : _coverLetterFileName ?? placeholder,
-                      style: const TextStyle(fontSize: 19, color: Colors.black),
-                      softWrap: true,
-                      overflow: TextOverflow.ellipsis,
-                      maxLines: 3,
-                    ),
-                  ),
-                ],
-              ),
-            ),
-          ),
-        ),
-      ),
-    );
   }
 
   Future<void> _downloadFilesFromLocalStorage(type) async {
@@ -478,7 +484,7 @@ class _ApplyingFormState extends State<ApplyingForm> {
       allowedExtensions: ['pdf'],
     );
     String filePath =
-        'candidates/user_${DateTime.now().millisecondsSinceEpoch}.pdf';
+        'candidature/user_${DateTime.now().millisecondsSinceEpoch}.pdf';
 
     if (result != null) {
       setState(() {
@@ -514,10 +520,13 @@ class _ApplyingFormState extends State<ApplyingForm> {
         lastName: lastName,
         email: email,
       );
-      UserActionsUsescases()
-          .pushFilesToFirebase(user: user, files: [cvFile, coverLetterFile]);
+      UserActionsUsescases().pushFilesToFirebase(
+          user: user,
+          files: [cvFile, coverLetterFile],
+          collection: 'candidature');
       ScaffoldMessenger.of(context)
           .showSnackBar(const SnackBar(content: Text('Envoi réussi')));
+      Navigator.pushNamed(context, '/carreers');
     } else {
       ScaffoldMessenger.of(context).showSnackBar(
           const SnackBar(content: Text('Cochez la  case de vailidation')));
