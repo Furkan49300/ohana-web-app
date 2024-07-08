@@ -134,7 +134,7 @@ class AppRouter {
 
       case search:
         return MaterialPageRoute(
-          builder: (e) => const SearchPageLargeScreen(),
+          builder: (e) => SearchPageLargeScreen(),
         );
 
 //DEV SERVICES

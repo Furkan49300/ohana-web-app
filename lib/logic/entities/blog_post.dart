@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:ohana_webapp_flutter/logic/entities/blog_post_content.dart';
 
 class BlogPost {
@@ -20,4 +21,6 @@ class BlogPost {
     required this.imagePath,
     required this.updateDate,
   });
+
+  static void fromDocumentSnapshot(DocumentSnapshot<Object?> doc) {}
 }

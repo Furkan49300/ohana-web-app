@@ -141,7 +141,10 @@ class FooterLargeScreen extends StatelessWidget {
                 SocialMediaButtons(),
                 FooterLink(text: "OHana Entreprise"),
                 FooterLink(text: "Blog"),
-                FooterLink(text: "Offres d'emploi"),
+                FooterLink(
+                  text: "Offres d'emploi",
+                  routeName: carreers,
+                ),
                 FooterLink(text: "Devis", routeName: estimate),
                 FooterLink(text: "Contactez-nous !"),
               ],

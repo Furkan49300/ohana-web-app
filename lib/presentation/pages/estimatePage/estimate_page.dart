@@ -91,28 +91,22 @@ class DevisForm extends StatefulWidget {
 class _DevisFormState extends State<DevisForm> {
   //TEXT CONTROLLER
   final TextEditingController lastNameFieldController = TextEditingController();
-
   final TextEditingController firstNameFieldController =
       TextEditingController();
-
   final TextEditingController emailFieldController = TextEditingController();
+  final TextEditingController contentFieldController = TextEditingController();
 
-//TEXT ERROR MESSAGE
-
+  //TEXT ERROR MESSAGE
   String serviceFieldText = '';
-
   String emailErrorMessage = '';
-
   String firstNameErrorMessage = '';
-
   String lastNameErrorMessage = '';
-
+  String contentErrorMessage = '';
   String selectedErrorMessage = '';
 
-//GLOBAL KEYS
+  //GLOBAL KEYS
   final GlobalKey<ServicesDropdownState> serviceDropdownKey =
       GlobalKey<ServicesDropdownState>();
-
   final GlobalKey<TextCheckCaseState> checkBoxKey =
       GlobalKey<TextCheckCaseState>();
 
@@ -141,6 +135,12 @@ class _DevisFormState extends State<DevisForm> {
             errorMessage: emailErrorMessage,
             textController: emailFieldController,
             placeholder: 'example@email.com'),
+        SizedBox(height: spaceBetween),
+        ..._getInputField(
+            title: 'Message',
+            errorMessage: contentErrorMessage,
+            textController: contentFieldController,
+            placeholder: 'Votre message...'),
         SizedBox(height: spaceBetween),
         ..._getSevicesDropdown(),
         SizedBox(height: spaceBetween),
@@ -203,12 +203,14 @@ class _DevisFormState extends State<DevisForm> {
     String firstNameText = firstNameFieldController.text.trim();
     String lastNameText = lastNameFieldController.text.trim();
     String emailText = emailFieldController.text.trim();
+    String contentText = contentFieldController.text.trim();
     String? seletedService = serviceDropdownKey.currentState!._selectedValue;
     bool isCheckedCase = checkBoxKey.currentState!.isChecked;
     bool validate = textFieldValidate(
         firstName: firstNameText,
         lastNameText: lastNameText,
         email: emailText,
+        content: contentText,
         selectedValue: seletedService);
     if (seletedService != null && validate) {
       if (isCheckedCase) {
@@ -216,11 +218,15 @@ class _DevisFormState extends State<DevisForm> {
         String lastName = htmlEscape.convert(lastNameText);
         String firstName = htmlEscape.convert(firstNameText);
         String email = htmlEscape.convert(emailText);
+        String content = htmlEscape.convert(contentText);
         UserActionsUsescases().pushJsonDocumentToFirebase('devis', {
-          'lastName': lastName,
-          'firstName': firstName,
+          'lastname': lastName,
+          'firstname': firstName,
           'email': email,
-          'offer': serviceDropdownKey.currentState!._selectedValue
+          'offer': serviceDropdownKey.currentState!._selectedValue,
+          'content': content,
+          'date_sent': DateTime.now(),
+          'repondu': false,
         });
         _getSnackBar('Envoi Réussi');
       } else {
@@ -235,12 +241,14 @@ class _DevisFormState extends State<DevisForm> {
       {required String firstName,
       required String lastNameText,
       required String email,
+      required String content,
       String? selectedValue}) {
     bool emailformatValidate = emailRegex.hasMatch(email) && email != '';
     bool firstNameformatValidate =
         nameRegex.hasMatch(firstName) && firstName != "";
     bool lastNameformatValidate =
         nameRegex.hasMatch(lastNameText) && lastNameText != "";
+    bool contentformatValidate = content.isNotEmpty;
 
     //first name validate test
     setState(() {
@@ -259,16 +267,21 @@ class _DevisFormState extends State<DevisForm> {
           ? ""
           : "Veuillez renseigner correctement ce champ";
 
+      // content validate notice
+      contentErrorMessage = contentformatValidate
+          ? ""
+          : "Veuillez renseigner correctement ce champ";
+
       // subject validate notice
       selectedErrorMessage =
           selectedValue != null ? "" : "Selectionnez une prestation!!";
     });
 
     //is validate ?
-
     return firstNameformatValidate &&
         lastNameformatValidate &&
-        emailformatValidate;
+        emailformatValidate &&
+        contentformatValidate;
   }
 
   _getSnackBar(String text) {
@@ -283,6 +296,7 @@ class _DevisFormState extends State<DevisForm> {
     firstNameFieldController.dispose();
     lastNameFieldController.dispose();
     emailFieldController.dispose();
+    contentFieldController.dispose();
   }
 }
 

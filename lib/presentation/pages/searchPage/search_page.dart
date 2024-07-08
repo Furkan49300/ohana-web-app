@@ -1,5 +1,7 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:intl/intl.dart';
 import 'package:ohana_webapp_flutter/presentation/bloc/blog_post/blocs/blog_global_manager_bloc.dart';
 import 'package:ohana_webapp_flutter/presentation/bloc/blog_post/blog_post_state.dart';
 
@@ -13,10 +15,18 @@ import 'package:ohana_webapp_flutter/presentation/navbar/largescreen/megaDropdow
 import 'package:ohana_webapp_flutter/presentation/navbar/navbar_responsiveness.dart';
 import 'package:ohana_webapp_flutter/presentation/navbar/search_bar.dart';
 import 'package:ohana_webapp_flutter/presentation/widgets/composants/blog_card.dart';
+import 'package:ohana_webapp_flutter/presentation/widgets/composants/button_format/button.dart';
 import 'package:ohana_webapp_flutter/presentation/widgets/composants/text_format/custom_underlined_title.dart';
 
 class SearchPageLargeScreen extends StatelessWidget {
-  const SearchPageLargeScreen({super.key});
+  final List<DocumentSnapshot> searchResults;
+  final String searchQuery;
+
+  const SearchPageLargeScreen({
+    super.key,
+    this.searchResults = const [],
+    this.searchQuery = '',
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -42,167 +52,194 @@ class SearchPageLargeScreen extends StatelessWidget {
           SearchNavBar(
             placeholder:
                 "Cherchez une page, un service, un article, une offre d'emploi...",
-          )
+          ),
         ],
       ),
     );
   }
 
-//CONTENT
+  // Determine document type by checking the presence of specific fields
+  String _getDocumentType(DocumentSnapshot doc) {
+    final data = doc.data() as Map<String, dynamic>?;
+    if (data != null) {
+      if (data.containsKey('image') && data.containsKey('description')) {
+        return 'article';
+      } else if (data.containsKey('offer_content') &&
+          data.containsKey('publish_date')) {
+        return 'emploi';
+      }
+    }
+    return 'unknown';
+  }
 
-  _content(Size screenSize, context) {
-    List blogListMap = [
-      {
-        'id': 1,
-        'title':
-            'Développez Votre Première Application Mobile en Flutter : Un Guide Pas à Pas',
-        'imagePath': 'assets/blog_images/flutterCover.webp',
-        'text':
-            "Ce tutoriel vous guidera à travers le processus de développement d'une application mobile de base avec Flutter, y compris la configuration de l'environnement, la création d'une interface utilisateur et le déploiement de l'application. ",
-        'boldTextList': [''],
-        'date': '05/06/2024'
-      },
-      {
-        'id': 2,
-        'title':
-            "Étude de Cas : Réussite de la Transformation Numérique de l'Entreprise ABC",
-        'imagePath': 'assets/blog_images/UnArticleABC-720x544.png',
-        'text':
-            "Découvrez comment nous avons aidé l'entreprise ABC à transformer son site web en une plateforme numérique moderne, en améliorant l'expérience utilisateur et en augmentant les conversions de 30%.",
-        'boldTextList': [''],
-        'date': '06/06/2024'
-      },
-      {
-        'id': 3,
-        'title':
-            "Optimisation SEO pour les Sites Web en 2024 : Ce Que Vous Devez Savoir",
-        'imagePath': 'assets/blog_images/homepage-concept-with-search-bar.jpg',
-        'text':
-            "Dans cet article, nous partageons les dernières techniques de SEO pour aider votre site web à se classer plus haut dans les résultats de recherche en 2024. De l'optimisation des mots-clés à l'amélioration de la vitesse de chargement, nous couvrons tout.",
-        'boldTextList': [''],
-        'date': '07/06/2024'
-      },
-      {
-        'id': 4,
-        'title':
-            "Interview avec Notre Expert en UX/UI : L'Importance d'une Bonne Expérience Utilisateur",
-        'imagePath':
-            'assets/blog_images/ui-ux-design-informations-actualites.jpg',
-        'text':
-            "Plongez dans l'importance de l'expérience utilisateur avec notre expert en UX/UI, qui partage ses idées sur les meilleures pratiques et les tendances à suivre pour créer des interfaces intuitives et engageantes",
-        'boldTextList': [''],
-        'date': '08/06/2024'
-      },
-    ];
+  //CONTENT
 
-    return Expanded(
-      child: SingleChildScrollView(
-        child: Container(
-            color: Colors.white,
-            child: Column(
-              children: [
-                const CustomUnderlineTitle(
-                  title: 'Résultat pour ...',
-                  textWidth: 300,
-                ),
-                const SizedBox(height: 80),
-                const Text(
-                  'Pages Correspondantes', // section for offers, services, ...
-                  style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
-                ),
-                const SizedBox(height: 50),
-                //MATCHING PAGES
-                Center(
-                  child: Wrap(
-                    spacing: 30,
-                    children: [
-                      _getMatchingPage(
-                          text: "Page <<Services de développement>>"),
-                      _getMatchingPage(
-                          text: "Page <<Services de développement>>"),
-                      _getMatchingPage(
-                          text: "Page <<Services de développement>>"),
-                      _getMatchingPage(
-                          text: "Page <<Services de développement>>"),
-                      _getMatchingPage(
-                          text: "Page <<Services de développement>>"),
-                    ],
-                  ),
-                ),
+  Widget _content(Size screenSize, BuildContext context) {
+    // Filter results based on type
+    final articleResults = searchResults
+        .where((doc) => _getDocumentType(doc) == 'article')
+        .toList();
+    final emploiResults = searchResults
+        .where((doc) => _getDocumentType(doc) == 'emploi')
+        .toList();
 
-                //MATCHING BLOG
-                const SizedBox(height: 50),
-                const Text(
-                  'Articles Correspondants',
-                  style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
+    return SingleChildScrollView(
+      child: Container(
+        color: Colors.white,
+        child: Column(
+          children: [
+            CustomUnderlineTitle(
+              title: 'Résultat pour "$searchQuery"',
+              textWidth: 300,
+            ),
+            const SizedBox(height: 80),
+            const Text(
+              'Pages Correspondantes',
+              style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
+            ),
+            const SizedBox(height: 50),
+            Center(
+              child: Wrap(
+                spacing: 30,
+                children: articleResults
+                    .map<Widget>((doc) =>
+                        _getMatchingPage(text: "Page <<${doc['title']}>>"))
+                    .toList(),
+              ),
+            ),
+            if (articleResults.isNotEmpty) ...[
+              const SizedBox(height: 50),
+              const Text(
+                'Articles Correspondants',
+                style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
+              ),
+              const SizedBox(height: 50),
+              Center(
+                child: Wrap(
+                  spacing: 40,
+                  children: articleResults
+                      .map<Widget>((doc) => Column(
+                            children: [
+                              Padding(
+                                padding: const EdgeInsets.only(bottom: 20),
+                                child: BlogCard(
+                                  width: 600,
+                                  pathOfTopImage: doc['image'],
+                                  title: doc['title'],
+                                  date: doc['publish_date'].toString(),
+                                  textAndBoldListMap: {
+                                    "text": doc['description']
+                                  },
+                                ),
+                              ),
+                            ],
+                          ))
+                      .toList(),
                 ),
-                const SizedBox(height: 50),
-                Center(
-                  child: BlocBuilder<BlogPostGlobalManagerBloc, BlogPostState>(
-                    builder: (context, state) {
-                      try {
-                        if (state is BlogPostLoaded) {
-                          if (state.blogPosts != []) {
-                            return Wrap(
-                              spacing: 40,
-                              children: state.blogPosts
-                                  .map((item) => Column(
-                                        children: [
-                                          Container(
-                                            height: 30,
-                                            width: 30,
-                                            color: Colors.red,
-                                          ),
-                                          Padding(
-                                            padding: const EdgeInsets.only(
-                                                bottom: 20),
-                                            child: BlogCard(
-                                              width: 600,
-                                              pathOfTopImage: item.imagePath,
-                                              title: item.title,
-                                              date:
-                                                  item.creationDate.toString(),
-                                              textAndBoldListMap: {
-                                                "text": item.description
-                                              },
+              ),
+            ],
+            if (emploiResults.isNotEmpty) ...[
+              const SizedBox(height: 50),
+              const Text(
+                'Emplois Correspondants',
+                style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
+              ),
+              const SizedBox(height: 50),
+              Center(
+                child: Wrap(
+                  spacing: 40,
+                  children: emploiResults
+                      .map<Widget>((doc) => Column(
+                            children: [
+                              Padding(
+                                padding: const EdgeInsets.only(bottom: 20),
+                                child: Card(
+                                  child: Column(
+                                    children: [
+                                      Text(
+                                        doc['title'],
+                                        style: TextStyle(
+                                            fontSize: 20,
+                                            fontWeight: FontWeight.bold),
+                                      ),
+                                      Container(
+                                          width: 400,
+                                          margin: EdgeInsets.only(
+                                              top: 10, bottom: 10),
+                                          child: Image(
+                                              image: AssetImage(
+                                                  doc['url_image']))),
+                                      SizedBox(
+                                        width: 400,
+                                        child: Row(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.spaceEvenly,
+                                          children: [
+                                            Container(
+                                              decoration: BoxDecoration(
+                                                color: Colors.white,
+                                                border: Border.all(
+                                                    color: Colors.black),
+                                                borderRadius:
+                                                    BorderRadius.circular(4),
+                                              ),
+                                              padding: EdgeInsets.all(8),
+                                              child: Text(doc['contract']),
                                             ),
-                                          ),
-                                        ],
-                                      ))
-                                  .toList(),
-                            );
-                          } else {
-                            return SizedBox(
-                              height: screenSize.height * 0.7,
-                              child: const Text('Aucun Résultat Trouvé',
-                                  style: TextStyle(
-                                      fontSize: 24,
-                                      fontWeight: FontWeight.bold)),
-                            );
-                          }
-                        } else if (state is BlogPostInitial) {
-                          return const Text('..is Loading',
-                              style: TextStyle(
-                                  fontSize: 24, fontWeight: FontWeight.bold));
-                        } else if (state is BlogPostError) {
-                          throw 'Une erreur est survénu dans la récuperation des blogs : ${state.errorMessage}';
-                        } else {
-                          return throw 'Problème d\'etat';
-                        }
-                      } catch (error) {
-                        return throw 'Problème ${error.toString()}';
-                      }
-                    },
-                  ),
+                                            Container(
+                                              decoration: BoxDecoration(
+                                                color: Colors.white,
+                                                border: Border.all(
+                                                    color: Colors.black),
+                                                borderRadius:
+                                                    BorderRadius.circular(4),
+                                              ),
+                                              padding: EdgeInsets.all(8),
+                                              child: Text(doc['duration']),
+                                            ),
+                                            Container(
+                                              decoration: BoxDecoration(
+                                                color: Colors.white,
+                                                border: Border.all(
+                                                    color: Colors.black),
+                                                borderRadius:
+                                                    BorderRadius.circular(4),
+                                              ),
+                                              padding: EdgeInsets.all(8),
+                                              child: Text(doc['place']),
+                                            ),
+                                          ],
+                                        ),
+                                      ),
+                                      Padding(
+                                        padding: const EdgeInsets.all(20.0),
+                                        child: Button("Voir plus",
+                                            type: ButtonType.standard,
+                                            onTap: () {
+                                          Navigator.of(context).pushNamed(
+                                            '/carreer',
+                                            arguments: doc,
+                                          );
+                                        }),
+                                      )
+                                    ],
+                                  ),
+                                ),
+                              ),
+                            ],
+                          ))
+                      .toList(),
                 ),
-                const Footer(),
-              ],
-            )),
+              ),
+            ],
+            const Footer(),
+          ],
+        ),
       ),
     );
   }
 
-  _getMatchingPage({required String text}) {
+  Widget _getMatchingPage({required String text}) {
     return Container(
       color: purpleNeutral,
       padding: const EdgeInsets.all(15),
@@ -220,9 +257,7 @@ class SearchPageLargeScreen extends StatelessWidget {
                   color: Colors.white),
             ),
           ),
-          const SizedBox(
-            width: 0,
-          ),
+          const SizedBox(width: 0),
           Container(
             padding: const EdgeInsets.all(5),
             decoration: BoxDecoration(

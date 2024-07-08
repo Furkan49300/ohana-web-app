@@ -211,11 +211,13 @@ class _ContactFormState extends State<ContactForm> {
         subject = htmlEscape.convert(subject);
         message = htmlEscape.convert(message);
         UserActionsUsescases().pushJsonDocumentToFirebase('messagerie', {
-          'lastName': lastName,
-          'firstName': firstName,
+          'lastname': lastName,
+          'firstname': firstName,
           'email': email,
           'subject': subject,
           'content': message,
+          'date_sent': DateTime.now(),
+          'repondu': false // Add this line
         });
         ScaffoldMessenger.of(context)
             .showSnackBar(const SnackBar(content: Text('Envoi réussi')));
