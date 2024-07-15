@@ -5,6 +5,7 @@ import 'package:flutter_quill/flutter_quill.dart' as quill;
 import 'package:intl/intl.dart';
 
 import 'package:ohana_webapp_flutter/logic/entities/job_offer.dart';
+import 'package:ohana_webapp_flutter/presentation/bloc/job_offer/job_offer_event.dart';
 import 'package:ohana_webapp_flutter/presentation/bloc/job_offer/job_offer_state.dart';
 import 'package:ohana_webapp_flutter/presentation/bloc/job_offer/blocs/single_job_offer_bloc.dart';
 import 'package:ohana_webapp_flutter/presentation/bloc/navbar_dropdown/dropdown_menu_bloc.dart';
@@ -21,62 +22,92 @@ import 'package:ohana_webapp_flutter/presentation/navbar/search_bar.dart';
 import 'package:ohana_webapp_flutter/presentation/widgets/composants/button_format/button.dart';
 import 'package:ohana_webapp_flutter/presentation/widgets/composants/text_format/custom_underlined_title.dart';
 
-class SingleCarreerPageLargeScreen extends StatelessWidget {
+class SingleCarreerPageLargeScreen extends StatefulWidget {
   const SingleCarreerPageLargeScreen({super.key});
+
+  @override
+  _SingleCarreerPageLargeScreenState createState() =>
+      _SingleCarreerPageLargeScreenState();
+}
+
+class _SingleCarreerPageLargeScreenState
+    extends State<SingleCarreerPageLargeScreen> {
+  String? currentJobId;
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    final jobId = ModalRoute.of(context)?.settings.arguments as String?;
+    if (jobId != null && jobId != currentJobId) {
+      currentJobId = jobId;
+      context.read<SingleJobOfferBloc>().add(ResetJobOffer());
+      context.read<SingleJobOfferBloc>().add(FetchSingleJobOfferPage(jobId));
+    }
+  }
+
+  @override
+  void dispose() {
+    context.read<SingleJobOfferBloc>().add(ResetJobOffer());
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
     Size screenSize = MediaQuery.of(context).size;
 
     return Scaffold(
-        backgroundColor: Colors.white,
-        appBar: NavbarResponsiveness.getNavbar(screenSize.width),
-        endDrawer: NavbarResponsiveness.getEndDrawer(screenSize.width),
-        body: Stack(
-          children: [
-            // CONTENT
-            GestureDetector(
-              onTap: () {
-                context.read<DropdownMenuBloc>().add(HideMenuEvent());
-              },
-              child: _content(screenSize, context),
-            ),
-            // NAVBAR MEGA-DROPDOWN MENUS
-            const DropdownMenuExpertises(),
-            const DropdownMenuOffers(),
-            const DropdownMenuAboutUs(),
-            //SEARCH BAR
-            SearchNavBar(
-              placeholder:
-                  "Cherchez une page, un service, un article, une offre d'emploi...",
-            )
-          ],
-        ));
+      backgroundColor: Colors.white,
+      appBar: NavbarResponsiveness.getNavbar(screenSize.width),
+      endDrawer: NavbarResponsiveness.getEndDrawer(screenSize.width),
+      body: Stack(
+        children: [
+          GestureDetector(
+            onTap: () {
+              context.read<DropdownMenuBloc>().add(HideMenuEvent());
+            },
+            child: _content(screenSize, context),
+          ),
+          const DropdownMenuExpertises(),
+          const DropdownMenuOffers(),
+          const DropdownMenuAboutUs(),
+          SearchNavBar(
+            placeholder:
+                "Cherchez une page, un service, un article, une offre d'emploi...",
+          )
+        ],
+      ),
+    );
   }
 
-  _content(Size screenSize, BuildContext context) {
+  Widget _content(Size screenSize, BuildContext context) {
     return SingleChildScrollView(
       child: Center(
         child: BlocBuilder<SingleJobOfferBloc, JobOfferState>(
           builder: (context, state) {
             if (state is SingleJobOfferLoaded) {
+              final jobOffer = state.jobOffers;
+
+              if (jobOffer == null || jobOffer.title.isEmpty) {
+                return _getErrorMessage(
+                    screenSize, 'Données d\'offre d\'emploi invalides.');
+              }
+
               try {
                 return Column(
+                  key: ValueKey(jobOffer.id), // Utiliser une clé unique
                   children: [
                     const SizedBox(height: 50),
                     Image.network(
-                      //control if the image value is null
-                      state.jobOffers.imagePath != '' &&
-                              state.jobOffers.imagePath != null
-                          ? state.jobOffers.imagePath
+                      jobOffer.imagePath.isNotEmpty
+                          ? jobOffer.imagePath
                           : jobDefaultImage,
                       width: screenSize.width * 0.55,
                       height: 300,
                     ),
                     const SizedBox(height: 20),
-                    _getHeader(state.jobOffers, context),
+                    _getHeader(jobOffer, context),
                     const SizedBox(height: 40),
-                    _getBodyText(screenSize, state.jobOffers),
+                    _getBodyText(screenSize, jobOffer),
                     const SizedBox(height: 50),
                     const SizedBox(height: 40),
                     const CustomUnderlineTitle(
@@ -92,7 +123,7 @@ class SingleCarreerPageLargeScreen extends StatelessWidget {
                     screenSize, 'Something went wrong (build error) : $error');
               }
             } else if (state is JobOfferInitialState) {
-              return _getErrorMessage(screenSize, 'is Loading...');
+              return _getErrorMessage(screenSize, 'Loading...');
             } else if (state is JobOfferError) {
               return _getErrorMessage(screenSize,
                   'Something went wrong (state error) :  ${state.errorMessage}');
@@ -106,7 +137,7 @@ class SingleCarreerPageLargeScreen extends StatelessWidget {
     );
   }
 
-  _getHeader(JobOffer jobOffer, BuildContext context) {
+  Widget _getHeader(JobOffer jobOffer, BuildContext context) {
     DateFormat dateFormat = DateFormat("dd/MM/yyyy");
     return Padding(
       padding: const EdgeInsets.all(30),
@@ -114,69 +145,76 @@ class SingleCarreerPageLargeScreen extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
           Wrap(
-              alignment: WrapAlignment.center,
-              crossAxisAlignment: WrapCrossAlignment.center,
-              spacing: 50,
-              children: [
-                Text(jobOffer.title,
-                    style: const TextStyle(
-                        fontSize: 50, fontWeight: FontWeight.bold)),
-                ClipRRect(
-                  borderRadius: BorderRadius.circular(partialCircularItem),
-                  child: Button(
-                    'Postuler',
-                    type: ButtonType.standard,
-                    paddingLeftRight: 30.0,
-                    paddingTopBottom: 5.0,
-                    fontSizeVal: 24,
-                    onTap: () {
-                      Navigator.of(context).pushNamed(apply,
-                          arguments: {'jobOfferTitle': jobOffer.title});
-                    },
-                  ),
-                )
-              ]),
+            alignment: WrapAlignment.center,
+            crossAxisAlignment: WrapCrossAlignment.center,
+            spacing: 50,
+            children: [
+              Text(
+                jobOffer.title,
+                style:
+                    const TextStyle(fontSize: 50, fontWeight: FontWeight.bold),
+              ),
+              ClipRRect(
+                borderRadius: BorderRadius.circular(partialCircularItem),
+                child: Button(
+                  'Postuler',
+                  type: ButtonType.standard,
+                  paddingLeftRight: 30.0,
+                  paddingTopBottom: 5.0,
+                  fontSizeVal: 24,
+                  onTap: () {
+                    Navigator.of(context).pushNamed(apply,
+                        arguments: {'jobOfferTitle': jobOffer.title});
+                  },
+                ),
+              ),
+            ],
+          ),
           const SizedBox(height: 10),
           SizedBox(
             height: 40,
-            child: Row(mainAxisSize: MainAxisSize.min, children: [
-              Text(
-                jobOffer.place,
-                style: const TextStyle(fontSize: 19),
-              ),
-              const VerticalDivider(),
-              Text(
-                dateFormat.format(jobOffer.pulishDate),
-                style: const TextStyle(fontSize: 19),
-              ),
-              const VerticalDivider(),
-              Text(
-                jobOffer.contract,
-                style: const TextStyle(fontSize: 19),
-              ),
-              const VerticalDivider(),
-              Text(
-                jobOffer.duration,
-                style: const TextStyle(fontSize: 19),
-              ),
-              const VerticalDivider(),
-              Text(
-                jobOffer.salary != null ? jobOffer.salary.toString() : '',
-                style: const TextStyle(fontSize: 19),
-              ),
-            ]),
-          )
+            child: Row(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                Text(
+                  jobOffer.place,
+                  style: const TextStyle(fontSize: 19),
+                ),
+                const VerticalDivider(),
+                Text(
+                  dateFormat.format(jobOffer.pulishDate),
+                  style: const TextStyle(fontSize: 19),
+                ),
+                const VerticalDivider(),
+                Text(
+                  jobOffer.contract,
+                  style: const TextStyle(fontSize: 19),
+                ),
+                const VerticalDivider(),
+                Text(
+                  jobOffer.duration,
+                  style: const TextStyle(fontSize: 19),
+                ),
+                const VerticalDivider(),
+                Text(
+                  jobOffer.salary != null ? jobOffer.salary.toString() : '',
+                  style: const TextStyle(fontSize: 19),
+                ),
+              ],
+            ),
+          ),
         ],
       ),
     );
   }
 
-  _getBodyText(Size screenSize, JobOffer jobOffer) {
+  Widget _getBodyText(Size screenSize, JobOffer jobOffer) {
     quill.Document quillDocument =
         quill.Document.fromJson(jsonDecode(jobOffer.textContent));
     quill.QuillController quillController = quill.QuillController(
-        document: quillDocument,
-        selection: const TextSelection.collapsed(offset: 0));
+      document: quillDocument,
+      selection: const TextSelection.collapsed(offset: 0),
+    );
     return Container(
       alignment: Alignment.center,
       padding: const EdgeInsets.symmetric(horizontal: 30),
@@ -191,7 +229,7 @@ class SingleCarreerPageLargeScreen extends StatelessWidget {
     );
   }
 
-  _getOtherSimilarJob() {
+  Widget _getOtherSimilarJob() {
     return Padding(
       padding: const EdgeInsets.only(left: 70, right: 70),
       child: Wrap(
@@ -226,13 +264,12 @@ class SingleCarreerPageLargeScreen extends StatelessWidget {
     );
   }
 
-  _getJobItem({required String title, required String imagePath}) {
+  Widget _getJobItem({required String title, required String imagePath}) {
     const double boxWidth = 400.0;
     const Color color = Color(0xffD9D9D9);
     const EdgeInsets padding =
         EdgeInsets.only(left: 10, right: 10, top: 5.0, bottom: 5.0);
     const EdgeInsets margin = EdgeInsets.only(bottom: 5.0);
-    //responsive item
     return Container(
       margin: const EdgeInsets.only(bottom: 30),
       child: SizedBox(
@@ -251,7 +288,6 @@ class SingleCarreerPageLargeScreen extends StatelessWidget {
               style: const TextStyle(fontSize: 35, fontWeight: FontWeight.bold),
             ),
             Wrap(
-              // keys Words of this Job
               alignment: WrapAlignment.start,
               spacing: 10,
               children: [
@@ -289,27 +325,30 @@ class SingleCarreerPageLargeScreen extends StatelessWidget {
             ),
             const SizedBox(height: 10),
             Align(
-                alignment: Alignment.centerRight,
-                child: Button(
-                  'Voir Plus',
-                  type: ButtonType.standard,
-                  onTap: () {},
-                  paddingLeftRight: 10,
-                  paddingTopBottom: 10,
-                ))
+              alignment: Alignment.centerRight,
+              child: Button(
+                'Voir Plus',
+                type: ButtonType.standard,
+                onTap: () {},
+                paddingLeftRight: 10,
+                paddingTopBottom: 10,
+              ),
+            ),
           ],
         ),
       ),
     );
   }
 
-  SizedBox _getErrorMessage(Size screenSize, String text) {
+  Widget _getErrorMessage(Size screenSize, String text) {
     return SizedBox(
-        height: screenSize.height * 0.7,
-        child: Center(
-          child: Text(text,
-              style:
-                  const TextStyle(fontSize: 24, fontWeight: FontWeight.bold)),
-        ));
+      height: screenSize.height * 0.7,
+      child: Center(
+        child: Text(
+          text,
+          style: const TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
+        ),
+      ),
+    );
   }
 }

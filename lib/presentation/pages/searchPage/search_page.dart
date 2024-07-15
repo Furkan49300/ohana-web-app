@@ -62,10 +62,9 @@ class SearchPageLargeScreen extends StatelessWidget {
   String _getDocumentType(DocumentSnapshot doc) {
     final data = doc.data() as Map<String, dynamic>?;
     if (data != null) {
-      if (data.containsKey('image') && data.containsKey('description')) {
+      if (data.containsKey('description')) {
         return 'article';
-      } else if (data.containsKey('offer_content') &&
-          data.containsKey('publish_date')) {
+      } else if (data.containsKey('offer_content')) {
         return 'emploi';
       }
     }

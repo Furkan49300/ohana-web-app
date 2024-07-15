@@ -9,22 +9,29 @@ import 'package:ohana_webapp_flutter/presentation/bloc/job_offer/job_offer_state
 class SingleJobOfferBloc extends Bloc<JobOfferEvent, JobOfferState> {
   SingleJobOfferBloc() : super(JobOfferInitialState()) {
     on<FetchSingleJobOfferPage>(_fetchSingleJobOffer);
-    on<FetchSingleJobOfferType>(_fetchSingleJobOfferType);
+    on<ResetJobOffer>(_resetJobOffer);
   }
-  void _fetchSingleJobOffer(FetchSingleJobOfferPage event, emit) async {
+
+  Future<void> _fetchSingleJobOffer(
+      FetchSingleJobOfferPage event, Emitter<JobOfferState> emit) async {
     try {
-      // Récupérer l' offre
-      final JobOffer jobOffers = await JobOfferUsecase(
+      final JobOffer jobOffer = await JobOfferUsecase(
               jobOffersRepository: JobOfferFirebaseRepository())
           .getSingleJobOffer(event.id);
 
-      // Retourner l'offre
-      emit(SingleJobOfferLoaded(jobOffers));
+      if (jobOffer.id.isEmpty || jobOffer.title.isEmpty) {
+        emit(JobOfferError("Données d'offre d'emploi invalides."));
+      } else {
+        emit(SingleJobOfferLoaded(jobOffer));
+      }
     } catch (error) {
-      // Gérer les erreurs
-      emit(JobOfferError(error.toString())); // Affiche un message d'erreur
+      emit(JobOfferError(error.toString()));
     }
   }
 
-  void _fetchSingleJobOfferType(FetchSingleJobOfferType event, emit) async {}
+  void _resetJobOffer(ResetJobOffer event, Emitter<JobOfferState> emit) {
+    emit(JobOfferInitialState());
+  }
 }
+
+class ResetJobOffer extends JobOfferEvent {}

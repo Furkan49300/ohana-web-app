@@ -41,101 +41,90 @@ class _CarreersPageLargeScreenState extends State<CarreersPageLargeScreen> {
   }
 
   @override
-  void dispose() {
-    // TODO: implement dispose
-    super.dispose();
-  }
-
-  @override
   Widget build(BuildContext context) {
     Size screenSize = MediaQuery.of(context).size;
     return Scaffold(
-        backgroundColor: Colors.white,
-        appBar: NavbarResponsiveness.getNavbar(screenSize.width),
-        endDrawer: NavbarResponsiveness.getEndDrawer(screenSize.width),
-        body: Stack(
-          children: [
-            // CONTENT
-            GestureDetector(
-              onTap: () {
-                context.read<DropdownMenuBloc>().add(HideMenuEvent());
-              },
-              child: _content(screenSize, context),
-            ),
-            // NAVBAR MEGA-DROPDOWN MENUS
-            const DropdownMenuExpertises(),
-            const DropdownMenuOffers(),
-            const DropdownMenuAboutUs(),
-            //SEARCH BAR
-            SearchNavBar(
-              placeholder:
-                  "Cherchez une page, un service, un article, une offre d'emploi...",
-            )
-          ],
-        ));
+      backgroundColor: Colors.white,
+      appBar: NavbarResponsiveness.getNavbar(screenSize.width),
+      endDrawer: NavbarResponsiveness.getEndDrawer(screenSize.width),
+      body: Stack(
+        children: [
+          GestureDetector(
+            onTap: () {
+              context.read<DropdownMenuBloc>().add(HideMenuEvent());
+            },
+            child: _content(screenSize, context),
+          ),
+          const DropdownMenuExpertises(),
+          const DropdownMenuOffers(),
+          const DropdownMenuAboutUs(),
+          SearchNavBar(
+            placeholder:
+                "Cherchez une page, un service, un article, une offre d'emploi...",
+          )
+        ],
+      ),
+    );
   }
 
-  _content(Size screenSize, context) {
-    return Expanded(
-      child: SingleChildScrollView(
-        child: Container(
-          width: screenSize.width,
-          color: Colors.white,
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.start,
-            children: [
-              _getBanner(screenSize: screenSize),
-              const SizedBox(height: 30),
-              _getCarrersItems(context),
-              const SizedBox(height: 50),
-              _getListNumber(),
-              const SizedBox(height: 50),
-              const Footer(),
-            ],
-          ),
+  Widget _content(Size screenSize, BuildContext context) {
+    return SingleChildScrollView(
+      child: Container(
+        width: screenSize.width,
+        color: Colors.white,
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.start,
+          children: [
+            _getBanner(screenSize: screenSize),
+            const SizedBox(height: 30),
+            _getCarrersItems(context),
+            const SizedBox(height: 50),
+            _getListNumber(),
+            const SizedBox(height: 50),
+            const Footer(),
+          ],
         ),
       ),
     );
   }
 
-//BANNER
-  _getBanner({required Size screenSize}) {
+  Widget _getBanner({required Size screenSize}) {
     return CustomBanner(
       imagePath: 'assets/offers_images/person-with-hiring-sign-by-window.jpg',
       widget: SizedBox(
-          child: Column(
-        mainAxisAlignment: MainAxisAlignment.center, //start at the start
-        crossAxisAlignment: CrossAxisAlignment.center,
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          const Text(
-            "REJOINDRE NOTRE EQUIPE ?",
-            style: TextStyle(
-                fontSize: 50, fontWeight: FontWeight.bold, color: Colors.white),
-          ),
-          const SizedBox(height: 10),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              CustomInputField(
-                placeholder: 'Chercher une offres',
-                textEditingController: TextEditingController(),
-              ),
-              const SizedBox(
-                width: 10,
-              ),
-              Button("RECHERCHER", type: ButtonType.standard, onTap: () {}),
-            ],
-          ),
-          _getExpertisesCards(),
-          const SizedBox(height: 100),
-        ],
-      )),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            const Text(
+              "REJOINDRE NOTRE EQUIPE ?",
+              style: TextStyle(
+                  fontSize: 50,
+                  fontWeight: FontWeight.bold,
+                  color: Colors.white),
+            ),
+            const SizedBox(height: 10),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                CustomInputField(
+                  placeholder: 'Chercher une offres',
+                  textEditingController: TextEditingController(),
+                ),
+                const SizedBox(width: 10),
+                Button("RECHERCHER", type: ButtonType.standard, onTap: () {}),
+              ],
+            ),
+            _getExpertisesCards(),
+            const SizedBox(height: 100),
+          ],
+        ),
+      ),
     );
   }
 
-//get  svg of expertises
-  _getExpertisesCards() {
+  Widget _getExpertisesCards() {
     return Row(
       mainAxisSize: MainAxisSize.min,
       children: [
@@ -153,7 +142,7 @@ class _CarreersPageLargeScreenState extends State<CarreersPageLargeScreen> {
     );
   }
 
-  _getCustomExpertiseCard({required String svgPath}) {
+  Widget _getCustomExpertiseCard({required String svgPath}) {
     Color color = Colors.black.withOpacity(0.5);
     double size = 30;
     return Container(
@@ -163,24 +152,18 @@ class _CarreersPageLargeScreenState extends State<CarreersPageLargeScreen> {
         borderRadius: BorderRadius.circular(partialCircularItem),
         color: color,
       ),
-      child: SvgPicture.asset(
-        svgPath,
-        height: size,
-        width: size,
-      ),
+      child: SvgPicture.asset(svgPath, height: size, width: size),
     );
   }
 
-// OFFRES/CONTRACT
-  _getCarrersItems(context) {
+  Widget _getCarrersItems(BuildContext context) {
     return BlocBuilder<PaginatedJobOfferBloc, JobOfferState>(
       builder: (context, state) {
         if (state is JobOfferLoaded) {
           return Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              for (JobOffer item in state
-                  .jobOffersList) //LIST_OF_OFFERS is inside widget_utils.dart doc
+              for (JobOffer item in state.jobOffersList)
                 ResponsiveJobOfferCard(
                   id: '',
                   title: item.title,
@@ -194,10 +177,12 @@ class _CarreersPageLargeScreenState extends State<CarreersPageLargeScreen> {
                   date: item.pulishDate,
                   alert: item.alert,
                   onTap: () {
+                    context.read<SingleJobOfferBloc>().add(ResetJobOffer());
                     context
                         .read<SingleJobOfferBloc>()
                         .add(FetchSingleJobOfferPage(item.id));
-                    Navigator.of(context).pushNamed(singleCarreer);
+                    Navigator.of(context)
+                        .pushNamed(singleCarreer, arguments: item.id);
                   },
                 )
             ],
@@ -213,8 +198,7 @@ class _CarreersPageLargeScreenState extends State<CarreersPageLargeScreen> {
     );
   }
 
-//NUMBER LIST
-  _getListNumber() {
+  Widget _getListNumber() {
     return CustomJobOfferSmartPaginator();
   }
 }
