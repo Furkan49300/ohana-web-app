@@ -23,7 +23,9 @@ import 'package:ohana_webapp_flutter/presentation/widgets/composants/button_form
 import 'package:ohana_webapp_flutter/presentation/widgets/composants/text_format/custom_underlined_title.dart';
 
 class SingleCarreerPageLargeScreen extends StatefulWidget {
-  const SingleCarreerPageLargeScreen({super.key});
+  final String jobId;
+
+  const SingleCarreerPageLargeScreen({super.key, required this.jobId});
 
   @override
   _SingleCarreerPageLargeScreenState createState() =>
@@ -32,14 +34,11 @@ class SingleCarreerPageLargeScreen extends StatefulWidget {
 
 class _SingleCarreerPageLargeScreenState
     extends State<SingleCarreerPageLargeScreen> {
-  String? currentJobId;
-
   @override
   void didChangeDependencies() {
     super.didChangeDependencies();
-    final jobId = ModalRoute.of(context)?.settings.arguments as String?;
-    if (jobId != null && jobId != currentJobId) {
-      currentJobId = jobId;
+    final jobId = widget.jobId;
+    if (jobId != null) {
       context.read<SingleJobOfferBloc>().add(ResetJobOffer());
       context.read<SingleJobOfferBloc>().add(FetchSingleJobOfferPage(jobId));
     }
@@ -84,7 +83,9 @@ class _SingleCarreerPageLargeScreenState
       child: Center(
         child: BlocBuilder<SingleJobOfferBloc, JobOfferState>(
           builder: (context, state) {
-            if (state is SingleJobOfferLoaded) {
+            if (state is JobOfferInitialState) {
+              return _getLoadingIndicator(screenSize);
+            } else if (state is SingleJobOfferLoaded) {
               final jobOffer = state.jobOffers;
 
               if (jobOffer == null || jobOffer.title.isEmpty) {
@@ -92,47 +93,46 @@ class _SingleCarreerPageLargeScreenState
                     screenSize, 'Données d\'offre d\'emploi invalides.');
               }
 
-              try {
-                return Column(
-                  key: ValueKey(jobOffer.id), // Utiliser une clé unique
-                  children: [
-                    const SizedBox(height: 50),
-                    Image.network(
-                      jobOffer.imagePath.isNotEmpty
-                          ? jobOffer.imagePath
-                          : jobDefaultImage,
-                      width: screenSize.width * 0.55,
-                      height: 300,
-                    ),
-                    const SizedBox(height: 20),
-                    _getHeader(jobOffer, context),
-                    const SizedBox(height: 40),
-                    _getBodyText(screenSize, jobOffer),
-                    const SizedBox(height: 50),
-                    const SizedBox(height: 40),
-                    const CustomUnderlineTitle(
-                      title: "Propositions similaires",
-                    ),
-                    const SizedBox(height: 40),
-                    _getOtherSimilarJob(),
-                    const Footer(),
-                  ],
-                );
-              } catch (error) {
-                return _getErrorMessage(
-                    screenSize, 'Something went wrong (build error) : $error');
-              }
-            } else if (state is JobOfferInitialState) {
-              return _getErrorMessage(screenSize, 'Loading...');
+              return Column(
+                key: ValueKey(jobOffer.id), // Utiliser une clé unique
+                children: [
+                  const SizedBox(height: 50),
+                  Image.network(
+                    jobOffer.imagePath.isNotEmpty
+                        ? jobOffer.imagePath
+                        : jobDefaultImage,
+                    width: screenSize.width * 0.55,
+                    height: 300,
+                  ),
+                  const SizedBox(height: 20),
+                  _getHeader(jobOffer, context),
+                  const SizedBox(height: 40),
+                  _getBodyText(screenSize, jobOffer),
+                  const SizedBox(height: 50),
+                  const SizedBox(height: 40),
+                  const CustomUnderlineTitle(title: "Propositions similaires"),
+                  const SizedBox(height: 40),
+                  _getOtherSimilarJob(),
+                  const Footer(),
+                ],
+              );
             } else if (state is JobOfferError) {
-              return _getErrorMessage(screenSize,
-                  'Something went wrong (state error) :  ${state.errorMessage}');
+              return _getErrorMessage(screenSize, state.errorMessage);
             } else {
               return _getErrorMessage(
-                  screenSize, 'Something went wrong (error)');
+                  screenSize, 'Something went wrong (unknown state)');
             }
           },
         ),
+      ),
+    );
+  }
+
+  Widget _getLoadingIndicator(Size screenSize) {
+    return SizedBox(
+      height: screenSize.height * 0.7,
+      child: Center(
+        child: CircularProgressIndicator(),
       ),
     );
   }

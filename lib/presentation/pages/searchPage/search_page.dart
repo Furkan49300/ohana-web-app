@@ -4,10 +4,13 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:intl/intl.dart';
 import 'package:ohana_webapp_flutter/presentation/bloc/blog_post/blocs/blog_global_manager_bloc.dart';
 import 'package:ohana_webapp_flutter/presentation/bloc/blog_post/blog_post_state.dart';
+import 'package:ohana_webapp_flutter/presentation/bloc/job_offer/blocs/single_job_offer_bloc.dart';
+import 'package:ohana_webapp_flutter/presentation/bloc/job_offer/job_offer_event.dart';
 
 import 'package:ohana_webapp_flutter/presentation/bloc/navbar_dropdown/dropdown_menu_bloc.dart';
 import 'package:ohana_webapp_flutter/presentation/bloc/navbar_dropdown/dropdown_menu_event.dart';
 import 'package:ohana_webapp_flutter/presentation/constants/colors.dart';
+import 'package:ohana_webapp_flutter/presentation/constants/router_constants.dart';
 import 'package:ohana_webapp_flutter/presentation/footer/footer_screen_fit.dart';
 import 'package:ohana_webapp_flutter/presentation/navbar/largescreen/megaDropdown/dropdown_menu_about_us.dart';
 import 'package:ohana_webapp_flutter/presentation/navbar/largescreen/megaDropdown/dropdown_menu_expertises.dart';
@@ -37,18 +40,15 @@ class SearchPageLargeScreen extends StatelessWidget {
       endDrawer: NavbarResponsiveness.getEndDrawer(screenSize.width),
       body: Stack(
         children: [
-          // CONTENT
           GestureDetector(
             onTap: () {
               context.read<DropdownMenuBloc>().add(HideMenuEvent());
             },
             child: _content(screenSize, context),
           ),
-          // NAVBAR MEGA-DROPDOWN MENUS
           const DropdownMenuExpertises(),
           const DropdownMenuOffers(),
           const DropdownMenuAboutUs(),
-          //SEARCH BAR
           SearchNavBar(
             placeholder:
                 "Cherchez une page, un service, un article, une offre d'emploi...",
@@ -58,7 +58,6 @@ class SearchPageLargeScreen extends StatelessWidget {
     );
   }
 
-  // Determine document type by checking the presence of specific fields
   String _getDocumentType(DocumentSnapshot doc) {
     final data = doc.data() as Map<String, dynamic>?;
     if (data != null) {
@@ -71,10 +70,7 @@ class SearchPageLargeScreen extends StatelessWidget {
     return 'unknown';
   }
 
-  //CONTENT
-
   Widget _content(Size screenSize, BuildContext context) {
-    // Filter results based on type
     final articleResults = searchResults
         .where((doc) => _getDocumentType(doc) == 'article')
         .toList();
@@ -162,12 +158,12 @@ class SearchPageLargeScreen extends StatelessWidget {
                                             fontWeight: FontWeight.bold),
                                       ),
                                       Container(
-                                          width: 400,
-                                          margin: EdgeInsets.only(
-                                              top: 10, bottom: 10),
-                                          child: Image(
-                                              image: AssetImage(
-                                                  doc['url_image']))),
+                                        width: 400,
+                                        margin: EdgeInsets.only(
+                                            top: 10, bottom: 10),
+                                        child:
+                                            _getImageWidget(doc['url_image']),
+                                      ),
                                       SizedBox(
                                         width: 400,
                                         child: Row(
@@ -215,10 +211,23 @@ class SearchPageLargeScreen extends StatelessWidget {
                                         child: Button("Voir plus",
                                             type: ButtonType.standard,
                                             onTap: () {
+                                          print("Voir plus tapé");
+                                          context
+                                              .read<SingleJobOfferBloc>()
+                                              .add(ResetJobOffer());
+                                          print("ResetJobOffer ajouté");
+                                          context
+                                              .read<SingleJobOfferBloc>()
+                                              .add(FetchSingleJobOfferPage(
+                                                  doc.id));
+                                          print(
+                                              "FetchSingleJobOfferPage ajouté pour id: ${doc.id}");
                                           Navigator.of(context).pushNamed(
                                             '/carreer',
-                                            arguments: doc,
+                                            arguments: doc.id,
                                           );
+                                          print(
+                                              "Navigation vers /carreer avec id: ${doc.id}");
                                         }),
                                       )
                                     ],
@@ -236,6 +245,18 @@ class SearchPageLargeScreen extends StatelessWidget {
         ),
       ),
     );
+  }
+
+  Widget _getImageWidget(String url) {
+    if (url.startsWith('http')) {
+      return Image.network(url, errorBuilder: (context, error, stackTrace) {
+        return Image.asset('assets/default_image.png');
+      });
+    } else {
+      return Image.asset(url, errorBuilder: (context, error, stackTrace) {
+        return Image.asset('assets/default_image.png');
+      });
+    }
   }
 
   Widget _getMatchingPage({required String text}) {

@@ -78,11 +78,13 @@ class AppRouter {
 //SINGLE CARREER
 
       case singleCarreer:
+        final jobId = routeSettings.arguments as String;
         return MaterialPageRoute(
-            builder: (e) => BlocProvider.value(
-                  value: _singleJobOfferBloc,
-                  child: const SingleCarreerPageLargeScreen(),
-                ));
+          builder: (context) => BlocProvider.value(
+            value: _singleJobOfferBloc,
+            child: SingleCarreerPageLargeScreen(jobId: jobId),
+          ),
+        );
 
 //POSTULATION
 
