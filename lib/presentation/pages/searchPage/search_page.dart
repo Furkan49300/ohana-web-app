@@ -1,12 +1,12 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:intl/intl.dart';
-import 'package:ohana_webapp_flutter/presentation/bloc/blog_post/blocs/blog_global_manager_bloc.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:ohana_webapp_flutter/presentation/bloc/blog_post/blocs/single_blog_post_bloc.dart';
+import 'package:ohana_webapp_flutter/presentation/bloc/blog_post/blog_post_event.dart';
 import 'package:ohana_webapp_flutter/presentation/bloc/blog_post/blog_post_state.dart';
 import 'package:ohana_webapp_flutter/presentation/bloc/job_offer/blocs/single_job_offer_bloc.dart';
 import 'package:ohana_webapp_flutter/presentation/bloc/job_offer/job_offer_event.dart';
-
 import 'package:ohana_webapp_flutter/presentation/bloc/navbar_dropdown/dropdown_menu_bloc.dart';
 import 'package:ohana_webapp_flutter/presentation/bloc/navbar_dropdown/dropdown_menu_event.dart';
 import 'package:ohana_webapp_flutter/presentation/constants/colors.dart';
@@ -97,8 +97,8 @@ class SearchPageLargeScreen extends StatelessWidget {
               child: Wrap(
                 spacing: 30,
                 children: articleResults
-                    .map<Widget>((doc) =>
-                        _getMatchingPage(text: "Page <<${doc['title']}>>"))
+                    .map<Widget>((doc) => _getMatchingPage(context, doc,
+                        text: "Page <<${doc['title']}>>"))
                     .toList(),
               ),
             ),
@@ -113,21 +113,34 @@ class SearchPageLargeScreen extends StatelessWidget {
                 child: Wrap(
                   spacing: 40,
                   children: articleResults
-                      .map<Widget>((doc) => Column(
-                            children: [
-                              Padding(
-                                padding: const EdgeInsets.only(bottom: 20),
-                                child: BlogCard(
-                                  width: 600,
-                                  pathOfTopImage: doc['image'],
-                                  title: doc['title'],
-                                  date: doc['publish_date'].toString(),
-                                  textAndBoldListMap: {
-                                    "text": doc['description']
-                                  },
+                      .map<Widget>((doc) => GestureDetector(
+                            onTap: () {
+                              print("Article tapped: ${doc.id}");
+                              context
+                                  .read<SingleBlogPostBloc>()
+                                  .add(ResetSingleBlogPostEvent());
+                              context
+                                  .read<SingleBlogPostBloc>()
+                                  .add(FetchSingleBlogPost(doc.id));
+                              Navigator.of(context)
+                                  .pushNamed(singleBlog, arguments: doc.id);
+                            },
+                            child: Column(
+                              children: [
+                                Padding(
+                                  padding: const EdgeInsets.only(bottom: 20),
+                                  child: BlogCard(
+                                    width: 600,
+                                    pathOfTopImage: doc['image'],
+                                    title: doc['title'],
+                                    date: doc['publish_date'].toString(),
+                                    textAndBoldListMap: {
+                                      "text": doc['description']
+                                    },
+                                  ),
                                 ),
-                              ),
-                            ],
+                              ],
+                            ),
                           ))
                       .toList(),
                 ),
@@ -250,47 +263,55 @@ class SearchPageLargeScreen extends StatelessWidget {
   Widget _getImageWidget(String url) {
     if (url.startsWith('http')) {
       return Image.network(url, errorBuilder: (context, error, stackTrace) {
-        return Image.asset('assets/default_image.png');
+        return Image.asset('assets/bg-devis.jpg');
       });
     } else {
       return Image.asset(url, errorBuilder: (context, error, stackTrace) {
-        return Image.asset('assets/default_image.png');
+        return Image.asset('assets/bg-devis.jpg');
       });
     }
   }
 
-  Widget _getMatchingPage({required String text}) {
-    return Container(
-      color: purpleNeutral,
-      padding: const EdgeInsets.all(15),
-      margin: const EdgeInsets.only(bottom: 20),
-      child: Row(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          SizedBox(
-            width: 370,
-            child: Text(
-              text,
-              style: const TextStyle(
-                  fontSize: 20,
-                  fontWeight: FontWeight.bold,
-                  color: Colors.white),
+  Widget _getMatchingPage(BuildContext context, DocumentSnapshot doc,
+      {required String text}) {
+    return GestureDetector(
+      onTap: () {
+        print("Page tapped: ${doc.id}");
+        context.read<SingleBlogPostBloc>().add(FetchSingleBlogPost(doc.id));
+        Navigator.of(context).pushNamed(singleBlog, arguments: doc.id);
+      },
+      child: Container(
+        color: purpleNeutral,
+        padding: const EdgeInsets.all(15),
+        margin: const EdgeInsets.only(bottom: 20),
+        child: Row(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            SizedBox(
+              width: 370,
+              child: Text(
+                text,
+                style: const TextStyle(
+                    fontSize: 20,
+                    fontWeight: FontWeight.bold,
+                    color: Colors.white),
+              ),
             ),
-          ),
-          const SizedBox(width: 0),
-          Container(
-            padding: const EdgeInsets.all(5),
-            decoration: BoxDecoration(
-                border: Border.all(width: 1, color: Colors.white)),
-            child: const Text(
-              'Voir plus',
-              style: TextStyle(
-                  fontSize: 20,
-                  fontWeight: FontWeight.bold,
-                  color: Colors.white),
+            const SizedBox(width: 0),
+            Container(
+              padding: const EdgeInsets.all(5),
+              decoration: BoxDecoration(
+                  border: Border.all(width: 1, color: Colors.white)),
+              child: const Text(
+                'Voir plus',
+                style: TextStyle(
+                    fontSize: 20,
+                    fontWeight: FontWeight.bold,
+                    color: Colors.white),
+              ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }

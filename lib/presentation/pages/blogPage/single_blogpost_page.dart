@@ -90,7 +90,7 @@ class _SingleBlogPostPageState extends State<SingleBlogPostPage> {
                                 controller: quillController,
                                 enableInteractiveSelection: false),
                           ),
-                          if (blogPostContent.imagePath != '' &&
+                          if (blogPostContent.imagePath != '' ||
                               blogPostContent.imagePath != null)
                             Image.network(
                               blogPostContent.imagePath!,

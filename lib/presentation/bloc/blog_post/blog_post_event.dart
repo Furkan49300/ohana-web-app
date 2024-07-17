@@ -28,6 +28,7 @@ class FetchSingleBlogPost extends BlogPostEvent {
   FetchSingleBlogPost(this.id);
 }
 
+class ResetSingleBlogPostEvent extends BlogPostEvent {}
 //BLOC POST SEARCH
 
 class SearchBlogPosts extends BlogPostEvent {

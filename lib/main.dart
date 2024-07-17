@@ -5,6 +5,7 @@ import 'package:firebase_core/firebase_core.dart';
 
 import 'package:ohana_webapp_flutter/data/repositories/firebase/firebase_options.dart';
 import 'package:ohana_webapp_flutter/presentation/bloc/blog_post/blocs/blog_global_manager_bloc.dart';
+import 'package:ohana_webapp_flutter/presentation/bloc/blog_post/blocs/single_blog_post_bloc.dart';
 import 'package:ohana_webapp_flutter/presentation/bloc/job_offer/blocs/single_job_offer_bloc.dart';
 import 'package:ohana_webapp_flutter/presentation/bloc/navbar_dropdown/dropdown_menu_bloc.dart';
 import 'package:ohana_webapp_flutter/presentation/pages/searchPage/search_page.dart';
@@ -32,9 +33,13 @@ class _MainAppState extends State<MainApp> {
   Widget build(BuildContext context) {
     return MultiBlocProvider(
       providers: [
+        BlocProvider<SingleBlogPostBloc>(
+          create: (context) => SingleBlogPostBloc(),
+        ),
         BlocProvider(create: (context) => DropdownMenuBloc()),
         BlocProvider(create: (context) => BlogPostGlobalManagerBloc()),
         BlocProvider(create: (context) => SingleJobOfferBloc()),
+        BlocProvider(create: (context) => SingleBlogPostBloc())
       ],
       child: MaterialApp(
         title: "OHana Entreprise",
