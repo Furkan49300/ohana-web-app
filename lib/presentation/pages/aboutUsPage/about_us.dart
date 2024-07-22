@@ -73,12 +73,12 @@ class _AboutUsPageState extends State<AboutUsPage> {
     double screenSizeWidth = Responsive.getScreenSizeWidth(context);
 
     Color blackColorwhiteOpacity = Colors.black.withOpacity(0.5);
-    ColorFilter colorFilter = ColorFilter.mode(
-        isOnDetails ? blackColorwhiteOpacity : Colors.transparent,
-        BlendMode.srcATop);
+    //ColorFilter colorFilter = ColorFilter.mode(
+    //isOnDetails ? blackColorwhiteOpacity : Colors.transparent,
+    //BlendMode.srcATop);
 
     return Scaffold(
-      backgroundColor: isOnDetails ? blackColorwhiteOpacity : Colors.white,
+      backgroundColor: /*isOnDetails ? blackColorwhiteOpacity :*/ Colors.white,
       appBar: NavbarResponsiveness.getNavbar(screenSizeWidth,
           isOnDetails: isOnDetails),
       endDrawer: NavbarResponsiveness.getEndDrawer(screenSizeWidth),
@@ -93,11 +93,8 @@ class _AboutUsPageState extends State<AboutUsPage> {
                     context.read<DropdownMenuBloc>().add(HideMenuEvent());
                     _removeBoxOfDetails();
                   },
-                  child: ColorFiltered(
-                    colorFilter: colorFilter,
-                    child: SingleChildScrollView(
-                      child: _content(screenSizeWidth, context),
-                    ),
+                  child: SingleChildScrollView(
+                    child: _content(screenSizeWidth, context),
                   ),
                 ),
                 // NAVBAR MEGA-DROPDOWN MENUS

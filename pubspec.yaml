@@ -28,13 +28,14 @@ dependencies:
   chewie: ^1.8.1
   flutter_hooks: ^0.18.0
   diacritic: ^0.1.5
+  flutter_lints: ^4.0.0
+  google_fonts: ^6.2.1
+  flutter_bloc: ^8.0.0
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
-  flutter_lints: ^4.0.0
-  google_fonts: ^6.2.1
-  flutter_bloc: ^8.0.0
+  
 
 
 flutter:
@@ -58,4 +59,11 @@ flutter:
     - assets/alert_images/
     - assets/values_icons/
     - assets/services_images/dev_services/software_services/
-    - assets/services_images/dev_services/software_services/carousel_images/
+    
+targets:
+  $default:
+    builders:
+      build_web_compilers|entrypoint:
+        options:
+          dart2js_args:
+            - --no-minify
